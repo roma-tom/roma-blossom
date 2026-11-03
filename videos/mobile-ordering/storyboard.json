@@ -1,5 +1,6 @@
 {
   "title": "Why Guests Love Ordering on Their Phone",
+  "cover": { "hero": "tomato" },
   "background": "paper",
   "output": "video.mp4",
   "sound": true,

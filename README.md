@@ -14,7 +14,8 @@ It is also a Claude Code skill: `.claude/skills/roma-blossom/SKILL.md` teaches C
     SKILL.md          the skill: workflow, storyboard format, template props, rules
 style/STYLE.md        palette, type, motion, cast, safe zones, the 24 templates
 scripts/
-  render.js           storyboard.json → video.mp4 (+ sound.wav, sfx/)
+  render.js           storyboard.json → video.mp4 and cover.jpg (+ sound.wav, sfx/)
+  cover.js            the crop-safe cover image alone, with --guides to see the crops
   new.js              scaffold videos/<slug>/
   still.js            one still of a scene on paper and lime → out/
   scenes/             the 24 templates and the end card

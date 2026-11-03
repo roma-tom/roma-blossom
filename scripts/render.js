@@ -1,6 +1,6 @@
 // Render a storyboard to a 1080×1920, 30 fps MP4.
 //
-//   node render.js ../videos/best-seller/storyboard.json
+//   node render.js ../videos/best-seller/storyboard.json   → video.mp4 and cover.jpg beside it
 //   node render.js <storyboard> --frames 0,45,100   → PNGs of just those frames, for checking
 //   node render.js <storyboard> --bg lime            → override the storyboard's background
 //
@@ -26,6 +26,7 @@ const { spawn } = require('child_process');
 const ffmpeg = require('ffmpeg-static');
 const { W, H, FPS, THEMES, frame, drawScene, pen, motion } = require('./lib/kit.js');
 const sound = require('./lib/sound.js');
+const { writeCover } = require('./cover.js');
 
 const WIPE = 0.5; // seconds
 const BOIL = 4; // frames per boil step
@@ -151,5 +152,6 @@ const enc = spawn(ffmpeg, [
     process.stdout.write(`\r${total}/${total} frames in ${((Date.now() - t0) / 1000).toFixed(1)} s\n`);
     if (code) process.exit(code);
     console.log(mp4);
+    console.log(writeCover(file)[0]);
   });
 })();
