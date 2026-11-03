@@ -82,7 +82,8 @@ and keeps it; later renders reuse it.
    Re-make just the cover with `node scripts/cover.js videos/<slug>/storyboard.json --guides`,
    which also writes the image with the crops drawn on to `out/`. Open it and check it.
 8. **Write `caption.txt`** in the video folder: the post caption from `script.md` with its 3 to 5
-   hashtags, as plain text ready to paste, and nothing else.
+   hashtags, as plain text ready to paste, and nothing else. Never use emoji in a caption (or in
+   the post caption in `script.md`): words only.
 9. **Update `topics.md`, then commit and push.** Move the video's topic from **Up next** to the
    end of the **Made as videos** list under **Covered**, ticked, with its folder:
    `- [x] Question (`videos/<slug>`)`. (If the topic wasn't in the backlog, just add it there.)
@@ -118,7 +119,7 @@ and keeps it; later renders reuse it.
      post already scheduled that day.
    - **Draft instead,** if the user asked for a draft or to review first: then create it as a
      draft, so nothing publishes until they schedule it themselves.
-   - **Text:** `caption.txt`, as it is (emoji are fine in post captions, unlike in the video).
+   - **Text:** `caption.txt`, as it is (it has no emoji, like the video).
    - **Cover:** the cover link from step 10, as the post's custom cover image. Only if the
      scheduler refuses a custom image for a network, fall back to a frame offset there: the
      frame where the hook question is fully written (`hook duration × 1000 − 300` ms), never the

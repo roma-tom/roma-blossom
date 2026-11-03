@@ -36,7 +36,7 @@ They are there to show the method; the post caption says so.
 
 ## Post caption
 
-Your best seller pays the bills… but is it the dish that earns the most per plate? 🍔🍝
+Your best seller pays the bills… but is it the dish that earns the most per plate?
 Example numbers for a typical cafe; run it with your own costs.
 
 #cafeowner #restaurantowner #menuengineering #foodcost #smallbusiness
