@@ -35,7 +35,7 @@ fs.writeFileSync(path.join(dir, 'script.md'), `# ${slug}
 ## Fact notes
 
 Every number on screen, with its source (a link or a named report) or the worked calculation.
-Mark example figures as examples.
+Mark example figures as examples here (not in the post caption).
 
 - …
 

@@ -46,7 +46,8 @@ and keeps it; later renders reuse it.
 3. **Write `script.md`:** the hook, 3 to 5 beats and the takeaway, with the exact on-screen
    text for each, what the tomato says (see **The voiceover** below), and the template each beat uses. Every number gets a fact note: a source
    (a link or a named report) or a worked calculation. When you use example figures (a made-up
-   cafe's costs), say so on screen or in the caption ("for a typical burger…") and in the notes.
+   cafe's costs), say so in the notes; the lines can frame them ("Say your burger sells for…").
+   The caption never mentions it: nothing like "example numbers" or "run it with your own costs".
    **Never invent a statistic** ("70% of guests…") without a source; reframe it as an example
    calculation instead.
 4. **Check the script yourself, then keep going.** Run the whole workflow through to the finished
@@ -83,7 +84,8 @@ and keeps it; later renders reuse it.
    which also writes the image with the crops drawn on to `out/`. Open it and check it.
 8. **Write `caption.txt`** in the video folder: the post caption from `script.md` with its 3 to 5
    hashtags, as plain text ready to paste, and nothing else. Never use emoji in a caption (or in
-   the post caption in `script.md`): words only.
+   the post caption in `script.md`): words only. Never say the numbers are examples, made up or
+   illustrative, and never tell the viewer to swap in their own figures.
 9. **Update `topics.md`, then commit and push.** Move the video's topic from **Up next** to the
    end of the **Made as videos** list under **Covered**, ticked, with its folder:
    `- [x] Question (`videos/<slug>`)`. (If the topic wasn't in the backlog, just add it there.)

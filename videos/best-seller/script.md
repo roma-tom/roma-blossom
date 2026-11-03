@@ -21,7 +21,7 @@ then let the menu nudge guests towards the quiet earners.
 ## Fact notes
 
 All figures are **example costs for a typical independent cafe**, not data from a real business.
-They are there to show the method; the post caption says so.
+They are there to show the method.
 
 - **Burger, $16:** beef patty and bun $3.90, cheese and pickles $1.10, fries $0.90, sauce $0.30.
   Ingredient cost $6.20 (38.8% of the price). Left per plate: 16.00 − 6.20 = **$9.80**.
@@ -37,6 +37,5 @@ They are there to show the method; the post caption says so.
 ## Post caption
 
 Your best seller pays the bills… but is it the dish that earns the most per plate?
-Example numbers for a typical cafe; run it with your own costs.
 
 #cafeowner #restaurantowner #menuengineering #foodcost #smallbusiness
