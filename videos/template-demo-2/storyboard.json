@@ -1,0 +1,95 @@
+{
+  "background": "paper",
+  "output": "video.mp4",
+  "scenes": [
+    { "type": "versus", "duration": 4.5, "props": {
+      "caption": "Same $24 order, *two* ways",
+      "left": { "name": "Dev", "label": "Delivery app", "value": "$16.80", "note": "after a 30% commission" },
+      "right": { "name": "Maria", "label": "Your own ordering", "value": "$23.30", "note": "after a 3% card fee" },
+      "winner": "right" } },
+    { "type": "plate", "duration": 4.5, "props": {
+      "caption": "Where *$1* goes",
+      "slices": [
+        { "label": "Food", "value": 30 }, { "label": "Staff", "value": 32 }, { "label": "Rent", "value": 10 },
+        { "label": "Bills & other", "value": 21 }, { "label": "Profit", "value": 7 }
+      ],
+      "highlight": 4 } },
+    { "type": "calendar", "duration": 4.5, "props": {
+      "caption": "Spot the *slow* days",
+      "month": "March", "start": 5, "days": 31,
+      "marks": { "3": "cross", "10": "cross", "17": "cross", "24": "cross", "14": "circle", "28": "circle", "20": "dot" },
+      "legend": [{ "mark": "cross", "label": "slow Mondays" }, { "mark": "circle", "label": "event night" }] } },
+    { "type": "gauge", "duration": 4.5, "props": {
+      "caption": "Check your *food cost*",
+      "value": 34, "min": 0, "max": 50, "unit": "%", "label": "food cost",
+      "zones": [{ "to": 30, "kind": "good" }, { "to": 35, "kind": "ok" }, { "to": 50, "kind": "bad" }],
+      "verdict": "A LITTLE HIGH" } },
+    { "type": "tickets", "duration": 4.5, "props": {
+      "caption": "Watch the *ticket* times",
+      "tickets": [
+        { "table": "T4", "items": ["2 flat white", "1 toastie"], "minutes": 6 },
+        { "table": "T7", "items": ["1 big brekkie", "1 oat latte"], "minutes": 15 },
+        { "table": "T2", "items": ["2 pancakes", "1 juice"], "minutes": 9 }
+      ],
+      "limit": 12, "goal": "GOAL: UNDER 12 MIN", "cook": "Dev" } },
+    { "type": "day", "duration": 4.5, "props": {
+      "caption": "A cafe *day*",
+      "steps": [
+        { "time": "6:00", "label": "Prep and bake" }, { "time": "7:00", "label": "Doors open" },
+        { "time": "8:15", "label": "The coffee rush" }, { "time": "12:30", "label": "Lunch peak" },
+        { "time": "3:00", "label": "Clean down" }
+      ],
+      "highlight": 2 } },
+    { "type": "chat", "duration": 5, "props": {
+      "caption": "Swap shifts *before* it's a crisis",
+      "contact": "Dev", "status": "LINE COOK",
+      "messages": [
+        { "from": "them", "text": "Can't do Saturday, sorry! Sister's wedding!" },
+        { "from": "me", "text": "Thanks for the heads up! I'll ask Ana." },
+        { "from": "them", "text": "Legend. I can cover her Tuesday." },
+        { "from": "me", "text": "Done. Rota updated." }
+      ] } },
+    { "type": "myth", "duration": 5, "props": {
+      "caption": "Myth or *fact*?",
+      "myth": "A discount day builds loyal regulars",
+      "fact": "It mostly brings people who wait for the next discount" } },
+    { "type": "quote", "duration": 4.5, "props": {
+      "name": "Maria", "role": "regular, 3 years",
+      "quote": "I come for the coffee. I stay because you *know my name*." } },
+    { "type": "countdown", "duration": 4.5, "props": {
+      "caption": "Cheap wins this *week*",
+      "items": ["Wipe the menu boards", "Fix the wobbly table", "Learn 5 regulars' names"] } },
+    { "type": "scale", "duration": 4.5, "props": {
+      "caption": "What guests *weigh*",
+      "left": { "label": "50c cheaper", "weight": 1 },
+      "right": { "label": "A warm hello", "weight": 3 },
+      "verdict": "Price matters, *feeling* matters more" } },
+    { "type": "stampcard", "duration": 4.5, "props": {
+      "caption": "Make it easy to come *back*",
+      "title": "Coffee club", "stamps": 8, "filled": 8, "reward": "9th coffee *free*", "name": "Maria" } },
+    { "type": "floor", "duration": 5, "props": {
+      "caption": "Every table, *three* times",
+      "tables": 9, "turns": 3,
+      "stat": { "value": "3 turns", "label": "on a busy Friday" } } },
+    { "type": "pricetag", "duration": 4.5, "props": {
+      "caption": "Raise prices *a little*",
+      "item": "Flat white", "from": "$4.50", "to": "$4.80",
+      "note": "*30c* once a year, not $1 at once" } },
+    { "type": "trend", "duration": 4.5, "props": {
+      "caption": "Replies *pay* off",
+      "label": "COVERS PER WEEK",
+      "labels": ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"],
+      "values": [212, 205, 218, 210, 226, 241, 255, 268],
+      "note": { "at": 3, "text": "Started replying to reviews" } } },
+    { "type": "rota", "duration": 4.5, "props": {
+      "caption": "Is *Saturday* covered?",
+      "staff": [
+        { "name": "Dev", "shifts": [1, 1, 0, 1, 1, 0, 1] },
+        { "name": "Ana", "shifts": [0, 1, 1, 1, 0, 1, 1] },
+        { "name": "Sam", "shifts": [1, 0, 1, 0, 1, 0, 1] },
+        { "name": "Lee", "shifts": [1, 1, 1, 0, 1, 1, 0] }
+      ],
+      "highlight": 5 } },
+    { "type": "endcard", "duration": 2.6, "props": {} }
+  ]
+}

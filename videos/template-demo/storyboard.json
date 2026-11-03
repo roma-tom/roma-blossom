@@ -1,0 +1,98 @@
+{
+  "background": "paper",
+  "output": "video.mp4",
+  "scenes": [
+    {
+      "type": "hook",
+      "duration": 3,
+      "props": { "kicker": "CAFE MATH", "headline": "Where does your *$5* latte actually go?" }
+    },
+    {
+      "type": "receipt",
+      "duration": 4.5,
+      "props": {
+        "caption": "One latte, *$5.00*",
+        "title": "LATTE · $5.00",
+        "items": [
+          { "label": "Price", "amount": 5.0 },
+          { "label": "Coffee beans", "amount": -0.45 },
+          { "label": "Milk", "amount": -0.4 },
+          { "label": "Cup & lid", "amount": -0.25 },
+          { "label": "Barista time", "amount": -1.2 },
+          { "label": "Rent & bills", "amount": -0.95 },
+          { "label": "Card fee", "amount": -0.15 }
+        ],
+        "totalLabel": "You keep"
+      }
+    },
+    {
+      "type": "menu",
+      "duration": 4.5,
+      "props": {
+        "caption": "Your menu is a *map*",
+        "title": "Lunch",
+        "items": [
+          { "name": "Smash burger", "price": "16", "mark": "circle", "note": "best seller, thin margin" },
+          { "name": "Mushroom pasta", "price": "14", "mark": "star", "note": "quiet hero, costs $2.80" },
+          { "name": "Club sandwich", "price": "13", "mark": "cross", "note": "slow, fiddly, rarely ordered" },
+          { "name": "Soup of the day", "price": "9", "mark": "underline", "note": "move it to the top" }
+        ]
+      }
+    },
+    {
+      "type": "rush",
+      "duration": 4.5,
+      "props": {
+        "caption": "Staff for the *rush*, not the day",
+        "label": "GUESTS PER HOUR",
+        "hours": ["7", "8", "9", "10", "11", "12", "1", "2", "3"],
+        "values": [14, 32, 26, 12, 18, 46, 38, 10, 8],
+        "queue": ["Maria", "Dev", "Ana", "Sam", "Lee"],
+        "queueLabel": "THE 12 O'CLOCK LINE"
+      }
+    },
+    {
+      "type": "regulars",
+      "duration": 4.5,
+      "props": {
+        "caption": "Who comes *back*?",
+        "guests": [
+          { "name": "Maria", "back": true }, { "name": "Jo", "back": false }, { "name": "Kim", "back": false },
+          { "name": "Ana", "back": false }, { "name": "Dev", "back": true }, { "name": "Priya", "back": false },
+          { "name": "Tom B", "back": false }, { "name": "Leo", "back": false }, { "name": "Sam", "back": true }
+        ],
+        "stat": { "value": "1 in 3", "label": "come back" }
+      }
+    },
+    {
+      "type": "review",
+      "duration": 5.5,
+      "props": {
+        "caption": "Reply to *every* review",
+        "name": "Sam",
+        "stars": 3,
+        "text": "Great coffee, but we waited 20 minutes for two toasties.",
+        "reply": "Thanks Sam, that's not good enough. Your next toastie is on us, and we've added a second press."
+      }
+    },
+    {
+      "type": "jar",
+      "duration": 4.5,
+      "props": {
+        "caption": "Small fixes add *up*",
+        "lines": ["$0.30 less waste a plate", "× 200 plates a day", "× 360 days"],
+        "total": 21600,
+        "label": "a year"
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 4.5,
+      "props": {
+        "title": "The fix",
+        "steps": ["Cost every dish once a quarter", "Price for margin, not habit", "Put the quiet heroes up top"]
+      }
+    },
+    { "type": "endcard", "duration": 3, "props": {} }
+  ]
+}

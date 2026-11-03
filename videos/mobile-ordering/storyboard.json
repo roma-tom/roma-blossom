@@ -1,0 +1,57 @@
+{
+  "background": "paper",
+  "output": "video.mp4",
+  "sound": true,
+  "scenes": [
+    {
+      "type": "hook",
+      "duration": 2.8,
+      "props": { "kicker": "GUESTS", "headline": "Why do guests *love* ordering on their phone?" }
+    },
+    {
+      "type": "rush",
+      "duration": 4,
+      "props": {
+        "caption": "They get to skip *this*",
+        "label": "A BUSY MORNING (EXAMPLE)",
+        "hours": ["7", "8", "9", "10", "11", "12"],
+        "values": [18, 34, 26, 15, 12, 22],
+        "queue": ["Maria", "Dev", "Sam", "Ana", "Leo"],
+        "queueLabel": "THE 8 O'CLOCK LINE"
+      }
+    },
+    {
+      "type": "menu",
+      "duration": 4.2,
+      "props": {
+        "caption": "Their order, *their* way",
+        "title": "Order ahead",
+        "items": [
+          { "name": "Oat flat white", "price": "4.80", "mark": "star", "note": "extra shot, no fuss" },
+          { "name": "Almond croissant", "price": "4.50", "mark": "underline", "note": "photo + allergens" },
+          { "name": "Maria's usual", "price": "4.80", "mark": "circle", "note": "reorder in one tap" }
+        ]
+      }
+    },
+    {
+      "type": "review",
+      "duration": 5,
+      "props": {
+        "caption": "Time back in their *day*",
+        "name": "Sam",
+        "stars": 5,
+        "text": "Ordered on the walk over, coffee was waiting. No line, no shouting my name twice!",
+        "reply": "Thanks Sam! Your oat flat white will be ready when you are."
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 3.8,
+      "props": {
+        "title": "Make yours easy",
+        "steps": ["Keep the menu short", "Show a real ready time", "Save their usual order"]
+      }
+    },
+    { "type": "endcard", "duration": 2.6, "props": {} }
+  ]
+}

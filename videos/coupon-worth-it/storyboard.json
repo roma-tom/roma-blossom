@@ -1,0 +1,61 @@
+{
+  "background": "paper",
+  "output": "video.mp4",
+  "scenes": [
+    {
+      "type": "hook",
+      "duration": 2.8,
+      "props": { "kicker": "CAFE MATH", "headline": "Is a 10% off coupon *worth it*?" }
+    },
+    {
+      "type": "receipt",
+      "duration": 4.3,
+      "props": {
+        "caption": "10% off takes *1/7* of your profit",
+        "title": "COFFEE & PASTRY · $12",
+        "items": [
+          { "label": "Coffee & pastry", "amount": 12.0 },
+          { "label": "Ingredients", "amount": -3.6 },
+          { "label": "10% coupon", "amount": -1.2 }
+        ],
+        "totalLabel": "You keep"
+      }
+    },
+    {
+      "type": "jar",
+      "duration": 4.5,
+      "props": {
+        "caption": "To *break even*…",
+        "lines": ["100 orders × $8.40 = $840", "at $7.20 you need…"],
+        "total": 117,
+        "currency": "",
+        "label": "orders: 17% more guests"
+      }
+    },
+    {
+      "type": "regulars",
+      "duration": 4.2,
+      "props": {
+        "caption": "Coupons pay off when guests *return*",
+        "guests": [
+          { "name": "Maria", "back": true },
+          { "name": "Ana", "back": false },
+          { "name": "Dev", "back": true },
+          { "name": "Leo", "back": false },
+          { "name": "Sam", "back": true },
+          { "name": "Kit", "back": false }
+        ],
+        "stat": { "value": "Return visits", "label": "pay it back" }
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 4,
+      "props": {
+        "title": "Make it work",
+        "steps": ["Aim it at your slow hours", "Give it to new guests only", "Count who comes back"]
+      }
+    },
+    { "type": "endcard", "duration": 2.6, "props": {} }
+  ]
+}

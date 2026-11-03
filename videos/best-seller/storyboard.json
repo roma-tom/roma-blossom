@@ -1,0 +1,60 @@
+{
+  "background": "paper",
+  "output": "video.mp4",
+  "scenes": [
+    {
+      "type": "hook",
+      "duration": 2.8,
+      "props": { "kicker": "MENU MATH", "headline": "Your best seller might earn the *least* per plate" }
+    },
+    {
+      "type": "receipt",
+      "duration": 4.5,
+      "props": {
+        "caption": "The smash burger, *$16*",
+        "title": "SMASH BURGER · $16",
+        "items": [
+          { "label": "Price", "amount": 16.0 },
+          { "label": "Beef & bun", "amount": -3.9 },
+          { "label": "Cheese & pickles", "amount": -1.1 },
+          { "label": "Fries", "amount": -0.9 },
+          { "label": "Sauce", "amount": -0.3 }
+        ],
+        "totalLabel": "Per plate"
+      }
+    },
+    {
+      "type": "menu",
+      "duration": 4.5,
+      "props": {
+        "caption": "Now the *quiet* one",
+        "title": "Lunch",
+        "items": [
+          { "name": "Smash burger", "price": "16", "mark": "circle", "note": "best seller, keeps $9.80" },
+          { "name": "Mushroom pasta", "price": "14", "mark": "star", "note": "keeps $10.90" },
+          { "name": "Fish tacos", "price": "15", "mark": "underline", "note": "cost this one too" },
+          { "name": "Soup of the day", "price": "9" }
+        ]
+      }
+    },
+    {
+      "type": "jar",
+      "duration": 4,
+      "props": {
+        "caption": "Swap *20* burgers a week",
+        "lines": ["$1.10 more per plate", "× 20 plates a week", "× 52 weeks"],
+        "total": 1144,
+        "label": "more a year"
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 4,
+      "props": {
+        "title": "The fix",
+        "steps": ["Cost every dish, not just the top 5", "Put quiet heroes where eyes land", "Nudge the best seller up $1"]
+      }
+    },
+    { "type": "endcard", "duration": 2.6, "props": {} }
+  ]
+}
