@@ -1,0 +1,73 @@
+{
+  "title": "Should You Run 30% Off on Black Friday?",
+  "cover": { "hero": "crowd", "names": ["Jo", "Kim", "Leo"] },
+  "background": "lime",
+  "music": { "mood": "bounce" },
+  "output": "video.mp4",
+  "scenes": [
+    {
+      "type": "hook",
+      "duration": 2.8,
+      "say": "Thirty percent off will pack the room on Black Friday. Will it pay?",
+      "props": { "kicker": "BLACK FRIDAY", "headline": "30% off fills the room. Does it fill the *till*?" }
+    },
+    {
+      "type": "receipt",
+      "duration": 4,
+      "say": "A fifteen dollar lunch with four fifty of food keeps ten fifty. At thirty percent off, it keeps just six.",
+      "props": {
+        "caption": "30% off a *$15* lunch",
+        "title": "LUNCH · $15",
+        "items": [
+          { "label": "Price", "amount": 15.0 },
+          { "label": "Food", "amount": -4.5 },
+          { "label": "30% off", "amount": -4.5 }
+        ],
+        "totalLabel": "You keep"
+      }
+    },
+    {
+      "type": "jar",
+      "duration": 4,
+      "say": "To match a normal day, a hundred lunches becomes a hundred and seventy-five.",
+      "props": {
+        "caption": "To *match* a normal day",
+        "lines": ["100 lunches × $10.50 = $1,050", "at $6.00 a lunch you need"],
+        "total": 175,
+        "currency": "",
+        "label": "lunches"
+      }
+    },
+    {
+      "type": "myth",
+      "duration": 5,
+      "say": "And many deal hunters leave with the next deal.",
+      "props": {
+        "caption": "Myth or *fact*?",
+        "myth": "A big sale day makes new regulars",
+        "fact": "Deal hunters often follow the next deal, not you"
+      }
+    },
+    {
+      "type": "versus",
+      "duration": 4.5,
+      "say": "Instead, keep full price and give a free side in December. Two visits keep nineteen fifty, not six.",
+      "props": {
+        "caption": "Same guest, *two* ways",
+        "left": { "name": "Jo", "label": "30% off today", "value": "$6.00", "note": "one visit" },
+        "right": { "name": "Maria", "label": "Free side next visit", "value": "$19.50", "note": "two visits" },
+        "winner": "right"
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 4,
+      "say": "So: skip the big discount. Give a reason to come back. And count who does.",
+      "props": {
+        "title": "The fix",
+        "steps": ["Skip the storewide discount", "Hand out a December bounce-back", "Count who comes back"]
+      }
+    },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}

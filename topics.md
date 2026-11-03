@@ -83,7 +83,6 @@ The topics are mixed so that consecutive videos cover different areas: money, st
 - [ ] How long are your ticket times, really? (tickets, trend)
 - [ ] What's the rhythm of a good cafe day? (day)
 - [ ] How do you handle shift swaps before they become a crisis? (chat, rota)
-- [ ] Does a discount day build loyal regulars? (myth, regulars)
 - [ ] Why does knowing a regular's name matter so much? (quote, regulars)
 - [ ] What cheap wins can you get done this week? (countdown, fix)
 - [ ] What do guests weigh more: a lower price or a warm hello? (scale, quote)
@@ -99,6 +98,7 @@ Made as videos:
 - [x] Your best seller might earn the least per plate (`videos/best-seller`)
 - [x] Is a 10% off coupon worth it? (`videos/coupon-worth-it`)
 - [x] Why do guests love ordering on their phone? (`videos/mobile-ordering`)
+- [x] Should you run 30% off on Black Friday? (`videos/black-friday`)
 
 Examples in the style guide:
 
