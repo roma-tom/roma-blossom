@@ -49,6 +49,7 @@ Mark example figures as examples.
 fs.writeFileSync(path.join(dir, 'caption.txt'), 'The post caption, ready to paste.\n\n#cafeowner #restaurantowner\n');
 
 fs.writeFileSync(path.join(dir, 'storyboard.json'), JSON.stringify({
+  title: 'A Concise Post Title',
   background: 'paper',
   output: 'video.mp4',
   scenes: [

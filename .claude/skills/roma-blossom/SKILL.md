@@ -62,23 +62,38 @@ npm install --prefix scripts
    `video.mp4` (WAVs and frames are ignored). In a cloud session, push the session's branch.
    Pushing a video can take a few minutes on a slow connection, so run the push with a
    10-minute timeout rather than the default 2.
-10. **Hand it over:**
-   - the public link to the video, for the user's social media scheduler. It is the raw file at the commit you just
-     pushed, so it keeps pointing at this exact video even if the branch changes later:
+10. **Create a draft post** with the user's social media scheduler connector: the MCP tools that
+   list brands, suggest the best time to post and create scheduled posts. If no such connector
+   is available in the session, skip to step 11 and say so.
+   - **Brand:** the one labelled Roma Tom. Use its timezone and post to every network it has
+     connected.
+   - **Media:** the public link to the video, the raw file at the commit you just pushed:
      ```bash
      echo "https://raw.githubusercontent.com/$(git remote get-url origin | sed -E 's#\.git$##; s#.*[:/]([^/:]+/[^/:]+)$#\1#')/$(git rev-parse HEAD)/videos/<slug>/video.mp4"
      ```
-   - the caption in a code block (one tap to copy)
-   - the on-screen text, and which question you picked if you chose it (step 1)
-
-   The link works for anyone because the repo is public; say so if a check of the link fails.
-   Remind the user not to delete the branch until the post has gone out. The user posts it
-   themselves.
+     The scheduler copies the file when the post is created, so later commits can't break it.
+   - **When:** the best-scoring hour in the next 7 days (Instagram's data if it is connected),
+     at least 12 hours from now, on an hour with no other post already scheduled that day.
+   - **Draft only:** create it as a draft, so nothing is published until the user schedules it
+     themselves. Never publish or schedule a live post unless the user explicitly asks.
+   - **Text:** `caption.txt`, as it is (emoji are fine in post captions, unlike in the video).
+   - **Cover:** the frame where the hook question is fully written, about 300 ms before the
+     hook scene ends (`hook duration × 1000 − 300` ms), instead of the near-empty first frame.
+   - **Per network,** with `title` from `storyboard.json` wherever a title is asked for:
+     Instagram as a Reel that also shows on the feed; Facebook as a Reel with the title; TikTok
+     public, with the title (required); YouTube as a public Short, not made for kids, category
+     Education, with the title. Leave every AI-content label off: the visuals are cartoons
+     drawn by code, not realistic footage.
+11. **Hand it over:** the link to the draft in the scheduler (or, if there was no connector, the
+   public video link above), the caption in a code block (one tap to copy), the post time you
+   picked, the on-screen text, and which question you picked if you chose it (step 1). Remind
+   the user the post is a draft: they review and schedule it.
 
 ## Storyboard format
 
 ```json
 {
+  "title": "Is a 10% Coupon Worth It",
   "background": "paper",
   "output": "video.mp4",
   "sound": true,
@@ -90,6 +105,8 @@ npm install --prefix scripts
 }
 ```
 
+- `title`: the post title for networks that ask for one (YouTube, TikTok, Facebook): title case,
+  under about 60 characters, the question or its answer, never the slug.
 - `background`: `paper` (default, calm) or `lime` (bold). One per video; the end card is always lime.
 - `duration` is seconds. Each scene after the first wipes in over the one before it with a
   whoosh during its first 0.5 s.
