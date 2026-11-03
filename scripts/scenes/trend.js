@@ -27,7 +27,7 @@ function trend(ctx, theme, t, props) {
   pen.line(ctx, [{ x: L - 30, y: T - 20 }, { x: L - 30, y: B + 20 }, { x: R + 30, y: B + 20 }], { width: 6, seed: 2001, upto: ax });
   for (let g = 1; g <= 3; g++) {
     const y = B + 20 - (g * (B - T + 40)) / 4;
-    pen.line(ctx, [{ x: L - 20, y }, { x: R + 20, y }], { width: 3, color: theme.bg === C.lime ? C.paper : C.line, seed: 2002 + g, alpha: ax * 0.8 });
+    pen.line(ctx, [{ x: L - 20, y }, { x: R + 20, y }], { width: 3, color: theme.rule, seed: 2002 + g, alpha: ax * 0.8 });
   }
   (props.labels || []).forEach((lb, i) => {
     if (n > 8 && i % 2) return;

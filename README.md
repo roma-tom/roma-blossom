@@ -17,14 +17,15 @@ scripts/
   render.js           storyboard.json → video.mp4 and cover.jpg (+ sound.wav, voice.wav, sfx/)
   cover.js            the crop-safe cover image alone, with --guides to see the crops
   new.js              scaffold videos/<slug>/
-  still.js            one still of a scene on paper and lime → out/
+  still.js            one still of a scene on any backgrounds → out/
   scenes/             the 24 templates and the end card
   lib/
     kit.js            canvas, brand colors, fonts, backgrounds, rays, headlines, tomatoes
     marks.js          text helpers and pen marks: ticks, loops, stars, strikes, underlines
     pen.js            the seeded hand-drawn pen and the line "boil"
     motion.js         easing, springs, settle, breathe
-    sound.js          the pad, 10 sound effects, the mixer and WAV writer
+    music.js          the music bed: six moods, each a chord progression and a small band
+    sound.js          14 sound effects, the mixer (with the voice ducking the music) and WAV writer
     voice.js          the voiceover: Kokoro speech or babble, the mouth movements, line checks
     tomato.js         the tomato character generator: any name draws its own tomato
   fonts/              Gaegu and Inter (SIL Open Font License)
@@ -49,8 +50,10 @@ node scripts/new.js tuesday-slump
 node scripts/render.js videos/tuesday-slump/storyboard.json
 ```
 
-Check frames before a full render with `--frames 80,200,320` (frame n is at n / 30 s), try the
-other background with `--bg lime`, and leave out the sound with `--silent`.
+Check frames before a full render with `--frames 80,200,320` (frame n is at n / 30 s), try
+another background with `--bg sky`, and leave out the sound with `--silent`. Set the look and
+sound in `storyboard.json` with `"background"` (paper, sky, butter, blush, mint, lime) and
+`"music": { "mood": "lofi" }` (bright, lofi, jazzy, bounce, dreamy, warm).
 
 ## The voice
 

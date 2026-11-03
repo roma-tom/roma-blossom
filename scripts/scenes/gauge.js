@@ -25,7 +25,7 @@ function gauge(ctx, theme, t, props) {
   const min = props.min ?? 0, max = props.max ?? 100, value = props.value ?? 50;
   const zones = props.zones || [{ to: max, kind: 'ok' }];
   const angle = (v) => Math.PI + ((v - min) / (max - min)) * Math.PI;
-  const zoneFill = { good: C.forest, ok: theme.swash === C.lime ? C.lime : C.card, bad: C.rose };
+  const zoneFill = { good: C.forest, ok: theme.mark, bad: C.rose };
   caption(ctx, theme, props.caption, easeOut(seg(t, 0, 0.12)));
 
   // Zone bands, drawn on one after another.

@@ -125,7 +125,7 @@ function drawHero(ctx, theme, hero, y0, y1) {
 function renderCover(board, slug = '') {
   const hook = (board.scenes || []).find((s) => s.type === 'hook')?.props || {};
   const o = { ...hook, ...(board.cover || {}) };
-  const theme = THEMES[o.background || board.background || 'paper'];
+  const theme = THEMES[o.background || [].concat(board.background || 'paper')[0]];
   const hero = pickHero(board, o, slug);
   const { canvas, ctx } = frame();
   pen.setBoil(0);

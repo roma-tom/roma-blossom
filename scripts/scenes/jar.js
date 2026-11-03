@@ -53,9 +53,8 @@ function jar(ctx, theme, t, props) {
     text(ctx, props.label || '', W / 2, 975, { size: 60, align: 'center', alpha: easeOut(seg(t, 0.8, 0.9)) });
   }
 
-  // Coins: lime with a forest edge on paper, card with a line-colored edge on lime.
-  const onLime = theme.bg === C.lime;
-  const fill = onLime ? C.card : C.lime, edge = onLime ? C.line : C.forest;
+  // Coins: lime with a forest edge where lime shows, else card with a line-colored edge.
+  const fill = theme.mark, edge = theme.mark === C.lime ? C.forest : C.line;
   const shape = jarOutline(ctx, 401);
   pen.fill(ctx, shape, C.card, { seed: 402, alpha: 0.55 });
   for (let i = 0; i < COINS; i++) {

@@ -11,9 +11,8 @@ const X = 150, Y = 480, S = 780, WRITE = 0.12, TICK = 0.5, STEP = 0.12;
 function fix(ctx, theme, t, props, info = {}) {
   const sec = info.sec ?? t * 4;
   const steps = (props.steps || []).slice(0, 3);
-  const onLime = theme.bg === C.lime;
-  const note = onLime ? C.card : C.lime;
-  const tickColor = onLime ? C.forest : C.forestDark;
+  const note = theme.mark;
+  const tickColor = theme.mark === C.lime ? C.forestDark : C.forest;
 
   caption(ctx, theme, props.caption, easeOut(seg(t, 0, 0.12)));
 

@@ -1,7 +1,8 @@
-// Sound design, made in code: a warm pad under the whole video and short effects on cues.
+// Sound design, made in code: music under the whole video (see music.js) and short effects on cues.
 // Everything is seeded, so a storyboard always sounds the same.
 
 const { rng } = require('./pen.js');
+const music = require('./music.js');
 
 const SR = 48000;
 const TAU = Math.PI * 2;
@@ -128,7 +129,61 @@ const SFX = {
     n.forEach((v, i) => (b[i] += v * (1 - i / 400) * 0.2));
     return b;
   },
+  // A quicker, airier wipe than the whoosh.
+  swish() {
+    const T = 0.32, n = noise(Math.ceil(T * SR), 33);
+    const lo = lowpass(n, 1500);
+    const f = lowpass(n.map((v, i) => v - lo[i]), (t) => 2500 + 6000 * Math.sin(Math.PI * Math.min(1, t / T)));
+    return f.map((v, i) => v * Math.pow(Math.sin((Math.PI * i) / f.length), 3) * 3);
+  },
+  // Paper sliding over paper: a grainy, papery wipe.
+  rustle() {
+    const T = 0.5, n = noise(Math.ceil(T * SR), 37), r = rng(41);
+    const lo = lowpass(n, 900), hi = lowpass(n, 7000);
+    let grit = 0;
+    return hi.map((v, i) => {
+      if (i % 240 === 0) grit = 0.4 + r() * 0.6;
+      return (v - lo[i]) * grit * Math.sin((Math.PI * i) / hi.length) * 2.4;
+    });
+  },
+  // A springy landing.
+  boing() {
+    const b = buf(0.4);
+    let ph = 0;
+    for (let i = 0; i < b.length; i++) {
+      const t = i / SR, f = 180 + 140 * Math.exp(-t * 6) + 40 * Math.sin(TAU * 14 * t) * Math.exp(-t * 5);
+      ph += (TAU * f) / SR;
+      b[i] = (Math.sin(ph) + 0.3 * Math.sin(2 * ph)) * Math.min(1, t * 400) * Math.exp(-t * 7) * 0.7;
+    }
+    return b;
+  },
+  // A soft, round blip: a gentler pop.
+  blip() {
+    const b = buf(0.12);
+    let ph = 0;
+    for (let i = 0; i < b.length; i++) {
+      const t = i / SR, f = 520 + 380 * Math.exp(-t * 40);
+      ph += (TAU * f) / SR;
+      b[i] = Math.sin(ph) * Math.exp(-t * 30) * Math.min(1, t * 500) * 0.8;
+    }
+    return b;
+  },
 };
+
+// Effects with a pitch: shifted into the music's key so they sit in the chord.
+// Their notes are written for C (the chime is E and B, the ding C and E).
+const TONAL = new Set(['chime', 'ding']);
+
+// Resample a buffer by a ratio (> 1 is higher and shorter).
+function repitch(x, ratio) {
+  if (ratio === 1) return x;
+  const out = new Float32Array(Math.floor(x.length / ratio));
+  for (let i = 0; i < out.length; i++) {
+    const p = i * ratio, k = Math.floor(p), f = p - k;
+    out[i] = x[k] * (1 - f) + (x[k + 1] ?? 0) * f;
+  }
+  return out;
+}
 
 // The bed under everything: a soft Fmaj9 chord, gently detuned, swelling slowly.
 function pad(sec) {
@@ -164,18 +219,34 @@ function duckEnvelope(voice, n) {
   return out;
 }
 
-// Mix the pad, every cue ({ at: seconds, sfx, gain }) and the voice into one track. Under the
-// voice the pad drops by o.duck (default 0.6) and the effects by half that.
+// Mix the music, every cue ({ at: seconds, sfx, gain }) and the voice into one track. Under the
+// voice the music drops by o.duck (default 0.6) and the effects by half that.
+// o: { music: { mood, key, bpm }, musicGain (or the older padGain), sfxGain, voiceGain, duck, swap: { pop: 'blip' }, seed }
+// Without a music mood this is the original mix: the warm pad, effects at their own pitch.
 function mix(sec, cues, o = {}, voice = null) {
   const out = buf(sec);
-  const bed = pad(sec);
+  const m = o.music;
+  const bed = m?.mood ? music.bed(sec, { ...m, seed: o.seed }) : pad(sec);
+  const gain = o.musicGain ?? o.padGain ?? 0.22;
   const duck = duckEnvelope(voice, out.length), depth = o.duck ?? 0.6;
-  const padGain = o.padGain ?? 0.22;
-  for (let i = 0; i < out.length; i++) out[i] = bed[i] * padGain * (1 - depth * duck[i]);
-  const cache = {};
+  for (let i = 0; i < out.length; i++) out[i] = bed[i] * gain * (1 - depth * duck[i]);
+
+  const mood = music.MOODS[m?.mood];
+  const swap = { ...(mood?.swap || {}), ...(o.swap || {}) };
+  // Shift tonal effects into the key (by the nearest way round from C); nudge the rest a
+  // little up or down per cue, so a run of pops doesn't sound like a machine.
+  const keyPc = m?.mood ? music.KEYS[m.key ?? mood.key] : 0;
+  const shift = ((keyPc + 6) % 12) - 6;
+  const r = rng(o.seed ?? 7);
+  const cache = {}, used = new Set();
   for (const c of cues) {
-    if (!SFX[c.sfx]) throw new Error(`unknown sound effect "${c.sfx}"`);
-    const s = (cache[c.sfx] ||= SFX[c.sfx]());
+    const name = swap[c.sfx] || c.sfx;
+    if (!SFX[name]) throw new Error(`unknown sound effect "${name}"`);
+    used.add(name);
+    let semis = 0;
+    if (m?.mood) semis = TONAL.has(name) ? shift : (r() - 0.5) * 2;
+    const key = `${name}|${semis.toFixed(2)}`;
+    const s = (cache[key] ||= repitch(SFX[name](), Math.pow(2, semis / 12)));
     const at = Math.round(c.at * SR), g = (c.gain ?? 0.8) * (o.sfxGain ?? 0.7);
     for (let i = 0; i < s.length && at + i < out.length; i++) if (at + i >= 0) out[at + i] += s[i] * g * (1 - 0.5 * depth * duck[at + i]);
   }
@@ -185,6 +256,7 @@ function mix(sec, cues, o = {}, voice = null) {
   }
   // Gentle limiter so stacked effects never clip.
   for (let i = 0; i < out.length; i++) out[i] = Math.tanh(out[i] * 1.1) * 0.9;
+  out.used = used; // the effects actually heard, after swaps
   return out;
 }
 

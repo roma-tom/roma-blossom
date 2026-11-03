@@ -51,8 +51,8 @@ function scale(ctx, theme, t, props) {
   pen.line(ctx, ends, { width: 14, seed: 1603 });
   pen.shape(ctx, pen.ellipse(PIVOT.x, PIVOT.y, 22, 22, 20), { fill: C.ink, width: 4, seed: 1604, offset: 0 });
 
-  // Lime blocks on paper; card blocks on lime, where lime would vanish.
-  const block = theme.bg === C.lime ? C.card : C.lime;
+  // Blocks in the theme's mark color: lime where it shows, card where it would vanish.
+  const block = theme.mark;
   pan(ctx, ends[0].x, ends[0].y, l, 1610, spring(seg(t, 0.08, 0.24)), block);
   pan(ctx, ends[1].x, ends[1].y, r, 1620, spring(seg(t, 0.2, 0.36)), block);
 

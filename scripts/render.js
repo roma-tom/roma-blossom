@@ -8,7 +8,8 @@
 //
 // storyboard.json:
 //   {
-//     "background": "paper" | "lime",
+//     "background": "paper" (or lime, butter, blush, sky, mint), or a list to alternate by scene,
+//     "music": { "mood": "lofi", "key": "D", "bpm": 80 },
 //     "output": "video.mp4",              (next to the storyboard; optional)
 //     "voice": { "mode": "speech" | "babble" | "off", "narrator": "Roma Tom", "speed": 1, "cast": {} },
 //     "scenes": [{ "type": "hook", "duration": 3.5, "say": "…", "speaker": "Maria", "props": { ... } }, ...]
@@ -23,9 +24,9 @@
 // peek in at the lower left (`"peek": false` on the scene leaves them out). See lib/voice.js.
 //
 // Sound: each scene module may export draw.cues(props) → [{ t (0..1 in the scene), sfx, gain }].
-// The renderer adds a whoosh on every wipe, mixes them over the pad with the voice into
-// sound.wav (and the voice alone into voice.wav), saves each effect used to sfx/<name>.wav for
-// your own edits, and muxes the mix into the MP4.
+// The renderer adds a wipe sound on every wipe (the mood's, or mix.wipe), mixes them over the
+// music (lib/music.js) with the voice into sound.wav (and the voice alone into voice.wav), saves
+// each effect used to sfx/<name>.wav for your own edits, and muxes the mix into the MP4.
 // The mix is normalised to -14 LUFS, the level Reels, TikTok and Shorts play at.
 // "sound": false in the storyboard (or --silent) leaves the audio out; the voice still sets
 // the timing.
@@ -38,6 +39,7 @@ const kit = require('./lib/kit.js');
 const { W, H, FPS, THEMES, frame, drawScene, pen, motion } = kit;
 const sound = require('./lib/sound.js');
 const voice = require('./lib/voice.js');
+const music = require('./lib/music.js');
 const { writeCover } = require('./cover.js');
 
 const WIPE = 0.5; // seconds
@@ -57,8 +59,10 @@ const framesArg = args.includes('--frames') ? args[args.indexOf('--frames') + 1]
 
 const board = JSON.parse(fs.readFileSync(file, 'utf8'));
 if (args.includes('--bg')) board.background = args[args.indexOf('--bg') + 1];
-const baseTheme = THEMES[board.background || 'paper'];
+const backgrounds = [].concat(board.background || 'paper');
+for (const b of backgrounds) if (!THEMES[b]) throw new Error(`unknown background "${b}" (try ${Object.keys(THEMES).join(', ')})`);
 const dir = path.dirname(file);
+if (board.music?.mood && !music.MOODS[board.music.mood]) throw new Error(`unknown music mood "${board.music.mood}" (try ${Object.keys(music.MOODS).join(', ')})`);
 
 // "voice": absent → speech; false → off; "babble" → babble; or an object.
 function voiceConfig() {
@@ -101,7 +105,7 @@ async function layout(vc) {
     const scene = {
       ...s,
       draw: require(`./scenes/${s.type}.js`),
-      theme: s.type === 'endcard' ? THEMES.lime : THEMES[s.background || ''] || baseTheme,
+      theme: s.type === 'endcard' ? THEMES.lime : THEMES[s.background || ''] || THEMES[backgrounds[i % backgrounds.length]],
       start: cursor,
       frames,
       line,
@@ -191,18 +195,22 @@ function voiceTrack() {
 // Collect every scene's cues on the video's timeline and mix the soundtrack.
 function soundtrack() {
   const cues = [];
+  const o = board.mix || {};
+  const wipe = o.wipe || music.MOODS[board.music?.mood]?.wipe || 'whoosh';
   scenes.forEach((sc, i) => {
     const dur = (sc.frames - 1) / FPS, start = sc.start / FPS;
-    if (i > 0) cues.push({ at: start, sfx: 'whoosh', gain: 0.5 });
+    if (i > 0) cues.push({ at: start, sfx: wipe, gain: 0.5 });
     for (const c of sc.draw.cues?.(sc.props || {}) || []) cues.push({ ...c, at: start + c.t * dur });
   });
   const vt = voiceTrack();
   if (vt) fs.writeFileSync(path.join(dir, 'voice.wav'), sound.wav(vt));
   const wavFile = path.join(dir, 'sound.wav');
-  fs.writeFileSync(wavFile, sound.wav(sound.mix(total / FPS, cues, board.mix || {}, vt)));
+  const seed = pen.seedOf(board.title || path.basename(dir), 0);
+  const track = sound.mix(total / FPS, cues, { ...o, music: board.music, seed }, vt);
+  fs.writeFileSync(wavFile, sound.wav(track));
   const sfxDir = path.join(dir, 'sfx');
   fs.mkdirSync(sfxDir, { recursive: true });
-  for (const name of new Set(cues.map((c) => c.sfx))) fs.writeFileSync(path.join(sfxDir, `${name}.wav`), sound.wav(sound.SFX[name]()));
+  for (const name of track.used) fs.writeFileSync(path.join(sfxDir, `${name}.wav`), sound.wav(sound.SFX[name]()));
   return wavFile;
 }
 
