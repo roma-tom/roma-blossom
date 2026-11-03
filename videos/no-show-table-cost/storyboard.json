@@ -1,0 +1,29 @@
+{
+  "title": "What Does One No-Show Table Cost You?",
+  "cover": { "hero": "number", "number": "$7,280", "label": "lost a year" },
+  "background": "paper",
+  "output": "video.mp4",
+  "scenes": [
+    { "type": "hook", "duration": 3, "props": { "kicker": "TABLE MATH", "headline": "What does one *no-show* table cost you?" } },
+    { "type": "receipt", "duration": 4.5, "props": {
+      "caption": "A table of *four*",
+      "title": "TABLE OF 4 · NO-SHOW",
+      "items": [
+        { "label": "Check, 4 guests", "amount": 100.0 },
+        { "label": "Food & drink cost", "amount": -30.0 }
+      ],
+      "totalLabel": "Lost" } },
+    { "type": "floor", "duration": 4, "props": {
+      "caption": "Prime time, *empty*",
+      "tables": 6, "turns": 1, "fill": 0.8, "guests": ["Maria", "Dev", "Sam", "Lena"],
+      "stat": { "value": "1 empty table", "label": "at 7:30 pm" } } },
+    { "type": "jar", "duration": 4, "props": {
+      "caption": "Just *two* a week",
+      "lines": ["$70 lost per no-show", "× 2 no-shows a week", "× 52 weeks"],
+      "total": 7280, "label": "lost a year" } },
+    { "type": "fix", "duration": 4, "props": {
+      "title": "The fix",
+      "steps": ["Text a reminder the day before", "Ask for a card to hold the table", "Keep a walk-in waitlist"] } },
+    { "type": "endcard", "duration": 2.6, "props": {} }
+  ]
+}
