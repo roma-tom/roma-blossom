@@ -85,9 +85,9 @@ npm install --prefix scripts
    request is unclear: then hand over as in step 10 and ask.
 
    Use the user's social media scheduler connector (the MCP tools that list brands, suggest the
-   best time to post and create scheduled posts) to schedule **two posts** that publish
-   automatically: the main post and the Stories post. If no such connector is available, say
-   so and hand over as in step 10.
+   best time to post and create scheduled posts) to schedule **one post** that publishes
+   automatically on every connected network. Never post to Stories on any network. If no such
+   connector is available, say so and hand over as in step 10.
    - **Brand:** the one labelled Roma Tom. Use its timezone and post to every network it has
      connected.
    - **Media:** the video link from step 10. The scheduler copies the file when the post is
@@ -95,8 +95,8 @@ npm install --prefix scripts
    - **When:** the time the user gave; otherwise the best-scoring hour in the next 7 days
      (Instagram's data if it is connected), at least 12 hours from now, on an hour with no other
      post already scheduled that day.
-   - **Draft instead,** if the user asked for a draft or to review first: then create both as
-     drafts, so nothing publishes until they schedule it themselves.
+   - **Draft instead,** if the user asked for a draft or to review first: then create it as a
+     draft, so nothing publishes until they schedule it themselves.
    - **Text:** `caption.txt`, as it is (emoji are fine in post captions, unlike in the video).
    - **Cover:** the cover link from step 10, as the post's custom cover image. Only if the
      scheduler refuses a custom image for a network, fall back to a frame offset there: the
@@ -107,11 +107,8 @@ npm install --prefix scripts
      public, with the title (required); YouTube as a public Short, not made for kids, category
      Education, with the title. Leave every AI-content label off: the visuals are cartoons
      drawn by code, not realistic footage.
-   - **The Stories post:** a second post with the same video at the same time, as a Story on
-     each connected network that has Stories (Instagram and Facebook), with no text and no
-     cover: Stories show neither.
 
-   Then add to the hand-over: the links to both posts in the scheduler and when they go out.
+   Then add to the hand-over: the link to the post in the scheduler and when it goes out.
 
 ## Storyboard format
 
