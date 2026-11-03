@@ -10,7 +10,6 @@ The topics are mixed so that consecutive videos cover different areas: money, st
 
 ## Up next
 
-- [ ] Why do good staff quit after three months? (myth, countdown, fix)
 - [ ] How do you get more Google reviews without begging? (review, fix)
 - [ ] What should be prepped before the doors open? (day, fix)
 - [ ] Should you charge extra for oat milk? (receipt, versus)
@@ -98,7 +97,8 @@ Made as videos:
 - [x] Your best seller might earn the least per plate (`videos/best-seller`)
 - [x] Is a 10% off coupon worth it? (`videos/coupon-worth-it`)
 - [x] Why do guests love ordering on their phone? (`videos/mobile-ordering`)
-- [x] How much does one no-show table actually cost you? (`videos/no-show-table`)
+- [x] How much does one no-show table actually cost you? (`videos/no-show-table-cost`)
+- [x] Why do good staff quit after three months? (`videos/staff-quit`)
 
 Examples in the style guide:
 
