@@ -17,6 +17,7 @@ resolve its real path first. Run every command below from the project root.
 - `scripts/`: the renderer, scene templates and sound. Node only; no API keys.
 - `videos/<slug>/`: one folder per video, with `script.md`, `storyboard.json` and the output.
 - `videos/best-seller/`: the worked example. Copy its shape.
+- `topics.md`: the backlog of video ideas (**Up next**) and the ones already made (**Covered**).
 
 One-time setup (if `scripts/node_modules` is missing):
 
@@ -29,6 +30,13 @@ npm install --prefix scripts
 1. **Pick the question.** Turn the topic into one question an owner would ask out loud, such as
    "Is a 10% off coupon worth it?" One idea per video. If the user gave only a broad area
    ("staffing"), pick the strongest question yourself and say which one you chose when you hand over.
+   - **No topic given** ("make the next video", "next one"): take the first unticked topic under
+     **Up next** in `topics.md`.
+   - **A topic given:** check **Covered** in `topics.md` first. If it's already been made, say so
+     and suggest a fresh angle on it, or the next topic from **Up next** instead.
+   - **"Add … to the backlog":** append it to the end of **Up next** as
+     `- [ ] Question (templates that could fit)`, after checking it isn't in either list, then
+     commit and push `topics.md`. No video is made.
 2. **Scaffold the folder:** `node scripts/new.js <slug>` creates `videos/<slug>/` with a
    `script.md`, a `caption.txt` and a starter `storyboard.json`.
 3. **Write `script.md`:** the hook, 3 to 5 beats and the takeaway, with the exact on-screen
@@ -66,7 +74,10 @@ npm install --prefix scripts
    which also writes the image with the crops drawn on to `out/`. Open it and check it.
 8. **Write `caption.txt`** in the video folder: the post caption from `script.md` with its 3 to 5
    hashtags, as plain text ready to paste, and nothing else.
-9. **Commit and push** the video folder: `script.md`, `storyboard.json`, `caption.txt`,
+9. **Update `topics.md`, then commit and push.** Move the video's topic from **Up next** to the
+   end of the **Made as videos** list under **Covered**, ticked, with its folder:
+   `- [x] Question (`videos/<slug>`)`. (If the topic wasn't in the backlog, just add it there.)
+   Commit it together with the video folder: `script.md`, `storyboard.json`, `caption.txt`,
    `video.mp4` and `cover.jpg` (WAVs and frames are ignored). In a cloud session, push the session's branch.
    Pushing a video can take a few minutes on a slow connection, so run the push with a
    10-minute timeout rather than the default 2.

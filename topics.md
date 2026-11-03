@@ -1,0 +1,105 @@
+# Topics
+
+The backlog of video ideas: questions an independent cafe or restaurant owner would ask out loud.
+
+- **"Make the next video"** takes the first unticked topic in **Up next**.
+- **When a video is done,** its topic moves to **Covered**, ticked, with the video's folder.
+- **To add an idea,** append it to the end of **Up next** as `- [ ] Question (templates that could fit)`. Check **Covered** first so it isn't a repeat.
+
+The topics are mixed so that consecutive videos cover different areas: money, staff, guests, the room and the kitchen, and a little tech. The templates in brackets are suggestions, not rules.
+
+## Up next
+
+- [ ] How much does one no-show table actually cost you? (receipt, floor, jar)
+- [ ] Why do good staff quit after three months? (myth, countdown, fix)
+- [ ] How do you get more Google reviews without begging? (review, fix)
+- [ ] What should be prepped before the doors open? (day, fix)
+- [ ] Should you charge extra for oat milk? (receipt, versus)
+- [ ] Do guests actually like QR code menus? (versus, quote)
+- [ ] What does it really cost to replace one barista? (receipt, jar)
+- [ ] Should you take reservations or stay walk-in only? (versus, scale)
+- [ ] How do you handle running out of a dish mid-service? (tickets, fix)
+- [ ] Is your happy hour making or losing money? (receipt, gauge)
+- [ ] How do you run a five-minute pre-shift huddle? (day, countdown)
+- [ ] How long should a guest wait before someone says hello? (day, quote)
+- [ ] Is your menu board readable from the door? (menu, fix)
+- [ ] What's the real cost of a free refill? (receipt, jar)
+- [ ] Is your Google profile quietly losing you customers? (review, countdown)
+- [ ] Should you pay a bit above minimum wage to keep staff? (scale, jar)
+- [ ] Laptop campers: how long is too long at one table? (floor, scale)
+- [ ] First in, first out: how do you stop throwing food away? (jar, fix)
+- [ ] Should prices end in .95 or a round number? (pricetag, menu)
+- [ ] How do you train a new hire in their first week? (day, fix)
+- [ ] How do you turn a one-star review into a regular? (review, quote)
+- [ ] Email list or Instagram: which brings guests back? (versus, trend)
+- [ ] How does portion creep quietly eat your margin? (plate, jar)
+- [ ] Split shifts: worth it, or a road to burnout? (rota, myth)
+- [ ] Kids in the cafe: the menu, the mess and the money (versus, countdown)
+- [ ] Where should the pastry case go? (floor, fix)
+- [ ] Card surcharges: pass the fee on, or absorb it? (receipt, scale)
+- [ ] How do you give staff feedback without a fight? (chat, fix)
+- [ ] Why does a free sample sell more than a discount? (myth, versus)
+- [ ] How do you read your sales report in five minutes? (trend, countdown)
+- [ ] Is a bigger menu costing you money? (menu, myth)
+- [ ] Should your staff eat for free? (scale, receipt)
+- [ ] How do you win the office lunch crowd? (rush, fix)
+- [ ] How do you speed up the coffee bar without adding staff? (tickets, day)
+- [ ] Should you open on Mondays? (calendar, receipt)
+- [ ] What should you post on Instagram when nothing is new? (countdown, quote)
+- [ ] Why should everyone know two stations? (rota, fix)
+- [ ] How do you handle allergies without slowing service? (tickets, fix)
+- [ ] Does a coffee and pastry deal raise the average order? (receipt, versus)
+- [ ] Self-order kiosks: friend or foe? (versus, myth)
+- [ ] What do you do when someone calls in sick at 6 am? (chat, rota)
+- [ ] Should you answer the phone during the rush? (rush, scale)
+- [ ] How loud should the music be? (gauge, quote)
+- [ ] How should you price a catering order? (receipt, fix)
+- [ ] Should you text guests when their order is ready? (chat, versus)
+- [ ] Owner burnout: what should you hand off first? (countdown, day)
+- [ ] What does your bathroom tell guests about your kitchen? (quote, myth)
+- [ ] Should you add brunch? (calendar, rush, receipt)
+- [ ] Is a supplier's price rise worth fighting? (pricetag, receipt)
+- [ ] How do you price your menu on the delivery apps? (receipt, versus)
+- [ ] Hire for attitude or for experience? (scale, myth)
+- [ ] Should you charge for takeaway cups? (pricetag, versus)
+- [ ] How do you plan a seasonal menu change? (calendar, menu)
+- [ ] Gift cards: free money or a promise you have to keep? (myth, jar)
+- [ ] How do you deal with a guest who is never happy? (quote, fix)
+- [ ] What does an empty seat cost you per hour? (floor, jar)
+- [ ] How do you split card tips fairly? (plate, rota)
+- [ ] Can you close down 20 minutes faster? (day, countdown)
+- [ ] Why does cash get tight after the holidays? (trend, calendar)
+- [ ] Should you offer a smaller, cheaper size? (menu, pricetag)
+- [ ] Where does your $5 latte actually go? (receipt, plate)
+- [ ] Your menu is a map: what sells, what earns, and where does the eye go? (menu)
+- [ ] Are you staffing for the rush, or for the whole day? (rush, rota)
+- [ ] Who actually comes back after their first visit? (regulars, stampcard)
+- [ ] Should you reply to every review, and does it pay off? (review, trend)
+- [ ] How do small fixes like less waste per plate add up? (jar)
+- [ ] Delivery app or your own ordering: how much do you keep? (versus, receipt)
+- [ ] Where does each dollar of a sale go? (plate)
+- [ ] How do you spot the slow days in your month? (calendar, rush)
+- [ ] Is your food cost percentage too high? (gauge, receipt)
+- [ ] How long are your ticket times, really? (tickets, trend)
+- [ ] What's the rhythm of a good cafe day? (day)
+- [ ] How do you handle shift swaps before they become a crisis? (chat, rota)
+- [ ] Does a discount day build loyal regulars? (myth, regulars)
+- [ ] Why does knowing a regular's name matter so much? (quote, regulars)
+- [ ] What cheap wins can you get done this week? (countdown, fix)
+- [ ] What do guests weigh more: a lower price or a warm hello? (scale, quote)
+- [ ] Do stamp cards actually make it easier to come back? (stampcard, regulars)
+- [ ] How many times can you turn every table on a busy night? (floor, receipt)
+- [ ] Should you raise prices a little once a year? (pricetag, myth)
+- [ ] Is Saturday covered on the rota? (rota, chat)
+
+## Covered
+
+Made as videos:
+
+- [x] Your best seller might earn the least per plate (`videos/best-seller`)
+- [x] Is a 10% off coupon worth it? (`videos/coupon-worth-it`)
+- [x] Why do guests love ordering on their phone? (`videos/mobile-ordering`)
+
+Examples in the style guide:
+
+- [x] Why do people come once and never again? (`style/STYLE.md`)

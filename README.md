@@ -27,6 +27,7 @@ scripts/
     sound.js          the pad, 10 sound effects, the mixer and WAV writer
     tomato.js         the tomato character generator: any name draws its own tomato
   fonts/              Gaegu and Inter (SIL Open Font License)
+topics.md             the backlog of video ideas, and the ones already made
 videos/
   best-seller/        the worked example: script.md, storyboard.json, video.mp4
   template-demo/      the first 8 templates, with example content
