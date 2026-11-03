@@ -70,38 +70,48 @@ npm install --prefix scripts
    `video.mp4` and `cover.jpg` (WAVs and frames are ignored). In a cloud session, push the session's branch.
    Pushing a video can take a few minutes on a slow connection, so run the push with a
    10-minute timeout rather than the default 2.
-10. **Create two draft posts** with the user's social media scheduler connector: the MCP tools
-   that list brands, suggest the best time to post and create scheduled posts. One draft is the
-   main post, the other the Stories post (below); always make both. If no such connector is
-   available in the session, skip to step 11 and say so.
+10. **Hand it over** for the user to post by hand. This is the default: don't touch any social
+   media scheduler unless the user asked for auto-posting (step 11). Give:
+   - the public links to the video and its cover, the raw files at the commit you just pushed:
+     ```bash
+     base="https://raw.githubusercontent.com/$(git remote get-url origin | sed -E 's#\.git$##; s#.*[:/]([^/:]+/[^/:]+)$#\1#')/$(git rev-parse HEAD)/videos/<slug>"
+     echo "$base/video.mp4"; echo "$base/cover.jpg"
+     ```
+   - the caption in a code block (one tap to copy), and `title` for the networks that ask for one
+   - which focal point the cover used, the on-screen text, and which question you picked if you
+     chose it (step 1)
+11. **Auto-post, only when asked.** Do this only if the user's request says so in words, such as
+   "auto post it", "post it", or "schedule it". Never on your own initiative, and not when the
+   request is unclear: then hand over as in step 10 and ask.
+
+   Use the user's social media scheduler connector (the MCP tools that list brands, suggest the
+   best time to post and create scheduled posts) to schedule **two posts** that publish
+   automatically: the main post and the Stories post. If no such connector is available, say
+   so and hand over as in step 10.
    - **Brand:** the one labelled Roma Tom. Use its timezone and post to every network it has
      connected.
-   - **Media:** the public link to the video, the raw file at the commit you just pushed:
-     ```bash
-     echo "https://raw.githubusercontent.com/$(git remote get-url origin | sed -E 's#\.git$##; s#.*[:/]([^/:]+/[^/:]+)$#\1#')/$(git rev-parse HEAD)/videos/<slug>/video.mp4"
-     ```
-     The scheduler copies the file when the post is created, so later commits can't break it.
-     The cover's link is the same with `cover.jpg` in place of `video.mp4`.
-   - **When:** the best-scoring hour in the next 7 days (Instagram's data if it is connected),
-     at least 12 hours from now, on an hour with no other post already scheduled that day.
-   - **Draft only:** create it as a draft, so nothing is published until the user schedules it
-     themselves. Never publish or schedule a live post unless the user explicitly asks.
+   - **Media:** the video link from step 10. The scheduler copies the file when the post is
+     created, so later commits can't break it.
+   - **When:** the time the user gave; otherwise the best-scoring hour in the next 7 days
+     (Instagram's data if it is connected), at least 12 hours from now, on an hour with no other
+     post already scheduled that day.
+   - **Draft instead,** if the user asked for a draft or to review first: then create both as
+     drafts, so nothing publishes until they schedule it themselves.
    - **Text:** `caption.txt`, as it is (emoji are fine in post captions, unlike in the video).
-   - **Cover:** `cover.jpg`'s public link as the post's custom cover image. Only if the scheduler
-     refuses a custom image for a network, fall back to a frame offset there: the frame where the
-     hook question is fully written (`hook duration × 1000 − 300` ms), never the first frame.
+   - **Cover:** the cover link from step 10, as the post's custom cover image. Only if the
+     scheduler refuses a custom image for a network, fall back to a frame offset there: the
+     frame where the hook question is fully written (`hook duration × 1000 − 300` ms), never the
+     first frame.
    - **Per network,** with `title` from `storyboard.json` wherever a title is asked for:
      Instagram as a Reel that also shows on the feed; Facebook as a Reel with the title; TikTok
      public, with the title (required); YouTube as a public Short, not made for kids, category
      Education, with the title. Leave every AI-content label off: the visuals are cartoons
      drawn by code, not realistic footage.
-   - **The Stories draft:** a second draft with the same video at the same time, posted as a
-     Story to each connected network that has Stories (Instagram and Facebook), with no text and
-     no cover: Stories show neither.
-11. **Hand it over:** the links to both drafts in the scheduler (or, if there was no connector,
-   the public video and cover links above), which focal point the cover used, the caption in a code block (one tap to copy), the post time you
-   picked, the on-screen text, and which question you picked if you chose it (step 1). Remind
-   the user the posts are drafts: they review and schedule them.
+   - **The Stories post:** a second post with the same video at the same time, as a Story on
+     each connected network that has Stories (Instagram and Facebook), with no text and no
+     cover: Stories show neither.
+
+   Then add to the hand-over: the links to both posts in the scheduler and when they go out.
 
 ## Storyboard format
 
