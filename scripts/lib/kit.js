@@ -183,26 +183,42 @@ function headline(ctx, theme, text, o) {
   return y + lines.length * lh;
 }
 
-// Tomatoes are rendered once per name and size, then stamped into frames.
+// Tomatoes are rendered once per name, size and mouth, then stamped into frames.
 const tomatoCache = new Map();
-function tomatoImage(name, size) {
-  const key = `${name}|${size}`;
+function tomatoImage(name, size, mouth = 0) {
+  const key = `${name}|${size}|${mouth}`;
   if (!tomatoCache.has(key)) {
     const c = createCanvas(size, size);
-    Tomato.render(c.getContext('2d'), Tomato.fromName(name).genes, { size, background: 'transparent' });
+    Tomato.render(c.getContext('2d'), Tomato.fromName(name).genes, { size, background: 'transparent', mouth });
     tomatoCache.set(key, c);
   }
   return tomatoCache.get(key);
 }
 
+// Who is talking on this frame: name → how open the mouth is (0 to 1). The renderer sets it
+// from the voice track before each frame, so every tomato of that name, in any scene, talks.
+// It also notes which names were drawn, so it can bring the speaker in when a scene has no
+// tomato of that name.
+let talking = new Map();
+const drawn = new Set();
+function setTalking(map) {
+  talking = map || new Map();
+  drawn.clear();
+}
+const wasDrawn = (name) => drawn.has(String(name).trim().toLowerCase());
+
 // Draw the tomato for `name` centered at (x, y), `size` px across its 512-unit box.
 // squash > 1 flattens and widens it (landing), < 1 stretches it (jumping); angle tilts it;
 // scale grows it from its base (pop-ins). It boils with the lines: a tiny seeded tilt and
-// stretch that changes with the pen's boil counter.
+// stretch that changes with the pen's boil counter. o.mouth (0 to 1) opens its mouth; without
+// it, the mouth follows the voice for whoever is talking.
 function tomato(ctx, name, x, y, size, o = {}) {
   const { squash = 1, angle = 0, alpha = 1, scale = 1 } = o;
   if (scale <= 0) return;
-  const img = tomatoImage(name, size);
+  const key = String(name).trim().toLowerCase();
+  drawn.add(key);
+  const open = o.mouth ?? talking.get(key) ?? 0;
+  const img = tomatoImage(name, size, Math.round(Math.max(0, Math.min(1, open)) * 3) / 3);
   const b = pen.rng(pen.seedOf(name, pen.getBoil()));
   const jitterA = pen.getBoil() ? (b() - 0.5) * 0.02 : 0, jitterS = pen.getBoil() ? 1 + (b() - 0.5) * 0.012 : 1;
   ctx.save();
@@ -229,4 +245,4 @@ function drawScene(ctx, scene, theme, t, info) {
   ctx.restore();
 }
 
-module.exports = { W, H, FPS, C, THEMES, frame, background, rays, kicker, headline, tomato, drawScene, Tomato, pen, motion };
+module.exports = { W, H, FPS, C, THEMES, frame, background, rays, kicker, headline, tomato, setTalking, wasDrawn, drawScene, Tomato, pen, motion };

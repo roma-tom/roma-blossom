@@ -21,16 +21,16 @@ fs.writeFileSync(path.join(dir, 'script.md'), `# ${slug}
 
 **Question:** the one thing an owner would ask out loud.
 **Background:** paper
-**Length:** about 18 s
+**Length:** about 30 s
 
 ## Scenes
 
-| # | Template | On screen | Time |
-| --- | --- | --- | --- |
-| 1 | hook | Kicker: … / Headline: … | 2.8 s |
-| 2 | … | … | 4 s |
-| 3 | fix | The fix: … / … / … | 4 s |
-| 4 | endcard | Follow for more *owner* tips | 2.6 s |
+| # | Template | On screen | Says | Time |
+| --- | --- | --- | --- | --- |
+| 1 | hook | Kicker: … / Headline: … | The question, out loud. | 2.8 s |
+| 2 | … | … | … | 4 s |
+| 3 | fix | The fix: … / … / … | The steps, in words. | 4 s |
+| 4 | endcard | Follow for more *owner* tips | Follow for more owner tips. | 2.6 s |
 
 ## Fact notes
 
@@ -53,9 +53,9 @@ fs.writeFileSync(path.join(dir, 'storyboard.json'), JSON.stringify({
   background: 'paper',
   output: 'video.mp4',
   scenes: [
-    { type: 'hook', duration: 2.8, props: { kicker: 'CAFE MATH', headline: 'Your *question* goes here?' } },
-    { type: 'fix', duration: 4, props: { title: 'The fix', steps: ['First step', 'Second step', 'Third step'] } },
-    { type: 'endcard', duration: 2.6, props: {} },
+    { type: 'hook', duration: 2.8, say: 'Your question, the way you would ask it out loud?', props: { kicker: 'CAFE MATH', headline: 'Your *question* goes here?' } },
+    { type: 'fix', duration: 4, say: 'So: the first step. The second step. And the third step.', props: { title: 'The fix', steps: ['First step', 'Second step', 'Third step'] } },
+    { type: 'endcard', duration: 2.6, say: 'Follow for more owner tips.', props: {} },
   ],
 }, null, 2) + '\n');
 

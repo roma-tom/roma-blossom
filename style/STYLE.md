@@ -22,9 +22,21 @@ Every number shown needs a source or a worked calculation, kept in `script.md`.
 
 ## Format
 
-- 1080 × 1920 (9:16), 30 fps, 12 to 20 s by default
-- Captions carry the story; a voiceover is optional
+- 1080 × 1920 (9:16), 30 fps, about 25 to 40 s (the spoken lines set the length)
+- The voiceover tells the whole story on its own, for people listening without watching; the
+  on-screen text tells it too, for people watching muted
 - One idea per video, a hook in the first second, a takeaway at the end
+
+## Voice
+
+- The tomatoes speak. Roma Tom narrates; a guest can say their own line. Whoever speaks moves
+  their mouth with the voice, and peeks in at the lower left if the scene doesn't show them.
+- The voice is Kokoro, run on this computer: Roma Tom is `am_michael`, and every other name
+  picks its own voice, so a recurring character always sounds the same.
+- Warm and plain, like a friend across the counter: short sentences, numbers said the way
+  people say them, no jargon.
+- Babble (cartoon syllables, no words) is the other mode, for lighter videos when asked.
+- The pad and sound effects drop back under the voice.
 
 ## Palette
 

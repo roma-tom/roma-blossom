@@ -14,7 +14,8 @@ levels up from this file. This file may be reached through a symlink in `~/.clau
 resolve its real path first. Run every command below from the project root.
 
 - `style/STYLE.md`: palette, type, motion, cast, safe zones. **Read it before writing a script.**
-- `scripts/`: the renderer, scene templates and sound. Node only; no API keys.
+- `scripts/`: the renderer, scene templates, sound and voice. Node only; no API keys. The voice
+  runs on this computer (Kokoro, a small text-to-speech model).
 - `videos/<slug>/`: one folder per video, with `script.md`, `storyboard.json` and the output.
 - `videos/best-seller/`: the worked example. Copy its shape.
 - `topics.md`: the backlog of video ideas (**Up next**) and the ones already made (**Covered**).
@@ -24,6 +25,9 @@ One-time setup (if `scripts/node_modules` is missing):
 ```bash
 npm install --prefix scripts
 ```
+
+The first render with a voice also downloads the voice model (about 330 MB) from Hugging Face
+and keeps it; later renders reuse it.
 
 ## Workflow
 
@@ -40,7 +44,7 @@ npm install --prefix scripts
 2. **Scaffold the folder:** `node scripts/new.js <slug>` creates `videos/<slug>/` with a
    `script.md`, a `caption.txt` and a starter `storyboard.json`.
 3. **Write `script.md`:** the hook, 3 to 5 beats and the takeaway, with the exact on-screen
-   text for each, and the template each beat uses. Every number gets a fact note: a source
+   text for each, what the tomato says (see **The voiceover** below), and the template each beat uses. Every number gets a fact note: a source
    (a link or a named report) or a worked calculation. When you use example figures (a made-up
    cafe's costs), say so on screen or in the caption ("for a typical burger…") and in the notes.
    **Never invent a statistic** ("70% of guests…") without a source; reframe it as an example
@@ -48,22 +52,27 @@ npm install --prefix scripts
 4. **Check the script yourself, then keep going.** Run the whole workflow through to the finished
    video without stopping to ask for approval. Before moving on, reread the script as the owner
    would: is every number backed by a fact note, is anything an invented statistic, is the tone
-   kind and practical? Fix it yourself. The user reviews the finished video and can ask for changes.
-5. **Write `storyboard.json`** from the script (format below). Aim for 12 to 22 s in all.
+   kind and practical? Then read only the spoken lines, top to bottom, as someone who can't see
+   the screen: do they tell the whole story on their own? Fix it yourself. The user reviews the finished video and can ask for changes.
+5. **Write `storyboard.json`** from the script (format below), with each scene's spoken line in
+   `say`. The lines set the length: aim for 25 to 40 s in all, about 90 spoken words at most.
 6. **Check frames before the full render.** Render the end of each scene (where everything is on
    screen) and look at them:
    ```bash
    node scripts/render.js videos/<slug>/storyboard.json --frames 80,200,320
    ```
-   Frame n is at n / 30 seconds. Look for text that overflows, wraps badly or sits in a safe
+   Frame n is at n / 30 seconds. Each scene stretches to fit its line, so take the frame
+   numbers from the scene list the renderer prints first (where each scene starts and how long
+   it is), and render the frame just before the next scene starts. Look for text that overflows, wraps badly or sits in a safe
    zone, and for overlaps. Fix the props (shorter text, fewer items) rather than the template.
    Delete the `frame-*.png` files when done.
 7. **Render:**
    ```bash
    node scripts/render.js videos/<slug>/storyboard.json
    ```
-   This writes `video.mp4`, `cover.jpg`, `sound.wav` and `sfx/*.wav` in the video folder (about
-   1 s of render per 1.5 s of video), and prints which focal point the cover used.
+   This writes `video.mp4`, `cover.jpg`, `sound.wav`, `voice.wav` and `sfx/*.wav` in the video
+   folder (about 1 s of render per 1.5 s of video), and prints which focal point the cover used.
+   It warns about any `say` with digits, symbols or abbreviations: respell them and render again.
 
    **The cover** is a still: the hook's question plus one focal point (a guest tomato, a group
    of three, the video's key number circled, or the question alone), all inside the center
@@ -91,6 +100,7 @@ npm install --prefix scripts
    - the caption in a code block (one tap to copy), and `title` for the networks that ask for one
    - which focal point the cover used, the on-screen text, and which question you picked if you
      chose it (step 1)
+   - which voice mode it used, if not speech (the user asked for babble)
 11. **Auto-post, only when asked.** Do this only if the user's request says so in words, such as
    "auto post it", "post it", or "schedule it". Never on your own initiative, and not when the
    request is unclear: then hand over as in step 10 and ask.
@@ -130,10 +140,12 @@ npm install --prefix scripts
   "background": "paper",
   "output": "video.mp4",
   "sound": true,
-  "mix": { "padGain": 0.22, "sfxGain": 0.7 },
+  "mix": { "padGain": 0.22, "sfxGain": 0.7, "voiceGain": 1, "duck": 0.6 },
+  "voice": { "mode": "speech", "narrator": "Roma Tom", "speed": 1 },
   "scenes": [
-    { "type": "hook", "duration": 3, "props": { "kicker": "MENU MATH", "headline": "…" } },
-    { "type": "endcard", "duration": 2.6, "props": {} }
+    { "type": "hook", "duration": 2.8, "say": "Is a ten percent coupon actually worth it?", "props": { "kicker": "MENU MATH", "headline": "…" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Maria", "say": "…", "props": { "name": "Maria", "quote": "…" } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
   ]
 }
 ```
@@ -145,13 +157,49 @@ npm install --prefix scripts
   such as "$1,144" and "more a year"), and `kicker`, `headline` and `background` to differ from
   the hook. Without `hero`, the cover picks one from what the video contains.
 - `background`: `paper` (default, calm) or `lime` (bold). One per video; the end card is always lime.
-- `duration` is seconds. Each scene after the first wipes in over the one before it with a
-  whoosh during its first 0.5 s.
+- `duration` is seconds, and with a voice it is the minimum: a scene grows to fit its line
+  (the line starts 0.45 s in, as the wipe ends, with 0.45 s of quiet after it). Each scene
+  after the first wipes in over the one before it with a whoosh during its first 0.5 s.
+- `say`: what is spoken over the scene (see **The voiceover**). Every scene has one, the end
+  card included.
+- `speaker`: the tomato who says it (default: the narrator, Roma Tom). Their mouth moves with
+  the voice wherever they're drawn. If the scene doesn't draw them, they peek in at the lower
+  left; `"peek": false` on the scene leaves them out.
+- `voice`: on by default as `speech`. `"mode": "babble"` (or `"voice": "babble"`) makes the
+  tomatoes talk in cartoon syllables instead, still with the timing and mouths of the lines;
+  use it only when the user asks for it. `"voice": false` leaves the voice out. `speed`
+  (default 1) speeds every line up or down; `cast` sets a tomato's Kokoro voice by name, such
+  as `{ "Maria": "af_bella" }` (Roma Tom is `am_michael`; everyone else gets one from their name).
 - Optional per scene: `push` (slow camera push, default 0.03; 0 for none).
-- `--bg lime` on the command line overrides the background; `--silent` leaves out the sound.
+- `--bg lime` on the command line overrides the background; `--babble` and `--no-voice` override
+  the voice; `--silent` leaves out the sound (the voice still sets the timing).
 - In any headline or caption, `*word*` or `*several words*` gets the marker swash. Use it once
   per line, on the word that carries the point.
 - No emoji anywhere: the fonts don't have them, so they render as blank boxes.
+
+## The voiceover
+
+The video must work with the eyes closed: someone listening while they prep should get the
+question, the numbers that matter and the fix from the voice alone. The on-screen text tells
+the same story for people watching muted, so the two cover each other.
+
+- **Tell the whole story out loud.** Never point at the screen ("as you can see", "this one",
+  "here"). Say what's shown: "the smash burger", not "it".
+- **Don't just read the screen.** The screen has the short version; the line is how a friend
+  would say it. Same numbers, same order.
+- **Example figures:** say they're examples ("Say your burger sells for…").
+- **Spell everything the way it's spoken,** because the model reads text literally:
+  - numbers in words: "sixteen dollars", "nine dollars eighty", "thirty-eight percent",
+    "eleven hundred and forty-four dollars", "one in three", "twenty twenty-six"
+  - no symbols: `$` → dollars, `%` → percent, `&` → and, `×` → times, `/` → per or a
+  - no abbreviations: "versus", "for example", "minutes", "average"
+  - names and words it may stumble on: respell them ("Roma Tom" is fine; "gyro" → "yee-roh"),
+    or give the sounds as `[gyro](/ˈjiɹO/)` (Kokoro's phonemes) when respelling isn't enough
+  - no `*swash*` asterisks and no emoji
+- **Short sentences,** about 2.5 words a second. Most lines are one or two sentences; the
+  hook is one. The end card says "Follow for more owner tips."
+- **Who speaks:** Roma Tom narrates. A guest can say their own line, such as Maria in a `quote`
+  scene: set `"speaker": "Maria"` and write it in her words.
 
 ## Templates
 
@@ -194,7 +242,7 @@ reading-heavy scenes more.
 
 - `host` defaults to Roma Tom. Leave it unless the user asks.
 - Guests are tomatoes made from names: the same name always draws the same tomato. Reuse
-  recurring names across videos (`Maria` the regular, `Dev` the line cook, `Sam` the reviewer)
+  recurring names across videos (`Maria` the regular, `Dev` the line cook, `Ivan` the reviewer)
   so the audience gets to know them. Use plain first names, never real people's full names.
 
 ## Rules

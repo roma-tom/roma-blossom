@@ -6,11 +6,13 @@
     {
       "type": "hook",
       "duration": 2.8,
+      "say": "Your best seller might be the dish that earns you the least on every plate.",
       "props": { "kicker": "MENU MATH", "headline": "Your best seller might earn the *least* per plate" }
     },
     {
       "type": "receipt",
       "duration": 4.5,
+      "say": "Say your smash burger sells for sixteen dollars. The beef, bun, cheese, fries and sauce cost six dollars twenty, so you keep nine dollars eighty a plate.",
       "props": {
         "caption": "The smash burger, *$16*",
         "title": "SMASH BURGER · $16",
@@ -27,6 +29,7 @@
     {
       "type": "menu",
       "duration": 4.5,
+      "say": "Now the quiet one. A fourteen dollar mushroom pasta costs three dollars ten to make, so it keeps ten dollars ninety. Cheaper for the guest, and better for you.",
       "props": {
         "caption": "Now the *quiet* one",
         "title": "Lunch",
@@ -41,6 +44,7 @@
     {
       "type": "jar",
       "duration": 4,
+      "say": "That's one dollar ten more on every plate. Nudge just twenty burger orders a week towards the pasta, and that's eleven hundred and forty-four dollars more a year.",
       "props": {
         "caption": "Swap *20* burgers a week",
         "lines": ["$1.10 more per plate", "× 20 plates a week", "× 52 weeks"],
@@ -51,11 +55,12 @@
     {
       "type": "fix",
       "duration": 4,
+      "say": "So: cost every dish, not just your top five. Put the quiet earners where eyes land on the menu. And try your best seller one dollar higher.",
       "props": {
         "title": "The fix",
         "steps": ["Cost every dish, not just the top 5", "Put quiet heroes where eyes land", "Nudge the best seller up $1"]
       }
     },
-    { "type": "endcard", "duration": 2.6, "props": {} }
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
   ]
 }

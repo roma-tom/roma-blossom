@@ -9,14 +9,14 @@ then let the menu nudge guests towards the quiet earners.
 
 ## Scenes
 
-| # | Template | On screen | Time |
-| --- | --- | --- | --- |
-| 1 | hook | Kicker: MENU MATH / Headline: Your best seller might earn the *least* per plate | 2.8 s |
-| 2 | receipt | Caption: The smash burger, *$16* / Price $16.00, Beef & bun −$3.90, Cheese & pickles −$1.10, Fries −$0.90, Sauce −$0.30 / Per plate **$9.80** (circled) | 4.5 s |
-| 3 | menu | Caption: Now the *quiet* one / Smash burger 16 (circled: "best seller, keeps $9.80"), Mushroom pasta 14 (starred: "keeps $10.90"), Fish tacos 15 (underlined: "cost this one too"), Soup of the day 9 | 4.5 s |
-| 4 | jar | Caption: Swap *20* burgers a week / $1.10 more per plate × 20 plates a week × 52 weeks / **$1,144** more a year | 4 s |
-| 5 | fix | The fix: Cost every dish, not just the top 5 / Put quiet heroes where eyes land / Nudge the best seller up $1 | 4 s |
-| 6 | endcard | Follow for more *owner* tips / romatom.com | 2.6 s |
+| # | Template | On screen | Says | Time |
+| --- | --- | --- | --- | --- |
+| 1 | hook | Kicker: MENU MATH / Headline: Your best seller might earn the *least* per plate | Your best seller might be the dish that earns you the least on every plate. | 2.8 s |
+| 2 | receipt | Caption: The smash burger, *$16* / Price $16.00, Beef & bun −$3.90, Cheese & pickles −$1.10, Fries −$0.90, Sauce −$0.30 / Per plate **$9.80** (circled) | Say your smash burger sells for sixteen dollars. The beef, bun, cheese, fries and sauce cost six dollars twenty, so you keep nine dollars eighty a plate. | 4.5 s |
+| 3 | menu | Caption: Now the *quiet* one / Smash burger 16 (circled: "best seller, keeps $9.80"), Mushroom pasta 14 (starred: "keeps $10.90"), Fish tacos 15 (underlined: "cost this one too"), Soup of the day 9 | Now the quiet one. A fourteen dollar mushroom pasta costs three dollars ten to make, so it keeps ten dollars ninety. Cheaper for the guest, and better for you. | 4.5 s |
+| 4 | jar | Caption: Swap *20* burgers a week / $1.10 more per plate × 20 plates a week × 52 weeks / **$1,144** more a year | That's one dollar ten more on every plate. Nudge just twenty burger orders a week towards the pasta, and that's eleven hundred and forty-four dollars more a year. | 4 s |
+| 5 | fix | The fix: Cost every dish, not just the top 5 / Put quiet heroes where eyes land / Nudge the best seller up $1 | So: cost every dish, not just your top five. Put the quiet earners where eyes land on the menu. And try your best seller one dollar higher. | 4 s |
+| 6 | endcard | Follow for more *owner* tips / romatom.com | Follow for more owner tips. | 2.6 s |
 
 ## Fact notes
 

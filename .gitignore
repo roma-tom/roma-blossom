@@ -3,3 +3,4 @@ out/
 .DS_Store
 videos/**/*.wav
 videos/**/frame-*.png
+.cache/

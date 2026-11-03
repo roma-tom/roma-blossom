@@ -453,6 +453,7 @@
    * opts.hideFace: leave the face off (for the tiniest icons, where it only reads as smudge)
    * opts.outline: a color; draw only the lines (outline, face, stem, label) in it, no fills
    * opts.labelColor: color for the label and side bar (default INK)
+   * opts.mouth: 0 to 1; above 0 the face's mouth is swapped for an open, talking one this wide
    */
   function render(ctx, genes, opts = {}) {
     const outer = [outlineColor, labelInk];
@@ -483,13 +484,13 @@
     } else if (label) {
       drawBelowLayout(ctx, genes, code, label, ts);
     } else {
-      drawTomato(ctx, genes, code, opts.lineWeight, opts.hideFace);
+      drawTomato(ctx, genes, code, opts.lineWeight, opts.hideFace, opts.mouth);
     }
     ctx.restore();
   }
 
   // The tomato itself (no background), in 512×512 space.
-  function drawTomato(ctx, genes, code, weight = 1, hideFace = false) {
+  function drawTomato(ctx, genes, code, weight = 1, hideFace = false, mouth = 0) {
     const pal = palette(genes.color);
     const shape = buildShape(genes.shape);
     const rot = (rotationDeg(genes.rotation) * Math.PI) / 180;
@@ -532,7 +533,7 @@
       y = y * FACE - 0.08;
       return { x: cx + R * (x * fcr - y * fsr), y: cy + R * (x * fsr + y * fcr) };
     });
-    if (!hideFace) drawFace(ctx, FACES[genes.face], { M: Mf, R: R * FACE, layout: FACE_LAYOUTS[genes.faceLayout], rng: rPen, jit, weight });
+    if (!hideFace) drawFace(ctx, FACES[genes.face], { M: Mf, R: R * FACE, layout: FACE_LAYOUTS[genes.faceLayout], rng: rPen, jit, weight, mouth });
 
     // --- stem
     {
@@ -733,6 +734,16 @@
     } else {
       eye(face.eyes, -1);
       eye(face.eyes, 1);
+    }
+
+    // Talking: an open mouth that grows down from where the smile sits, as an outline with a
+    // dark inside so it still reads at small sizes.
+    if (o.mouth > 0) {
+      const h = 0.028 + 0.06 * o.mouth, w = 0.09 + 0.045 * o.mouth;
+      const pts = M(ellipse(0, my - 0.02 + h, w, h, 0, TAU, 28));
+      fillPoly(ctx, pts, '#4f0810');
+      ink(ellipse(0, my - 0.02 + h, w, h, 0, TAU, 28));
+      return;
     }
 
     switch (face.mouth) {

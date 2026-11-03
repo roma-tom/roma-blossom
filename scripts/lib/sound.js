@@ -150,18 +150,38 @@ function pad(sec) {
   return lowpass(b, 1400);
 }
 
-// Mix the pad and every cue ({ at: seconds, sfx, gain }) into one track.
-function mix(sec, cues, o = {}) {
+// How much to duck the bed under the voice, per sample (0 to 1): fast in, slow out.
+function duckEnvelope(voice, n) {
+  const out = new Float32Array(n);
+  if (!voice) return out;
+  const att = 1 - Math.exp(-1 / (0.03 * SR)), rel = 1 - Math.exp(-1 / (0.35 * SR));
+  let e = 0;
+  for (let i = 0; i < n; i++) {
+    const v = i < voice.length ? Math.min(1, Math.abs(voice[i]) * 6) : 0;
+    e += (v - e) * (v > e ? att : rel);
+    out[i] = e;
+  }
+  return out;
+}
+
+// Mix the pad, every cue ({ at: seconds, sfx, gain }) and the voice into one track. Under the
+// voice the pad drops by o.duck (default 0.6) and the effects by half that.
+function mix(sec, cues, o = {}, voice = null) {
   const out = buf(sec);
   const bed = pad(sec);
+  const duck = duckEnvelope(voice, out.length), depth = o.duck ?? 0.6;
   const padGain = o.padGain ?? 0.22;
-  for (let i = 0; i < out.length; i++) out[i] = bed[i] * padGain;
+  for (let i = 0; i < out.length; i++) out[i] = bed[i] * padGain * (1 - depth * duck[i]);
   const cache = {};
   for (const c of cues) {
     if (!SFX[c.sfx]) throw new Error(`unknown sound effect "${c.sfx}"`);
     const s = (cache[c.sfx] ||= SFX[c.sfx]());
     const at = Math.round(c.at * SR), g = (c.gain ?? 0.8) * (o.sfxGain ?? 0.7);
-    for (let i = 0; i < s.length && at + i < out.length; i++) if (at + i >= 0) out[at + i] += s[i] * g;
+    for (let i = 0; i < s.length && at + i < out.length; i++) if (at + i >= 0) out[at + i] += s[i] * g * (1 - 0.5 * depth * duck[at + i]);
+  }
+  if (voice) {
+    const vg = o.voiceGain ?? 1;
+    for (let i = 0; i < out.length && i < voice.length; i++) out[i] += voice[i] * vg;
   }
   // Gentle limiter so stacked effects never clip.
   for (let i = 0; i < out.length; i++) out[i] = Math.tanh(out[i] * 1.1) * 0.9;

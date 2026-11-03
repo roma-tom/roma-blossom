@@ -3,38 +3,54 @@
 //   node render.js ../videos/best-seller/storyboard.json   → video.mp4 and cover.jpg beside it
 //   node render.js <storyboard> --frames 0,45,100   → PNGs of just those frames, for checking
 //   node render.js <storyboard> --bg lime            → override the storyboard's background
+//   node render.js <storyboard> --babble             → the tomatoes babble instead of speaking
+//   node render.js <storyboard> --no-voice           → no voiceover
 //
 // storyboard.json:
 //   {
 //     "background": "paper" | "lime",
 //     "output": "video.mp4",              (next to the storyboard; optional)
-//     "scenes": [{ "type": "hook", "duration": 3.5, "props": { ... }, "push": 0.03 }, ...]
+//     "voice": { "mode": "speech" | "babble" | "off", "narrator": "Roma Tom", "speed": 1, "cast": {} },
+//     "scenes": [{ "type": "hook", "duration": 3.5, "say": "…", "speaker": "Maria", "props": { ... } }, ...]
 //   }
 //
 // Each scene after the first is wiped in over the previous one with a growing, wobbly
 // ink-edged blob, during its first WIPE seconds.
 //
+// Voice: on by default. A scene's `say` is spoken by its `speaker` (the narrator, Roma Tom,
+// unless set), and the scene grows to fit the line: its duration is a minimum. The speaker's
+// mouth follows the voice wherever that tomato is drawn; if the scene doesn't draw them, they
+// peek in at the lower left (`"peek": false` on the scene leaves them out). See lib/voice.js.
+//
 // Sound: each scene module may export draw.cues(props) → [{ t (0..1 in the scene), sfx, gain }].
-// The renderer adds a whoosh on every wipe, mixes them over the pad into sound.wav, saves each
-// effect used to sfx/<name>.wav for your own edits, and muxes the mix into the MP4.
+// The renderer adds a whoosh on every wipe, mixes them over the pad with the voice into
+// sound.wav (and the voice alone into voice.wav), saves each effect used to sfx/<name>.wav for
+// your own edits, and muxes the mix into the MP4.
 // The mix is normalised to -14 LUFS, the level Reels, TikTok and Shorts play at.
-// "sound": false in the storyboard (or --silent) leaves the audio out.
+// "sound": false in the storyboard (or --silent) leaves the audio out; the voice still sets
+// the timing.
 
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 const ffmpeg = require('ffmpeg-static');
-const { W, H, FPS, THEMES, frame, drawScene, pen, motion } = require('./lib/kit.js');
+const kit = require('./lib/kit.js');
+const { W, H, FPS, THEMES, frame, drawScene, pen, motion } = kit;
 const sound = require('./lib/sound.js');
+const voice = require('./lib/voice.js');
 const { writeCover } = require('./cover.js');
 
 const WIPE = 0.5; // seconds
 const BOIL = 4; // frames per boil step
+const LEAD = 0.45; // seconds into a scene before its line starts (the wipe is nearly done)
+const LEAD_FIRST = 0.3;
+const TAIL = 0.45; // seconds of quiet after a line before the next wipe
+const TAIL_LAST = 0.9;
 
 const args = process.argv.slice(2);
 const file = path.resolve(args[0] || '');
 if (!args[0] || !fs.existsSync(file)) {
-  console.error('usage: node render.js <storyboard.json> [--frames 0,30,60]');
+  console.error('usage: node render.js <storyboard.json> [--frames 0,30,60] [--bg lime] [--babble | --no-voice] [--silent]');
   process.exit(1);
 }
 const framesArg = args.includes('--frames') ? args[args.indexOf('--frames') + 1].split(',').map(Number) : null;
@@ -42,22 +58,61 @@ const framesArg = args.includes('--frames') ? args[args.indexOf('--frames') + 1]
 const board = JSON.parse(fs.readFileSync(file, 'utf8'));
 if (args.includes('--bg')) board.background = args[args.indexOf('--bg') + 1];
 const baseTheme = THEMES[board.background || 'paper'];
+const dir = path.dirname(file);
 
-// Lay the scenes out on a timeline (in frames).
-let cursor = 0;
-const scenes = board.scenes.map((s) => {
-  const frames = Math.round(s.duration * FPS);
-  const scene = {
-    ...s,
-    draw: require(`./scenes/${s.type}.js`),
-    theme: s.type === 'endcard' ? THEMES.lime : THEMES[s.background || ''] || baseTheme,
-    start: cursor,
-    frames,
-  };
-  cursor += frames;
-  return scene;
-});
-const total = cursor;
+// "voice": absent → speech; false → off; "babble" → babble; or an object.
+function voiceConfig() {
+  let v = board.voice;
+  if (v === undefined || v === true) v = {};
+  else if (v === false) v = { mode: 'off' };
+  else if (typeof v === 'string') v = { mode: v };
+  v = { mode: 'speech', narrator: 'Roma Tom', speed: 1, cast: {}, ...v };
+  if (args.includes('--babble')) v.mode = 'babble';
+  if (args.includes('--no-voice')) v.mode = 'off';
+  if (!['speech', 'babble', 'off'].includes(v.mode)) throw new Error(`unknown voice mode "${v.mode}"`);
+  return v;
+}
+
+// Make every scene's line, then lay the scenes out on a timeline (in frames).
+async function layout(vc) {
+  const lines = [];
+  if (vc.mode !== 'off') {
+    for (const [i, s] of board.scenes.entries()) {
+      if (!s.say) {
+        if (s.type !== 'endcard') console.warn(`warning: scene ${i + 1} (${s.type}) has no "say", so it's silent`);
+        lines.push(null);
+        continue;
+      }
+      const problems = voice.checkLine(s.say);
+      if (problems.length) console.warn(`warning: scene ${i + 1} "say" has ${problems.join('; ')}:\n  ${s.say}`);
+      const speaker = s.speaker || vc.narrator;
+      const clip = vc.mode === 'speech' ? await voice.speak(s.say, voice.voiceFor(speaker, vc.cast), vc.speed) : voice.babble(s.say, speaker);
+      lines.push({ speaker, clip, mouth: voice.mouth(clip, FPS) });
+    }
+  }
+
+  let cursor = 0;
+  return board.scenes.map((s, i) => {
+    const line = lines[i] || null;
+    const lead = i === 0 ? LEAD_FIRST : LEAD;
+    const tail = i === board.scenes.length - 1 ? TAIL_LAST : TAIL;
+    const need = line ? lead + line.clip.length / sound.SR + tail : 0;
+    const frames = Math.round(Math.max(s.duration || 0, need) * FPS);
+    const scene = {
+      ...s,
+      draw: require(`./scenes/${s.type}.js`),
+      theme: s.type === 'endcard' ? THEMES.lime : THEMES[s.background || ''] || baseTheme,
+      start: cursor,
+      frames,
+      line,
+      lineStart: cursor + Math.round(lead * FPS),
+    };
+    cursor += frames;
+    return scene;
+  });
+}
+
+let scenes, total;
 
 // Two scratch canvases: the scene coming in, and the one it covers during a wipe.
 const cur = frame(), prev = frame(), out = frame();
@@ -65,7 +120,26 @@ const cur = frame(), prev = frame(), out = frame();
 function paintScene(target, scene, f) {
   const local = Math.min(f - scene.start, scene.frames - 1);
   const t = scene.frames > 1 ? local / (scene.frames - 1) : 1;
+  const line = scene.line;
+  const talk = new Map();
+  if (line) {
+    const k = f - scene.lineStart;
+    talk.set(line.speaker.trim().toLowerCase(), k >= 0 && k < line.mouth.length ? line.mouth[k] : 0);
+  }
+  kit.setTalking(talk);
   drawScene(target.ctx, scene, scene.theme, t, { sec: local / FPS, dur: scene.frames / FPS });
+  if (line && scene.peek !== false && !kit.wasDrawn(line.speaker)) peek(target.ctx, scene, line, f);
+  kit.setTalking(null);
+}
+
+// The speaker, when the scene doesn't show them: they pop up at the lower left as their line
+// starts and stay, leaning in towards the scene.
+function peek(ctx, scene, line, f) {
+  const sec = (f - scene.lineStart) / FPS;
+  if (sec < -0.25) return;
+  const k = motion.spring((sec + 0.25) / 0.6);
+  const breathe = 1 + 0.02 * Math.sin(f / FPS * 2.6);
+  kit.tomato(ctx, line.speaker, 150, 1440 + (1 - k) * 360, 310, { angle: 0.14, squash: breathe });
 }
 
 // A wobbly circle from the bottom center, grown to cover the frame.
@@ -101,15 +175,17 @@ function renderFrame(f) {
   return out.canvas;
 }
 
-const dir = path.dirname(file);
-
-if (framesArg) {
-  for (const f of framesArg) {
-    const png = path.join(dir, `frame-${String(f).padStart(4, '0')}.png`);
-    fs.writeFileSync(png, renderFrame(Math.min(f, total - 1)).toBuffer('image/png'));
-    console.log(png);
+// The voice on the video's timeline.
+function voiceTrack() {
+  const track = new Float32Array(Math.ceil((total / FPS) * sound.SR));
+  let any = false;
+  for (const sc of scenes) {
+    if (!sc.line) continue;
+    any = true;
+    const at = Math.round((sc.lineStart / FPS) * sound.SR);
+    for (let i = 0; i < sc.line.clip.length && at + i < track.length; i++) track[at + i] += sc.line.clip[i];
   }
-  process.exit(0);
+  return any ? track : null;
 }
 
 // Collect every scene's cues on the video's timeline and mix the soundtrack.
@@ -120,26 +196,45 @@ function soundtrack() {
     if (i > 0) cues.push({ at: start, sfx: 'whoosh', gain: 0.5 });
     for (const c of sc.draw.cues?.(sc.props || {}) || []) cues.push({ ...c, at: start + c.t * dur });
   });
+  const vt = voiceTrack();
+  if (vt) fs.writeFileSync(path.join(dir, 'voice.wav'), sound.wav(vt));
   const wavFile = path.join(dir, 'sound.wav');
-  fs.writeFileSync(wavFile, sound.wav(sound.mix(total / FPS, cues, board.mix || {})));
+  fs.writeFileSync(wavFile, sound.wav(sound.mix(total / FPS, cues, board.mix || {}, vt)));
   const sfxDir = path.join(dir, 'sfx');
   fs.mkdirSync(sfxDir, { recursive: true });
   for (const name of new Set(cues.map((c) => c.sfx))) fs.writeFileSync(path.join(sfxDir, `${name}.wav`), sound.wav(sound.SFX[name]()));
   return wavFile;
 }
 
-const silent = board.sound === false || args.includes('--silent');
-const audio = silent ? null : soundtrack();
-const mp4 = path.join(dir, board.output || 'video.mp4');
-const enc = spawn(ffmpeg, [
-  '-y', '-loglevel', 'error',
-  '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', `${W}x${H}`, '-r', String(FPS), '-i', '-',
-  ...(audio ? ['-i', audio, '-map', '0:v', '-map', '1:a', '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', '-shortest'] : []),
-  '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p',
-  '-movflags', '+faststart', mp4,
-], { stdio: ['pipe', 'inherit', 'inherit'] });
-
 (async () => {
+  const vc = voiceConfig();
+  scenes = await layout(vc);
+  total = scenes.reduce((n, s) => n + s.frames, 0);
+  if (vc.mode !== 'off') {
+    console.log(`voice: ${vc.mode}, ${(total / FPS).toFixed(1)} s`);
+    for (const [i, s] of scenes.entries()) console.log(`  ${i + 1} ${s.type.padEnd(10)} ${(s.frames / FPS).toFixed(1).padStart(5)} s  starts at frame ${s.start}`);
+  }
+
+  if (framesArg) {
+    for (const f of framesArg) {
+      const png = path.join(dir, `frame-${String(f).padStart(4, '0')}.png`);
+      fs.writeFileSync(png, renderFrame(Math.min(f, total - 1)).toBuffer('image/png'));
+      console.log(png);
+    }
+    return;
+  }
+
+  const silent = board.sound === false || args.includes('--silent');
+  const audio = silent ? null : soundtrack();
+  const mp4 = path.join(dir, board.output || 'video.mp4');
+  const enc = spawn(ffmpeg, [
+    '-y', '-loglevel', 'error',
+    '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', `${W}x${H}`, '-r', String(FPS), '-i', '-',
+    ...(audio ? ['-i', audio, '-map', '0:v', '-map', '1:a', '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', '-shortest'] : []),
+    '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p',
+    '-movflags', '+faststart', mp4,
+  ], { stdio: ['pipe', 'inherit', 'inherit'] });
+
   const t0 = Date.now();
   for (let f = 0; f < total; f++) {
     const c = renderFrame(f);
@@ -154,4 +249,7 @@ const enc = spawn(ffmpeg, [
     console.log(mp4);
     console.log(writeCover(file)[0]);
   });
-})();
+})().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
