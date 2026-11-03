@@ -2,7 +2,7 @@
 
 **Question:** "My burger outsells everything. Why doesn't the money feel like it?"
 **Background:** paper
-**Length:** 22.4 s
+**Length:** 38.8 s
 
 The idea: the dish you sell most isn't always the one that earns most per plate. Cost every dish,
 then let the menu nudge guests towards the quiet earners.
@@ -11,12 +11,12 @@ then let the menu nudge guests towards the quiet earners.
 
 | # | Template | On screen | Says | Time |
 | --- | --- | --- | --- | --- |
-| 1 | hook | Kicker: MENU MATH / Headline: Your best seller might earn the *least* per plate | Your best seller might be the dish that earns you the least on every plate. | 2.8 s |
-| 2 | receipt | Caption: The smash burger, *$16* / Price $16.00, Beef & bun −$3.90, Cheese & pickles −$1.10, Fries −$0.90, Sauce −$0.30 / Per plate **$9.80** (circled) | Say your smash burger sells for sixteen dollars. The beef, bun, cheese, fries and sauce cost six dollars twenty, so you keep nine dollars eighty a plate. | 4.5 s |
-| 3 | menu | Caption: Now the *quiet* one / Smash burger 16 (circled: "best seller, keeps $9.80"), Mushroom pasta 14 (starred: "keeps $10.90"), Fish tacos 15 (underlined: "cost this one too"), Soup of the day 9 | Now the quiet one. A fourteen dollar mushroom pasta costs three dollars ten to make, so it keeps ten dollars ninety. Cheaper for the guest, and better for you. | 4.5 s |
-| 4 | jar | Caption: Swap *20* burgers a week / $1.10 more per plate × 20 plates a week × 52 weeks / **$1,144** more a year | That's one dollar ten more on every plate. Nudge just twenty burger orders a week towards the pasta, and that's eleven hundred and forty-four dollars more a year. | 4 s |
-| 5 | fix | The fix: Cost every dish, not just the top 5 / Put quiet heroes where eyes land / Nudge the best seller up $1 | So: cost every dish, not just your top five. Put the quiet earners where eyes land on the menu. And try your best seller one dollar higher. | 4 s |
-| 6 | endcard | Follow for more *owner* tips / romatom.com | Follow for more owner tips. | 2.6 s |
+| 1 | hook | Kicker: MENU MATH / Headline: Your best seller might earn the *least* per plate | Your best seller might earn you the least on every plate. | 3.6 s |
+| 2 | receipt | Caption: The smash burger, *$16* / Price $16.00, Beef & bun −$3.90, Cheese & pickles −$1.10, Fries −$0.90, Sauce −$0.30 / Per plate **$9.80** (circled) | Your smash burger sells for sixteen dollars. The ingredients cost six dollars twenty, so you keep nine eighty. | 8.2 s |
+| 3 | menu | Caption: Now the *quiet* one / Smash burger 16 (circled: "best seller, keeps $9.80"), Mushroom pasta 14 (starred: "keeps $10.90"), Fish tacos 15 (underlined: "cost this one too"), Soup of the day 9 | The mushroom pasta sells for fourteen, but costs just three dollars ten. It keeps ten ninety. | 7.1 s |
+| 4 | jar | Caption: Swap *20* burgers a week / $1.10 more per plate × 20 plates a week × 52 weeks / **$1,144** more a year | That's a dollar ten more a plate. Move twenty burger orders a week to the pasta, and that's eleven hundred and forty-four dollars a year. | 9.4 s |
+| 5 | fix | The fix: Cost every dish, not just the top 5 / Put quiet heroes where eyes land / Nudge the best seller up $1 | So: cost every dish. Put the quiet earners where eyes land. And try your best seller a dollar higher. | 7.6 s |
+| 6 | endcard | Follow for more *owner* tips / romatom.com | Follow for more owner tips. | 3.0 s |
 
 ## Fact notes
 
