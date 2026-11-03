@@ -22,6 +22,11 @@ const C = {
   forest: '#3f8f3a',
   forestDark: '#1f4f1c',
   lime: '#addb30',
+  // Soft backgrounds: light enough that ink text, rose numbers and the card stay clear on them.
+  butter: '#f6d66b',
+  blush: '#f5c8bb',
+  sky: '#c3dfe9',
+  mint: '#d3e9c4',
 };
 
 const fonts = path.join(__dirname, '..', 'fonts');
@@ -30,9 +35,15 @@ GlobalFonts.registerFromPath(path.join(fonts, 'inter-variable.woff2'), 'Inter');
 
 // Per-background colors: what a swash, the rays and the grain use on paper vs lime.
 // accent and good are the rose and green that are safe as text on that background.
+// mark is the fill for highlight blocks drawn on the background (bars, sticky notes, coins);
+// rule is a faint grid line on the background.
 const THEMES = {
-  paper: { bg: C.paper, swash: C.lime, rays: C.lime, raysAlpha: 0.26, grain: '#8a6a4a', text: C.ink, soft: C.muted, accent: C.rose, good: C.forest },
-  lime: { bg: C.lime, swash: C.paper, rays: C.paper, raysAlpha: 0.38, grain: '#2f4a10', text: C.ink, soft: C.forestDark, accent: C.roseDark, good: C.forestDark },
+  paper: { bg: C.paper, swash: C.lime, mark: C.lime, rule: C.line, rays: C.lime, raysAlpha: 0.26, grain: '#8a6a4a', text: C.ink, soft: C.muted, accent: C.rose, good: C.forest },
+  lime: { bg: C.lime, swash: C.paper, mark: C.card, rule: C.paper, rays: C.paper, raysAlpha: 0.38, grain: '#2f4a10', text: C.ink, soft: C.forestDark, accent: C.roseDark, good: C.forestDark },
+  butter: { bg: C.butter, swash: C.paper, mark: C.card, rule: C.paper, rays: C.paper, raysAlpha: 0.42, grain: '#7a5a10', text: C.ink, soft: C.roseDark, accent: C.rose, good: C.forestDark },
+  blush: { bg: C.blush, swash: C.lime, mark: C.lime, rule: C.paper, rays: C.paper, raysAlpha: 0.42, grain: '#8a3a2a', text: C.ink, soft: C.roseDark, accent: C.rose, good: C.forestDark },
+  sky: { bg: C.sky, swash: C.lime, mark: C.lime, rule: C.paper, rays: C.paper, raysAlpha: 0.45, grain: '#2a5a6a', text: C.ink, soft: '#1f4a5a', accent: C.rose, good: C.forestDark },
+  mint: { bg: C.mint, swash: C.paper, mark: C.card, rule: C.paper, rays: C.paper, raysAlpha: 0.45, grain: '#3a5a2a', text: C.ink, soft: C.forestDark, accent: C.rose, good: C.forestDark },
 };
 
 function frame() {

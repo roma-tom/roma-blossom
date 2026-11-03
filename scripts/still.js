@@ -1,7 +1,8 @@
-// Render a single still frame of a scene, on paper and on lime.
+// Render a single still frame of a scene, on paper and on lime (or the backgrounds you list).
 //
 //   node still.js                      → out/hook-paper.png, out/hook-lime.png at t = 1
 //   node still.js hook 0.4             → the same scene at 40% through
+//   node still.js hook 1 butter,sky    → on other backgrounds
 
 const fs = require('fs');
 const path = require('path');
@@ -17,7 +18,7 @@ const scene = { type, draw: require(`./scenes/${type}.js`), props, push: 0 };
 
 const outDir = path.join(__dirname, '..', 'out');
 fs.mkdirSync(outDir, { recursive: true });
-for (const name of ['paper', 'lime']) {
+for (const name of (process.argv[4] || 'paper,lime').split(',')) {
   const { canvas, ctx } = frame();
   drawScene(ctx, scene, THEMES[name], t, {});
   const file = path.join(outDir, `${type}-${name}.png`);

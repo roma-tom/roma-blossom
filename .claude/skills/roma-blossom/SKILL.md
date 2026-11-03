@@ -38,7 +38,8 @@ npm install --prefix scripts
      `- [ ] Question (templates that could fit)`, after checking it isn't in either list, then
      commit and push `topics.md`. No video is made.
 2. **Scaffold the folder:** `node scripts/new.js <slug>` creates `videos/<slug>/` with a
-   `script.md`, a `caption.txt` and a starter `storyboard.json`.
+   `script.md`, a `caption.txt` and a starter `storyboard.json`. The starter already has a
+   `background` and a music `mood` that the last three videos didn't use.
 3. **Write `script.md`:** the hook, 3 to 5 beats and the takeaway, with the exact on-screen
    text for each, and the template each beat uses. Every number gets a fact note: a source
    (a link or a named report) or a worked calculation. When you use example figures (a made-up
@@ -50,6 +51,11 @@ npm install --prefix scripts
    would: is every number backed by a fact note, is anything an invented statistic, is the tone
    kind and practical? Fix it yourself. The user reviews the finished video and can ask for changes.
 5. **Write `storyboard.json`** from the script (format below). Aim for 12 to 22 s in all.
+   **Keep the feed varied:** every video should look and sound different from the last three.
+   Check them with `grep -h '"background"\|"mood"' $(ls -td videos/*/ | grep -v template-demo | head -3 | sed 's#$#storyboard.json#')`
+   and keep the scaffold's picks unless the topic suits another one better (see **Look and
+   sound** below), as long as it still differs from the last three. Never default back to paper
+   with the warm pad.
 6. **Check frames before the full render.** Render the end of each scene (where everything is on
    screen) and look at them:
    ```bash
@@ -127,10 +133,11 @@ npm install --prefix scripts
 {
   "title": "Is a 10% Coupon Worth It",
   "cover": { "hero": "number" },
-  "background": "paper",
+  "background": "sky",
+  "music": { "mood": "jazzy" },
   "output": "video.mp4",
   "sound": true,
-  "mix": { "padGain": 0.22, "sfxGain": 0.7 },
+  "mix": { "musicGain": 0.22, "sfxGain": 0.7 },
   "scenes": [
     { "type": "hook", "duration": 3, "props": { "kicker": "MENU MATH", "headline": "…" } },
     { "type": "endcard", "duration": 2.6, "props": {} }
@@ -144,7 +151,16 @@ npm install --prefix scripts
   optional `name` (the tomato), `names` (the crowd, three), `number` and `label` (the number,
   such as "$1,144" and "more a year"), and `kicker`, `headline` and `background` to differ from
   the hook. Without `hero`, the cover picks one from what the video contains.
-- `background`: `paper` (default, calm) or `lime` (bold). One per video; the end card is always lime.
+- `background`: `paper`, `sky`, `butter`, `blush`, `mint` or `lime` (see **Look and sound**). The
+  end card is always lime. A list, such as `["sky", "paper"]`, alternates by scene for a
+  two-tone video; one scene can also set its own `background`.
+- `music`: `mood` (below), and optional `key` (such as `"D"` or `"Bb"`; each mood has its own
+  default) and `bpm`. Tonal effects (the chime and ding) are tuned to the key, and the other
+  effects vary a little in pitch so repeats don't sound mechanical. Without `music` the video
+  gets the original warm pad.
+- `mix`: `musicGain` (default 0.22; `padGain` is the old name), `sfxGain` (0.7), `wipe` (the
+  scene-wipe sound; the mood picks one by default) and `swap` to replace an effect throughout,
+  such as `{ "pop": "blip" }`.
 - `duration` is seconds. Each scene after the first wipes in over the one before it with a
   whoosh during its first 0.5 s.
 - Optional per scene: `push` (slow camera push, default 0.03; 0 for none).
@@ -152,6 +168,31 @@ npm install --prefix scripts
 - In any headline or caption, `*word*` or `*several words*` gets the marker swash. Use it once
   per line, on the word that carries the point.
 - No emoji anywhere: the fonts don't have them, so they render as blank boxes.
+
+## Look and sound
+
+Pick the pair to suit the topic, then make sure it differs from the last three videos.
+
+| background | feel | good for |
+| --- | --- | --- |
+| `paper` | calm, classic | money, careful how-tos |
+| `sky` | cool, clear | tech, ordering, systems, the pass |
+| `butter` | sunny, warm | breakfast and coffee, guests, good news |
+| `blush` | soft, friendly | regulars, reviews, staff and people |
+| `mint` | fresh, light | waste, prep, the walk-in, health |
+| `lime` | bold, loud | myths, big numbers, punchy takes |
+
+| mood | sound | good for |
+| --- | --- | --- |
+| `bright` | strummed plucks, shaker, light kick (112 bpm) | upbeat tips, wins |
+| `lofi` | electric piano, swung hats, vinyl crackle (80 bpm) | late-night books, money, calm explainers |
+| `jazzy` | walking bass, brushes, piano (104 bpm) | cafe life, guests, the room |
+| `bounce` | pizzicato bass, marimba, claps (120 bpm) | quick lists, myths, playful topics |
+| `dreamy` | music box over a slow pad, no drums (88 bpm) | reflective, people, the why |
+| `warm` | the original soft pad, no beat | gentle or serious topics, sparingly |
+
+Each mood also brings its own wipe sound (`whoosh`, `swish` or `rustle`) and a swap or two
+(lofi pops become blips, bounce landings boing).
 
 ## Templates
 
@@ -201,7 +242,8 @@ reading-heavy scenes more.
 
 - The brand is **Roma Tom**, and it is the only name that appears on screen.
 - Only the brand palette and the two fonts (see `style/STYLE.md`). The templates already follow
-  it; don't add colors in props.
+  it; don't add colors in props. Scenes read the background's colors from `theme` (`text`,
+  `soft`, `accent`, `good`, `swash`, `mark`, `rule`), never by checking which background it is.
 - Keep text out of the safe zones: the top 220 px, the bottom 380 px, and the right 140 px.
   The templates do this; long props can break it, so check frames.
 - Kind, practical tone. No fear-mongering, no "you're doing it wrong". A friend who has run a kitchen.
@@ -209,5 +251,6 @@ reading-heavy scenes more.
   `scripts/scenes/<type>.js` with the same shape: `function draw(ctx, theme, t, props, info)`,
   plus `draw.cues = (props) => [{ t, sfx, gain }]`. Build it from `lib/kit.js` (backgrounds,
   rays, headline, tomato), `lib/marks.js` (text, ticks, loops, stars) and `lib/pen.js` (wobbly
-  lines). The sound effects are `pop`, `sprout`, `squish`, `chime`, `whoosh`, `tap`, `tick`, `scratch`, `clink` and `ding`.
-  Check it with `--frames` on both backgrounds, then add it to the table above.
+  lines). The sound effects are `pop`, `sprout`, `squish`, `chime`, `whoosh`, `tap`, `tick`, `scratch`, `clink`, `ding`, `swish`, `rustle`, `boing` and `blip`.
+  Check it with `node scripts/still.js <type> 1 paper,lime,sky,butter,blush,mint`, then add it to
+  the table above.

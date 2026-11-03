@@ -23,6 +23,8 @@ Every number shown needs a source or a worked calculation, kept in `script.md`.
 ## Format
 
 - 1080 × 1920 (9:16), 30 fps, 12 to 20 s by default
+- Music made in code in one of six moods (bright, lofi, jazzy, bounce, dreamy, warm), with sound
+  effects on the action; the mood changes from video to video like the background
 - Captions carry the story; a voiceover is optional
 - One idea per video, a hook in the first second, a takeaway at the end
 
@@ -32,8 +34,12 @@ Only the Roma Tom brand tokens:
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| paper | `#FBF5E9` | background A |
-| lime | `#ADDB30` | background B (bold, high-energy topics, end card) |
+| paper | `#FBF5E9` | background (calm) |
+| lime | `#ADDB30` | background (bold, high-energy topics, end card) |
+| sky | `#C3DFE9` | soft background (cool) |
+| butter | `#F6D66B` | soft background (sunny) |
+| blush | `#F5C8BB` | soft background (friendly) |
+| mint | `#D3E9C4` | soft background (fresh) |
 | card | `#FFFAF0` | cards, receipts, menu boards |
 | line | `#E2D4BD` | soft dividers, ruled lines |
 | ink | `#2B1B17` | all text, all outlines |
@@ -46,9 +52,15 @@ Only the Roma Tom brand tokens:
 
 Rules:
 
-- One background per video: **paper** or **lime**. Don't switch mid-video, except the end card may go lime.
-- On lime, text is ink, rose-dark or forest-dark only.
-- The highlighted word in a headline gets a marker swash behind it: lime on paper, paper on lime. The text itself stays ink.
+- Six backgrounds: **paper**, **sky**, **butter**, **blush**, **mint** and **lime**. Text on all of
+  them is ink; the end card is always lime.
+- **Vary them:** a video uses a different background (and music mood) from the last three, so the
+  feed doesn't look like one video posted over and over. One background per video, or two
+  alternating by scene.
+- On lime, text is ink, rose-dark or forest-dark only. On the soft backgrounds, rose is fine for
+  numbers; "good" green text is forest-dark.
+- The highlighted word in a headline gets a marker swash behind it: lime on paper, sky and blush;
+  paper on lime, butter and mint. The text itself stays ink.
 
 ## Type
 

@@ -50,7 +50,7 @@ function versus(ctx, theme, t, props, info = {}) {
     ctx.save();
     ctx.translate(540, TOP + 250);
     ctx.scale(v, v);
-    pen.shape(ctx, pen.ellipse(0, 0, 58, 58), { fill: theme.swash === C.lime ? C.lime : C.card, width: 6, seed: 631, offset: 0 });
+    pen.shape(ctx, pen.ellipse(0, 0, 58, 58), { fill: theme.mark, width: 6, seed: 631, offset: 0 });
     text(ctx, 'vs', 0, 20, { size: 64, align: 'center' });
     ctx.restore();
   }
