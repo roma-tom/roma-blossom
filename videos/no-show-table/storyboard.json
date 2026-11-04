@@ -1,0 +1,55 @@
+{
+  "title": "What Does One No-Show Table Really Cost?",
+  "cover": { "hero": "number", "number": "$7,280", "label": "lost a year", "kicker": "NO-SHOWS", "headline": "What does one no-show *table* cost?" },
+  "background": "blush",
+  "output": "video.mp4",
+  "scenes": [
+    {
+      "type": "hook",
+      "duration": 2.8,
+      "say": "What does one no-show table actually cost you?",
+      "props": { "kicker": "NO-SHOWS", "headline": "What does one no-show *table* cost?" }
+    },
+    {
+      "type": "receipt",
+      "duration": 4,
+      "say": "Say a table of four booked a hundred dollars of dinner. Thirty dollars of that is food you never cook. The empty chairs cost you seventy.",
+      "props": {
+        "caption": "A table of *four*, booked",
+        "title": "TABLE OF 4 · $100",
+        "items": [
+          { "label": "Booked dinner", "amount": 100.0 },
+          { "label": "Food not cooked", "amount": -30.0 }
+        ],
+        "totalLabel": "You lose"
+      }
+    },
+    {
+      "type": "floor", "peek": false,
+      "duration": 4.5,
+      "say": "And the seats sit empty, while walk-ins were told you were full.",
+      "props": { "caption": "The room *looks* full", "tables": 6, "turns": 1, "fill": 0.7, "stat": { "value": "2 empty", "label": "held for no one" } }
+    },
+    {
+      "type": "jar",
+      "duration": 4.5,
+      "say": "Two no-shows a week, at seventy dollars each, is over seven thousand dollars a year.",
+      "props": {
+        "caption": "Two a week *adds* up",
+        "lines": ["$70 lost a table", "× 2 no-shows a week", "× 52 weeks"],
+        "total": 7280,
+        "label": "a year"
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 4,
+      "say": "So: text a reminder the day before. Ask for a card on big groups. And keep a short waitlist for walk-ins.",
+      "props": {
+        "title": "The fix",
+        "steps": ["Text a reminder the day before", "Card on file for big groups", "Keep a short waitlist"]
+      }
+    },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
