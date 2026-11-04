@@ -24,8 +24,7 @@ scripts/
     marks.js          text helpers and pen marks: ticks, loops, stars, strikes, underlines
     pen.js            the seeded hand-drawn pen and the line "boil"
     motion.js         easing, springs, settle, breathe
-    music.js          the music bed: six moods, each a chord progression and a small band
-    sound.js          14 sound effects, the mixer (with the voice ducking the music) and WAV writer
+    sound.js          the warm pad, 14 sound effects, the mixer (with the voice ducking the pad) and WAV writer
     voice.js          the voiceover: Kokoro speech or babble, the mouth movements, line checks
     tomato.js         the tomato character generator: any name draws its own tomato
   fonts/              Gaegu and Inter (SIL Open Font License)
@@ -51,9 +50,8 @@ node scripts/render.js videos/tuesday-slump/storyboard.json
 ```
 
 Check frames before a full render with `--frames 80,200,320` (frame n is at n / 30 s), try
-another background with `--bg sky`, and leave out the sound with `--silent`. Set the look and
-sound in `storyboard.json` with `"background"` (paper, sky, butter, blush, mint, lime) and
-`"music": { "mood": "lofi" }` (bright, lofi, jazzy, bounce, dreamy, warm).
+another background with `--bg sky`, and leave out the sound with `--silent`. Set the look in
+`storyboard.json` with `"background"` (paper, sky, butter, blush, mint, lime).
 
 ## The voice
 

@@ -43,7 +43,7 @@ and keeps it; later renders reuse it.
      commit and push `topics.md`. No video is made.
 2. **Scaffold the folder:** `node scripts/new.js <slug>` creates `videos/<slug>/` with a
    `script.md`, a `caption.txt` and a starter `storyboard.json`. The starter already has a
-   `background` and a music `mood` that the last three videos didn't use.
+   `background` that the last three videos didn't use.
 3. **Write `script.md`:** the hook, 3 to 5 beats and the takeaway, with the exact on-screen
    text for each, what the tomato says (see **The voiceover** below), and the template each beat uses. Every number gets a fact note: a source
    (a link or a named report) or a worked calculation. When you use example figures (a made-up
@@ -58,11 +58,10 @@ and keeps it; later renders reuse it.
    the screen: do they tell the whole story on their own? Fix it yourself. The user reviews the finished video and can ask for changes.
 5. **Write `storyboard.json`** from the script (format below), with each scene's spoken line in
    `say`. The lines set the length: aim for 25 to 40 s in all, about 90 spoken words at most.
-   **Keep the feed varied:** every video should look and sound different from the last three.
-   Check them with `grep -h '"background"\|"mood"' $(ls -td videos/*/ | grep -v template-demo | head -3 | sed 's#$#storyboard.json#')`
-   and keep the scaffold's picks unless the topic suits another one better (see **Look and
-   sound** below), as long as it still differs from the last three. Never default back to paper
-   with the warm pad.
+   **Keep the feed varied:** every video should look different from the last three.
+   Check them with `grep -h '"background"' $(ls -td videos/*/ | grep -v template-demo | head -3 | sed 's#$#storyboard.json#')`
+   and keep the scaffold's pick unless the topic suits another one better (see **Look and
+   sound** below), as long as it still differs from the last three.
 6. **Check frames before the full render.** Render the end of each scene (where everything is on
    screen) and look at them:
    ```bash
@@ -147,10 +146,9 @@ and keeps it; later renders reuse it.
   "title": "Is a 10% Coupon Worth It",
   "cover": { "hero": "number" },
   "background": "sky",
-  "music": { "mood": "jazzy" },
   "output": "video.mp4",
   "sound": true,
-  "mix": { "musicGain": 0.22, "sfxGain": 0.7, "voiceGain": 1, "duck": 0.6 },
+  "mix": { "padGain": 0.22, "sfxGain": 0.7, "voiceGain": 1, "duck": 0.6 },
   "voice": { "mode": "speech", "narrator": "Roma Tom", "speed": 1 },
   "scenes": [
     { "type": "hook", "duration": 2.8, "say": "Is a ten percent coupon actually worth it?", "props": { "kicker": "MENU MATH", "headline": "…" } },
@@ -169,14 +167,9 @@ and keeps it; later renders reuse it.
 - `background`: `paper`, `sky`, `butter`, `blush`, `mint` or `lime` (see **Look and sound**). The
   end card is always lime. A list, such as `["sky", "paper"]`, alternates by scene for a
   two-tone video; one scene can also set its own `background`.
-- `music`: `mood` (below), and optional `key` (such as `"D"` or `"Bb"`; each mood has its own
-  default) and `bpm`. Tonal effects (the chime and ding) are tuned to the key, and the other
-  effects vary a little in pitch so repeats don't sound mechanical. Without `music` the video
-  gets the original warm pad.
-- `mix`: `musicGain` (default 0.22; `padGain` is the old name), `sfxGain` (0.7), `voiceGain`
-  (1), `duck` (0.6: how far the music drops under the voice; effects drop half as far), `wipe`
-  (the scene-wipe sound; the mood picks one by default) and `swap` to replace an effect
-  throughout, such as `{ "pop": "blip" }`.
+- `mix`: `padGain` (default 0.22), `sfxGain` (0.7), `voiceGain` (1), `duck` (0.6: how far the
+  pad drops under the voice; effects drop half as far), `wipe` (the scene-wipe sound, default
+  `whoosh`) and `swap` to replace an effect throughout, such as `{ "pop": "blip" }`.
 - `duration` is seconds, and with a voice it is the minimum: a scene grows to fit its line
   (the line starts 0.45 s in, as the wipe ends, with 0.45 s of quiet after it). Each scene
   after the first wipes in over the one before it with the wipe sound during its first 0.5 s.
@@ -223,7 +216,7 @@ the same story for people watching muted, so the two cover each other.
 
 ## Look and sound
 
-Pick the pair to suit the topic, then make sure it differs from the last three videos.
+Pick the background to suit the topic, then make sure it differs from the last three videos.
 
 | background | feel | good for |
 | --- | --- | --- |
@@ -234,17 +227,8 @@ Pick the pair to suit the topic, then make sure it differs from the last three v
 | `mint` | fresh, light | waste, prep, the walk-in, health |
 | `lime` | bold, loud | myths, big numbers, punchy takes |
 
-| mood | sound | good for |
-| --- | --- | --- |
-| `bright` | strummed plucks, shaker, light kick (112 bpm) | upbeat tips, wins |
-| `lofi` | electric piano, swung hats, vinyl crackle (80 bpm) | late-night books, money, calm explainers |
-| `jazzy` | walking bass, brushes, piano (104 bpm) | cafe life, guests, the room |
-| `bounce` | pizzicato bass, marimba, claps (120 bpm) | quick lists, myths, playful topics |
-| `dreamy` | music box over a slow pad, no drums (88 bpm) | reflective, people, the why |
-| `warm` | the original soft pad, no beat | gentle or serious topics, sparingly |
-
-Each mood also brings its own wipe sound (`whoosh`, `swish` or `rustle`) and a swap or two
-(lofi pops become blips, bounce landings boing).
+Every video has the same sound: the original warm pad (a soft, slowly swelling chord) under
+the voice, with sound effects on the action. There's no music to pick.
 
 ## Templates
 

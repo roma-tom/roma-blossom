@@ -9,7 +9,6 @@
 // storyboard.json:
 //   {
 //     "background": "paper" (or lime, butter, blush, sky, mint), or a list to alternate by scene,
-//     "music": { "mood": "lofi", "key": "D", "bpm": 80 },
 //     "output": "video.mp4",              (next to the storyboard; optional)
 //     "voice": { "mode": "speech" | "babble" | "off", "narrator": "Roma Tom", "speed": 1, "cast": {} },
 //     "scenes": [{ "type": "hook", "duration": 3.5, "say": "…", "speaker": "Maria", "props": { ... } }, ...]
@@ -24,9 +23,9 @@
 // peek in at the lower left (`"peek": false` on the scene leaves them out). See lib/voice.js.
 //
 // Sound: each scene module may export draw.cues(props) → [{ t (0..1 in the scene), sfx, gain }].
-// The renderer adds a wipe sound on every wipe (the mood's, or mix.wipe), mixes them over the
-// music (lib/music.js) with the voice into sound.wav (and the voice alone into voice.wav), saves
-// each effect used to sfx/<name>.wav for your own edits, and muxes the mix into the MP4.
+// The renderer adds a whoosh on every wipe (or mix.wipe), mixes them over the warm pad with the
+// voice into sound.wav (and the voice alone into voice.wav), saves each effect used to
+// sfx/<name>.wav for your own edits, and muxes the mix into the MP4.
 // The mix is normalised to -14 LUFS, the level Reels, TikTok and Shorts play at.
 // "sound": false in the storyboard (or --silent) leaves the audio out; the voice still sets
 // the timing.
@@ -39,7 +38,6 @@ const kit = require('./lib/kit.js');
 const { W, H, FPS, THEMES, frame, drawScene, pen, motion } = kit;
 const sound = require('./lib/sound.js');
 const voice = require('./lib/voice.js');
-const music = require('./lib/music.js');
 const { writeCover } = require('./cover.js');
 
 const WIPE = 0.5; // seconds
@@ -62,7 +60,6 @@ if (args.includes('--bg')) board.background = args[args.indexOf('--bg') + 1];
 const backgrounds = [].concat(board.background || 'paper');
 for (const b of backgrounds) if (!THEMES[b]) throw new Error(`unknown background "${b}" (try ${Object.keys(THEMES).join(', ')})`);
 const dir = path.dirname(file);
-if (board.music?.mood && !music.MOODS[board.music.mood]) throw new Error(`unknown music mood "${board.music.mood}" (try ${Object.keys(music.MOODS).join(', ')})`);
 
 // "voice": absent → speech; false → off; "babble" → babble; or an object.
 function voiceConfig() {
@@ -196,7 +193,7 @@ function voiceTrack() {
 function soundtrack() {
   const cues = [];
   const o = board.mix || {};
-  const wipe = o.wipe || music.MOODS[board.music?.mood]?.wipe || 'whoosh';
+  const wipe = o.wipe || 'whoosh';
   scenes.forEach((sc, i) => {
     const dur = (sc.frames - 1) / FPS, start = sc.start / FPS;
     if (i > 0) cues.push({ at: start, sfx: wipe, gain: 0.5 });
@@ -205,8 +202,7 @@ function soundtrack() {
   const vt = voiceTrack();
   if (vt) fs.writeFileSync(path.join(dir, 'voice.wav'), sound.wav(vt));
   const wavFile = path.join(dir, 'sound.wav');
-  const seed = pen.seedOf(board.title || path.basename(dir), 0);
-  const track = sound.mix(total / FPS, cues, { ...o, music: board.music, seed }, vt);
+  const track = sound.mix(total / FPS, cues, o, vt);
   fs.writeFileSync(wavFile, sound.wav(track));
   const sfxDir = path.join(dir, 'sfx');
   fs.mkdirSync(sfxDir, { recursive: true });

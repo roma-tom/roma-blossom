@@ -24,8 +24,8 @@ Every number shown needs a source or a worked calculation, kept in `script.md`.
 
 - 1080 × 1920 (9:16), 30 fps, about 25 to 40 s with the voiceover (the spoken lines set the
   length), or 12 to 20 s without one
-- Music made in code in one of six moods (bright, lofi, jazzy, bounce, dreamy, warm), with sound
-  effects on the action; the mood changes from video to video like the background
+- A warm pad made in code under the whole video (a soft, slowly swelling chord), with sound
+  effects on the action; no music
 - The voiceover tells the whole story on its own, for people listening without watching; the
   on-screen text tells it too, for people watching muted
 - One idea per video, a hook in the first second, a takeaway at the end
@@ -67,7 +67,7 @@ Rules:
 
 - Six backgrounds: **paper**, **sky**, **butter**, **blush**, **mint** and **lime**. Text on all of
   them is ink; the end card is always lime.
-- **Vary them:** a video uses a different background (and music mood) from the last three, so the
+- **Vary them:** a video uses a different background from the last three, so the
   feed doesn't look like one video posted over and over. One background per video, or two
   alternating by scene.
 - On lime, text is ink, rose-dark or forest-dark only. On the soft backgrounds, rose is fine for

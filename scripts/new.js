@@ -48,9 +48,8 @@ Mark example figures as examples here (not in the post caption).
 
 fs.writeFileSync(path.join(dir, 'caption.txt'), 'The post caption, ready to paste.\n\n#cafeowner #restaurantowner\n');
 
-// Variety: start from a background and a music mood the last three videos didn't use.
+// Variety: start from a background the last three videos didn't use.
 const BACKGROUNDS = ['paper', 'sky', 'butter', 'blush', 'mint', 'lime'];
-const MOODS = ['bright', 'lofi', 'jazzy', 'bounce', 'dreamy', 'warm'];
 const videos = path.join(__dirname, '..', 'videos');
 const order = (() => { // folders newest first: by when git first saw them, else by file time
   try {
@@ -71,12 +70,10 @@ const fresh = (all, used) => {
   return pool[[...slug].reduce((h, c) => h * 31 + c.charCodeAt(0), 7) % pool.length];
 };
 const background = fresh(BACKGROUNDS, recent.map((b) => [].concat(b.background || 'paper')[0]));
-const mood = fresh(MOODS, recent.map((b) => b.music?.mood || 'warm'));
 
 fs.writeFileSync(path.join(dir, 'storyboard.json'), JSON.stringify({
   title: 'A Concise Post Title',
   background,
-  music: { mood },
   output: 'video.mp4',
   scenes: [
     { type: 'hook', duration: 2.8, say: 'Your question, the way you would ask it out loud?', props: { kicker: 'CAFE MATH', headline: 'Your *question* goes here?' } },

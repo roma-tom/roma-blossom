@@ -1,7 +1,7 @@
 # black-friday
 
 **Question:** "Should I run 30% off on Black Friday?"
-**Background:** lime, music: bounce
+**Background:** lime
 **Length:** 39.6 s
 
 The idea: a big storewide discount fills the room but guts what you keep per guest, and the
