@@ -1,0 +1,36 @@
+{
+  "title": "What Does It Really Cost to Replace a Barista?",
+  "cover": { "hero": "tomato", "name": "Sam" },
+  "background": "blush",
+  "output": "video.mp4",
+  "mix": { "pad": "drift" },
+  "voice": { "mode": "babble" },
+  "scenes": [
+    { "type": "hook", "duration": 2.8,
+      "say": "What does it really cost to replace one barista?",
+      "props": { "kicker": "STAFF MATH", "headline": "What does losing *one barista* cost?" } },
+    { "type": "receipt", "duration": 4.5,
+      "say": "Say one barista quits. Add up the job ad, the interviews, a week of training pay, your trainer's time, the remakes and a slower line. That's about two thousand dollars.",
+      "props": { "caption": "When *one barista* quits",
+        "title": "REPLACING ONE BARISTA",
+        "items": [
+          { "label": "Job ad", "amount": 150 },
+          { "label": "Interviews", "amount": 150 },
+          { "label": "Training pay", "amount": 640 },
+          { "label": "Trainer's time", "amount": 360 },
+          { "label": "Remakes, waste", "amount": 200 },
+          { "label": "Slower line", "amount": 500 }
+        ],
+        "totalLabel": "Total" } },
+    { "type": "jar", "duration": 4.5,
+      "say": "Lose three baristas in a year, and that's six thousand dollars gone.",
+      "props": { "caption": "If *three* leave this year",
+        "lines": ["$2,000 a barista", "× 3 who leave"],
+        "total": 6000, "label": "a year" } },
+    { "type": "fix", "duration": 4,
+      "say": "So ask your team what would make them stay. A dollar an hour raise costs less than replacing one barista. And train every new hire properly.",
+      "props": { "title": "Keep them instead",
+        "steps": ["Ask what would keep them", "A $1 raise: $1,300 a year", "Train new hires properly"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
