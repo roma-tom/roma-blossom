@@ -1,0 +1,24 @@
+{
+  "title": "Do Guests Actually Like QR Code Menus?",
+  "cover": { "hero": "crowd", "names": ["Maria", "Ivan", "Dev"], "kicker": "GUESTS", "headline": "Do guests like *QR menus*?" },
+  "background": "butter",
+  "output": "video.mp4",
+  "mix": { "pad": "sunny" },
+  "scenes": [
+    { "type": "hook", "duration": 2.8, "say": "Do guests actually like QR code menus?",
+      "props": { "kicker": "GUESTS", "headline": "Do guests like *QR menus*?" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Maria",
+      "say": "I'm hungry. I just want to read a menu, not hunt for a signal on my phone.",
+      "props": { "name": "Maria", "role": "regular, lunch crowd", "quote": "I want a menu, not a *scavenger hunt*." } },
+    { "type": "quote", "duration": 4.5, "speaker": "Ivan",
+      "say": "The page wouldn't load, so I just ordered the first thing I saw. Two stars.",
+      "props": { "name": "Ivan", "role": "first-time guest", "quote": "The menu *wouldn't load*. Two stars." } },
+    { "type": "myth", "duration": 5,
+      "say": "A QR menu is cheap to change, and some guests love it. But for others it's one more hurdle before they can eat.",
+      "props": { "caption": "Myth or *fact*?", "myth": "Everyone loves a QR menu", "fact": "Some love it. Others find it one more hurdle" } },
+    { "type": "fix", "duration": 4,
+      "say": "So keep a few paper menus at the host stand. Test the code on bad Wi-Fi. And have servers offer both.",
+      "props": { "title": "The fix", "steps": ["Keep paper menus on hand", "Test the code on bad Wi-Fi", "Servers offer both"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
