@@ -99,6 +99,8 @@ Made as videos:
 - [x] Is a 10% off coupon worth it? (`videos/coupon-worth-it`)
 - [x] Why do guests love ordering on their phone? (`videos/mobile-ordering`)
 - [x] Should you run 30% off on Black Friday? (`videos/black-friday`)
+- [x] How much does one no-show table actually cost you? (receipt, floor, jar)
+- [x] Why do good staff quit after three months? (myth, countdown, fix)
 
 Examples in the style guide:
 
