@@ -23,7 +23,7 @@
 // peek in at the lower left (`"peek": false` on the scene leaves them out). See lib/voice.js.
 //
 // Sound: each scene module may export draw.cues(props) → [{ t (0..1 in the scene), sfx, gain }].
-// The renderer adds a whoosh on every wipe (or mix.wipe), mixes them over the warm pad with the
+// The renderer adds a whoosh on every wipe (or mix.wipe), mixes them over the pad (mix.pad, see lib/sound.js) with the
 // voice into sound.wav (and the voice alone into voice.wav), saves each effect used to
 // sfx/<name>.wav for your own edits, and muxes the mix into the MP4.
 // The mix is normalised to -14 LUFS, the level Reels, TikTok and Shorts play at.

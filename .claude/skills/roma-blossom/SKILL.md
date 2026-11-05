@@ -61,7 +61,8 @@ and keeps it; later renders reuse it.
    **Keep the feed varied:** every video should look different from the last three.
    Check them with `grep -h '"background"' $(ls -td videos/*/ | grep -v template-demo | head -3 | sed 's#$#storyboard.json#')`
    and keep the scaffold's pick unless the topic suits another one better (see **Look and
-   sound** below), as long as it still differs from the last three.
+   sound** below), as long as it still differs from the last three. Do the same for the pad
+   (`mix.pad`, which the scaffold also picks): `grep -h '"pad"'` over the same three files.
 6. **Check frames before the full render.** Render the end of each scene (where everything is on
    screen) and look at them:
    ```bash
@@ -149,7 +150,7 @@ and keeps it; later renders reuse it.
   "background": "sky",
   "output": "video.mp4",
   "sound": true,
-  "mix": { "padGain": 0.22, "sfxGain": 0.7, "voiceGain": 1, "duck": 0.6 },
+  "mix": { "pad": "sunny", "padGain": 0.22, "sfxGain": 0.7, "voiceGain": 1, "duck": 0.6 },
   "voice": { "mode": "speech", "narrator": "Roma Tom", "speed": 1 },
   "scenes": [
     { "type": "hook", "duration": 2.8, "say": "Is a ten percent coupon actually worth it?", "props": { "kicker": "MENU MATH", "headline": "…" } },
@@ -168,7 +169,7 @@ and keeps it; later renders reuse it.
 - `background`: `paper`, `sky`, `butter`, `blush`, `mint` or `lime` (see **Look and sound**). The
   end card is always lime. A list, such as `["sky", "paper"]`, alternates by scene for a
   two-tone video; one scene can also set its own `background`.
-- `mix`: `padGain` (default 0.22), `sfxGain` (0.7), `voiceGain` (1), `duck` (0.6: how far the
+- `mix`: `pad` (the bed under the voice, default `warm`; see **Look and sound**), `padGain` (default 0.22), `sfxGain` (0.7), `voiceGain` (1), `duck` (0.6: how far the
   pad drops under the voice; effects drop half as far), `wipe` (the scene-wipe sound, default
   `whoosh`) and `swap` to replace an effect throughout, such as `{ "pop": "blip" }`.
 - `duration` is seconds, and with a voice it is the minimum: a scene grows to fit its line
@@ -228,8 +229,19 @@ Pick the background to suit the topic, then make sure it differs from the last t
 | `mint` | fresh, light | waste, prep, the walk-in, health |
 | `lime` | bold, loud | myths, big numbers, punchy takes |
 
-Every video has the same sound: the original warm pad (a soft, slowly swelling chord) under
-the voice, with sound effects on the action. There's no music to pick.
+Under the voice there's a pad (a soft, slowly swelling chord made in code), with sound effects
+on the action. There's no music, but there are six pads, set with `mix.pad`. The scaffold
+picks one the last three videos didn't use (a video without `mix.pad` has `warm`); keep it
+unless another suits the topic better, as long as it still differs from the last three.
+
+| pad | sound | good for |
+| --- | --- | --- |
+| `warm` | Fmaj9, round (the original) | anything |
+| `sunny` | Cmaj9, open and bright | mornings, coffee, good news |
+| `mellow` | Dm9, soft and thoughtful | money, careful how-tos |
+| `cosy` | Abmaj9, deep and warm | evenings, regulars, people |
+| `drift` | Fmaj9 drifting to Dm9 and back | longer videos, calm topics |
+| `sway` | Cmaj9 swaying to Am9 | hopeful, light, quick wins |
 
 ## Templates
 

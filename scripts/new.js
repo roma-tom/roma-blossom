@@ -48,7 +48,7 @@ Mark example figures as examples here (not in the post caption).
 
 fs.writeFileSync(path.join(dir, 'caption.txt'), 'The post caption, ready to paste.\n\n#cafeowner #restaurantowner');
 
-// Variety: start from a background the last three videos didn't use.
+// Variety: start from a background and a pad the last three videos didn't use.
 const BACKGROUNDS = ['paper', 'sky', 'butter', 'blush', 'mint', 'lime'];
 const videos = path.join(__dirname, '..', 'videos');
 const order = (() => { // folders newest first: by when git first saw them, else by file time
@@ -70,11 +70,13 @@ const fresh = (all, used) => {
   return pool[[...slug].reduce((h, c) => h * 31 + c.charCodeAt(0), 7) % pool.length];
 };
 const background = fresh(BACKGROUNDS, recent.map((b) => [].concat(b.background || 'paper')[0]));
+const pad = fresh(Object.keys(require('./lib/sound.js').PADS), recent.map((b) => b.mix?.pad || 'warm'));
 
 fs.writeFileSync(path.join(dir, 'storyboard.json'), JSON.stringify({
   title: 'A Concise Post Title',
   background,
   output: 'video.mp4',
+  mix: { pad },
   scenes: [
     { type: 'hook', duration: 2.8, say: 'Your question, the way you would ask it out loud?', props: { kicker: 'CAFE MATH', headline: 'Your *question* goes here?' } },
     { type: 'fix', duration: 4, say: 'So: the first step. The second step. And the third step.', props: { title: 'The fix', steps: ['First step', 'Second step', 'Third step'] } },

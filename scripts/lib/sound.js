@@ -169,24 +169,59 @@ const SFX = {
   },
 };
 
-// The bed under everything: a soft Fmaj9 chord, gently detuned, swelling slowly.
-function pad(sec) {
+// The beds: soft chords, gently detuned, swelling slowly, under the whole video. Each is one
+// chord, or two that drift into each other every `every` seconds. Notes in Hz, lowest first;
+// the lowest is the root and sits a little louder. cutoff is the lowpass (Hz) that keeps it warm.
+const PADS = {
+  // The original: Fmaj9, warm and round.
+  warm: { chords: [[87.31, 174.61, 220, 261.63, 329.63, 392]], cutoff: 1400 },
+  // Cmaj9, open and a little brighter: sunny mornings, good news.
+  sunny: { chords: [[65.41, 130.81, 196, 246.94, 293.66, 329.63]], cutoff: 1700 },
+  // Dm9, soft and thoughtful: careful money talk.
+  mellow: { chords: [[73.42, 146.83, 174.61, 220, 261.63, 329.63]], cutoff: 1250 },
+  // Abmaj9, deep and cosy: evenings, regulars.
+  cosy: { chords: [[103.83, 155.56, 196, 233.08, 261.63, 311.13]], cutoff: 1300 },
+  // Fmaj9 drifting to Dm9 and back: gentle movement for longer videos.
+  drift: { chords: [[87.31, 174.61, 220, 261.63, 329.63, 392], [73.42, 146.83, 174.61, 220, 261.63, 329.63]], every: 6, cutoff: 1400 },
+  // Cmaj9 swaying to Am9: light and hopeful.
+  sway: { chords: [[65.41, 130.81, 196, 246.94, 293.66, 329.63], [110, 164.81, 196, 246.94, 261.63, 329.63]], every: 5, cutoff: 1600 },
+};
+
+// How loud chord j of n is at time t (0 to 1): each holds for `every` s, crossfading over 2 s.
+function chordWeight(t, j, n, every) {
+  if (n === 1) return 1;
+  const fade = Math.min(2, every / 2);
+  const pos = t / every, k = Math.floor(pos), u = (pos - k) * every; // seconds into chord k
+  const cur = k % n, next = (k + 1) % n;
+  const x = Math.max(0, (u - (every - fade)) / fade); // 0 until the crossfade, then to 1
+  const into = 0.5 - 0.5 * Math.cos(Math.PI * x);
+  return (j === cur ? 1 - into : 0) + (j === next ? into : 0);
+}
+
+// The bed under everything, by name (see PADS; default warm).
+function pad(sec, name = 'warm') {
+  const def = PADS[name];
+  if (!def) throw new Error(`unknown pad "${name}" (one of: ${Object.keys(PADS).join(', ')})`);
+  const { chords, every = 6, cutoff } = def;
   const b = buf(sec);
-  const notes = [87.31, 174.61, 220, 261.63, 329.63, 392];
   for (let i = 0; i < b.length; i++) {
     const t = i / SR;
     let s = 0;
-    notes.forEach((f, k) => {
-      const swell = 0.75 + 0.25 * Math.sin(TAU * (0.07 + k * 0.013) * t + k);
-      for (const d of [-0.18, 0.18]) {
-        const ph = TAU * (f + d) * t;
-        s += swell * (Math.sin(ph) + 0.3 * Math.sin(2 * ph) + 0.08 * Math.sin(3 * ph)) / (k === 0 ? 1.2 : 2);
-      }
+    chords.forEach((notes, j) => {
+      const w = chordWeight(t, j, chords.length, every);
+      if (w <= 0) return;
+      notes.forEach((f, k) => {
+        const swell = 0.75 + 0.25 * Math.sin(TAU * (0.07 + k * 0.013) * t + k);
+        for (const d of [-0.18, 0.18]) {
+          const ph = TAU * (f + d) * t;
+          s += w * swell * (Math.sin(ph) + 0.3 * Math.sin(2 * ph) + 0.08 * Math.sin(3 * ph)) / (k === 0 ? 1.2 : 2);
+        }
+      });
     });
     const fade = Math.min(1, t / 1.2, (sec - t) / 1.5);
-    b[i] = (s / notes.length) * Math.max(0, fade);
+    b[i] = (s / chords[0].length) * Math.max(0, fade);
   }
-  return lowpass(b, 1400);
+  return lowpass(b, cutoff);
 }
 
 // How much to duck the bed under the voice, per sample (0 to 1): fast in, slow out.
@@ -205,10 +240,10 @@ function duckEnvelope(voice, n) {
 
 // Mix the pad, every cue ({ at: seconds, sfx, gain }) and the voice into one track. Under the
 // voice the pad drops by o.duck (default 0.6) and the effects by half that.
-// o: { padGain, sfxGain, voiceGain, duck, swap: { pop: 'blip' } }
+// o: { pad, padGain, sfxGain, voiceGain, duck, swap: { pop: 'blip' } }
 function mix(sec, cues, o = {}, voice = null) {
   const out = buf(sec);
-  const bed = pad(sec);
+  const bed = pad(sec, o.pad);
   const gain = o.padGain ?? 0.22;
   const duck = duckEnvelope(voice, out.length), depth = o.duck ?? 0.6;
   for (let i = 0; i < out.length; i++) out[i] = bed[i] * gain * (1 - depth * duck[i]);
@@ -253,4 +288,4 @@ function wav(samples) {
   return Buffer.concat([h, data]);
 }
 
-module.exports = { SR, SFX, pad, mix, wav };
+module.exports = { SR, SFX, PADS, pad, mix, wav };

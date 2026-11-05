@@ -24,8 +24,8 @@ Every number shown needs a source or a worked calculation, kept in `script.md`.
 
 - 1080 × 1920 (9:16), 30 fps, about 25 to 40 s with the voiceover (the spoken lines set the
   length), or 12 to 20 s without one
-- A warm pad made in code under the whole video (a soft, slowly swelling chord), with sound
-  effects on the action; no music
+- A warm pad made in code under the whole video (a soft, slowly swelling chord, one of six so
+  the feed doesn't sound the same), with sound effects on the action; no music
 - The voiceover tells the whole story on its own, for people listening without watching; the
   on-screen text tells it too, for people watching muted
 - One idea per video, a hook in the first second, a takeaway at the end
