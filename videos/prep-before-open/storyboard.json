@@ -1,0 +1,22 @@
+{
+  "title": "What to Prep Before the Doors Open",
+  "cover": { "hero": "headline" },
+  "background": "mint",
+  "output": "video.mp4",
+  "scenes": [
+    { "type": "hook", "duration": 2.8, "say": "What should be ready before you unlock the door?",
+      "props": { "kicker": "OPENING", "headline": "Ready before the *doors* open?" } },
+    { "type": "day", "duration": 4.5,
+      "say": "Work backwards from opening. Clean first, then stock the stations, then the first drink, then unlock.",
+      "props": { "caption": "Work *backwards* from open",
+        "steps": [ {"time":"-60 min","label":"Clean and switch on"}, {"time":"-40 min","label":"Stock every station"}, {"time":"-20 min","label":"Dial in the coffee"}, {"time":"-10 min","label":"Taste and check"}, {"time":"Open","label":"Unlock"} ],
+        "highlight": 1 } },
+    { "type": "quote", "duration": 4.5, "speaker": "Dev",
+      "say": "If I'm hunting for lids at eight in the morning, I've already lost the rush.",
+      "props": { "name": "Dev", "role": "line cook", "quote": "Hunting for lids at 8 means I've *lost* the rush." } },
+    { "type": "fix", "duration": 4,
+      "say": "So: write one opening list. Stock to a set level every night. And taste the first drink before guests do.",
+      "props": { "title": "The fix", "steps": ["One opening list", "Restock to a set level", "Taste before guests do"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}

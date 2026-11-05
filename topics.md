@@ -10,7 +10,6 @@ The topics are mixed so that consecutive videos cover different areas: money, st
 
 ## Up next
 
-- [ ] What should be prepped before the doors open? (day, fix)
 - [ ] Should you charge extra for oat milk? (receipt, versus)
 - [ ] Do guests actually like QR code menus? (versus, quote)
 - [ ] What does it really cost to replace one barista? (receipt, jar)
@@ -99,6 +98,7 @@ Made as videos:
 - [x] How much does one no-show table actually cost you? (receipt, floor, jar)
 - [x] Why do good staff quit after three months? (myth, countdown, fix)
 - [x] How do you get more Google reviews without begging? (`videos/google-reviews`)
+- [x] What should be prepped before the doors open? (`videos/prep-before-open`)
 
 Examples in the style guide:
 
