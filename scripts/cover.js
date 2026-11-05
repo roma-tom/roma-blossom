@@ -4,9 +4,11 @@
 //   node scripts/cover.js videos/<slug>/storyboard.json            → videos/<slug>/cover.jpg
 //   node scripts/cover.js videos/<slug>/storyboard.json --guides   → also out/<slug>-cover-guides.png
 //
-// The image is 1080 × 1920, but everything that matters sits inside the center square
-// (y 420 to 1500): Instagram and TikTok grids crop covers to about 3:4, feeds and some
-// previews to 4:5 or 1:1, and Facebook shows the whole frame. --guides draws those crops.
+// The image is 1080 × 1920. The kicker, question and focal point are laid out to fit the
+// center square (y 420 to 1500); then the whole group, the Roma Tom name included, is moved so
+// its drawn pixels sit exactly in the vertical middle of the frame. Instagram and TikTok grids
+// crop covers to about 3:4, feeds and some previews to 4:5 or 1:1, and Facebook shows the
+// whole frame. --guides draws those crops.
 //
 // The text comes from the first hook scene. The focal point under it ("hero") varies so a feed
 // of covers doesn't repeat:
@@ -90,23 +92,24 @@ function pickHero(board, o, slug) {
   return { kind, ...options[kind] };
 }
 
-// Draw the focal point into the box from y0 to y1 (inside the square).
+// Draw the focal point into the box from y0 to y1 (inside the square). Returns where its
+// sunrise goes, for the caller to draw behind everything once the layout is final.
 function drawHero(ctx, theme, hero, y0, y1) {
   const room = y1 - y0;
   // A tomato `s` wide reaches about 0.38 s above its center (stem) and 0.36 s below (body).
   if (hero.kind === 'tomato' || hero.kind === 'host') {
     const s = Math.max(300, Math.min(640, room / 0.74));
     const cy = y0 + 0.38 * s;
-    rays(ctx, theme, { cx: W / 2, cy, spin: -Math.PI / 2 + 0.2, reach: 1100 });
     tomato(ctx, hero.kind === 'host' ? HOST : hero.name, W / 2, cy, s);
+    return { cx: W / 2, cy, spin: -Math.PI / 2 + 0.2, reach: 1100 };
   } else if (hero.kind === 'crowd') {
     const s = Math.max(260, Math.min(330, room / 0.74));
     const cy = y0 + 0.38 * s;
-    rays(ctx, theme, { cx: W / 2, cy, spin: -Math.PI / 2 + 0.2, reach: 1100 });
     hero.names.forEach((n, i) => {
       const side = i === 0 ? 0 : i === 1 ? -1 : 1;
       tomato(ctx, n, W / 2 + side * 300, cy + Math.abs(side) * 24, side ? s * 0.9 : s, { angle: side * 0.12 });
     });
+    return { cx: W / 2, cy, spin: -Math.PI / 2 + 0.2, reach: 1100 };
   } else if (hero.kind === 'number') {
     // The circle reaches about 0.62 × size above and below the number's middle; the label sits
     // under the circle. Shrink the number until all of it fits the room.
@@ -114,12 +117,30 @@ function drawHero(ctx, theme, hero, y0, y1) {
     let size = 260;
     while (size > 100 && (measure(hero.number, { size }) > 760 || size * 1.3 + labelH > room)) size -= 10;
     const cy = y0 + (room - labelH) / 2;
-    rays(ctx, theme, { cx: W / 2, cy, spin: 0.3, reach: 1000 });
     const w = measure(hero.number, { size });
     text(ctx, hero.number, W / 2, cy + size * 0.32, { size, align: 'center', color: theme.accent });
     loop(ctx, W / 2, cy, w / 2 + 50, size * 0.62, 1, theme.accent, 77, 9);
     if (hero.label) text(ctx, hero.label, W / 2, cy + size * 0.65 + 70, { size: 64, align: 'center' });
+    return { cx: W / 2, cy, spin: 0.3, reach: 1000 };
   }
+  return null;
+}
+
+// The rows a layer's drawn (non-transparent) pixels span, as { top, bottom }.
+function inkRows(canvas) {
+  const { data } = canvas.getContext('2d').getImageData(0, 0, W, H);
+  let top = -1, bottom = -1;
+  for (let y = 0; y < H; y++) {
+    const row = y * W * 4;
+    for (let x = 0; x < W; x++) {
+      if (data[row + x * 4 + 3] > 24) {
+        if (top < 0) top = y;
+        bottom = y;
+        break;
+      }
+    }
+  }
+  return top < 0 ? { top: H / 2, bottom: H / 2 } : { top, bottom: bottom + 1 };
 }
 
 function renderCover(board, slug = '') {
@@ -127,11 +148,10 @@ function renderCover(board, slug = '') {
   const o = { ...hook, ...(board.cover || {}) };
   const theme = THEMES[o.background || [].concat(board.background || 'paper')[0]];
   const hero = pickHero(board, o, slug);
-  const { canvas, ctx } = frame();
   pen.setBoil(0);
-  background(ctx, theme);
 
-  // Kicker, then the question, then the focal point in whatever room is left in the square.
+  // Lay out the kicker, the question and the focal point on a clear layer first.
+  const { canvas: layer, ctx: lc } = frame();
   const kickerY = SQUARE.top + 80;
   const top = kickerY + 70;
   const alone = hero.kind === 'headline';
@@ -140,22 +160,31 @@ function renderCover(board, slug = '') {
     : fitHeadline(theme, o.headline || '', 520);
   const { ctx: probe } = frame();
   const height = headline(probe, theme, o.headline || '', { y: 0, size, maxW: 900 });
-  // On its own, the question sits in the middle of the square's remaining space.
   const headTop = alone ? top + (SQUARE.bottom - 40 - top - height) / 2 : top;
-  if (alone) rays(ctx, theme, { cx: W / 2, cy: SQUARE.bottom + 200, spin: -Math.PI / 2, reach: 1300 });
-  else drawHero(ctx, theme, hero, headTop + height + 10, SQUARE.bottom - 20);
-  if (o.kicker) kicker(ctx, o.kicker, W / 2, kickerY);
-  headline(ctx, theme, o.headline || '', { y: headTop, size, maxW: 900, seed: 9 });
+  const sun = alone
+    ? { cx: W / 2, cy: SQUARE.bottom + 200, spin: -Math.PI / 2, reach: 1300 }
+    : drawHero(lc, theme, hero, headTop + height + 10, SQUARE.bottom - 20);
+  if (o.kicker) kicker(lc, o.kicker, W / 2, kickerY);
+  headline(lc, theme, o.headline || '', { y: headTop, size, maxW: 900, seed: 9 });
 
-  // The name, below the square: crops hide it, but full-frame views (Facebook) show it.
-  ctx.save();
-  ctx.font = '700 96px Gaegu';
-  ctx.letterSpacing = '-2px';
-  ctx.fillStyle = C.ink;
-  ctx.textAlign = 'center';
-  ctx.fillText(HOST, W / 2, SQUARE.bottom + 190);
-  ctx.letterSpacing = '0px';
-  ctx.restore();
+  // The name, a little under the rest, as part of the same group.
+  const above = inkRows(layer);
+  lc.save();
+  lc.font = '700 96px Gaegu';
+  lc.letterSpacing = '-2px';
+  lc.fillStyle = C.ink;
+  lc.textAlign = 'center';
+  lc.fillText(HOST, W / 2, above.bottom + 150);
+  lc.letterSpacing = '0px';
+  lc.restore();
+
+  // Then move the whole group so its drawn pixels sit exactly in the middle of the frame.
+  const ink = inkRows(layer);
+  const dy = Math.round(H / 2 - (ink.top + ink.bottom) / 2);
+  const { canvas, ctx } = frame();
+  background(ctx, theme);
+  if (sun) rays(ctx, theme, { ...sun, cy: sun.cy + dy });
+  ctx.drawImage(layer, 0, dy);
   return { canvas, hero: hero.kind };
 }
 
