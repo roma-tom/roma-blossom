@@ -98,7 +98,7 @@ Made as videos:
 - [x] Should you run 30% off on Black Friday? (`videos/black-friday`)
 - [x] How much does one no-show table actually cost you? (receipt, floor, jar)
 - [x] Why do good staff quit after three months? (myth, countdown, fix)
-- [x] How do you get more Google reviews without begging? (review, fix)
+- [x] How do you get more Google reviews without begging? (`videos/google-reviews`)
 
 Examples in the style guide:
 

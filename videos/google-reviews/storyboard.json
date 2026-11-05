@@ -1,0 +1,23 @@
+{
+  "title": "How to Get More Google Reviews Without Begging",
+  "cover": { "hero": "tomato", "name": "Maria" },
+  "background": "blush",
+  "output": "video.mp4",
+  "scenes": [
+    { "type": "hook", "duration": 2.8, "say": "How do you get more Google reviews without begging?",
+      "props": { "kicker": "GUEST LOVE", "headline": "More Google reviews, without *begging*?" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Maria",
+      "say": "Here's the thing. Happy guests don't think about reviews. Maria loved her latte, then she just went back to work.",
+      "props": { "name": "Maria", "role": "Happy regular", "quote": "Loved my latte. Totally forgot to *review* it." } },
+    { "type": "day", "duration": 4.5, "highlight": 1,
+      "say": "So ask at the happy moment. When a guest says it was lovely, say thank you, and ask if they'd share that online.",
+      "props": { "steps": [ { "time": "Order", "label": "Say hello" }, { "time": "Praise", "label": "Ask right here" }, { "time": "Leaving", "label": "Thank them" } ] } },
+    { "type": "review", "duration": 5.5, "speaker": "Maria",
+      "say": "Then reply to every review, short and warm. New guests read the replies, and they see someone who cares.",
+      "props": { "caption": "Reply to *every* review", "name": "Maria", "stars": 5, "text": "Best flat white in town, and they remembered my name.", "reply": "Thank you Maria! Your usual is waiting whenever you're ready.", "owner": "Roma Tom" } },
+    { "type": "fix", "duration": 4,
+      "say": "So: ask when they smile. Make it easy with a small card and a link. And reply to every single review.",
+      "props": { "title": "The fix", "steps": ["Ask when they smile", "A card with the link", "Reply to every review"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
