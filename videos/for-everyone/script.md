@@ -2,7 +2,7 @@
 
 **Question:** "Should your cafe try to be for everyone?"
 **Background:** blush (pad: sunny)
-**Length:** about 35 s
+**Length:** about 31 s (no hook scene: it opens on the street; the cover carries the question)
 
 The idea: a sign that tries to speak to everyone doesn't give anyone walking by a reason to
 stop. A sign that names one guest and their problem (office workers with a short lunch break)
@@ -13,12 +13,11 @@ best, say it on the sign, and build the menu for them.
 
 | # | Template | On screen | Says | Time |
 | --- | --- | --- | --- | --- |
-| 1 | hook | Kicker: GUESTS / Headline: Should your cafe be for *everyone*? | Should your cafe try to be for everyone? | 2.8 s |
-| 2 | street (new) | Same street. Same *guests*. / MON to WED / top shop "Lunch for everyone", owner Gus shouting new extras (Something for all! Now with soup! Tacos too!), 0 → 1 came in / bottom shop "Lunch in 10 minutes", owner Lina, 2 → 9 came in | Picture two cafes on one street. One sign says lunch for everyone. The other says lunch in ten minutes. | ~7 s |
-| 3 | street (new) | The *specific* one wins / THU, FRI / top 1 → 2 (Now with sushi! Free balloons!) / bottom 9 → 20, circled | Office workers on a short break walk past the first one. The second one is clearly for them. | ~7 s |
-| 4 | myth | Myth: A narrow sign turns guests away / Fact: A clear sign tells the right guests to stop | A narrow sign feels like it turns people away. Really, it tells the right people to stop. | ~6 s |
-| 5 | fix | Try this: Pick the guest you serve best / Name them on your sign / Build the menu around them | So pick the guest you serve best. Name them on your sign. Then build the menu around them. | ~6 s |
-| 6 | endcard | Follow for more *owner* tips | Follow for more owner tips. | 2.6 s |
+| 1 | street (new) | Same street. Same *guests*. / MON to WED / top shop "Lunch for everyone", owner Gus shouting new extras (Something for all! Now with soup! Tacos too!), 0 → 1 came in / bottom shop "Lunch in 10 minutes", owner Lina, 2 → 9 came in | Picture two cafes on one street. One sign says lunch for everyone. The other says lunch in ten minutes. | ~7 s |
+| 2 | street (new) | The *specific* one wins / THU, FRI / top 1 → 2 (Now with sushi! Free balloons!) / bottom 9 → 20, circled | Office workers on a short break walk past the first one. The second one is clearly for them. | ~7 s |
+| 3 | myth | Myth: A narrow sign turns guests away / Fact: A clear sign tells the right guests to stop | A narrow sign feels like it turns people away. Really, it tells the right people to stop. | ~6 s |
+| 4 | fix | Try this: Pick the guest you serve best / Name them on your sign / Build the menu around them | So pick the guest you serve best. Name them on your sign. Then build the menu around them. | ~6 s |
+| 5 | endcard | Follow for more *owner* tips | Follow for more owner tips. | 2.6 s |
 
 ## Fact notes
 

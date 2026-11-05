@@ -110,7 +110,7 @@ function shop(ctx, theme, o, top, seed, sec, appear, stripe) {
 
 function lane(ctx, theme, t, p, key, sec) {
   const o = p[key] || {}, top = LANES[key], g = top + GROUND, seed = key === 'top' ? 2500 : 2600;
-  const appear = easeOut(seg(t, 0.02, 0.1));
+  const appear = 1; // shops and counts are there from the first frame, so the scene can open a video
   const winner = p.winner === key, loser = p.winner && !winner;
   const fade = easeOut(seg(t, 0.88, 0.96));
 
@@ -183,7 +183,7 @@ function street(ctx, theme, t, props, info = {}) {
   // The day pill.
   const days = daysOf(props);
   const d = clamp(Math.floor((t - WALK0) / ((WALK1 - WALK0) / days.length)), 0, days.length - 1);
-  if (t > 0.03) kicker(ctx, days[d], 540, 488, { seed: 2710 + d });
+  kicker(ctx, days[d], 540, 488, { seed: 2710 + d });
 }
 
 street.cues = (props) => {
