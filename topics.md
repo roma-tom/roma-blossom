@@ -10,7 +10,6 @@ The topics are mixed so that consecutive videos cover different areas: money, st
 
 ## Up next
 
-- [ ] Should you charge extra for oat milk? (receipt, versus)
 - [ ] Do guests actually like QR code menus? (versus, quote)
 - [ ] What does it really cost to replace one barista? (receipt, jar)
 - [ ] Should you take reservations or stay walk-in only? (versus, scale)
@@ -99,6 +98,7 @@ Made as videos:
 - [x] Why do good staff quit after three months? (myth, countdown, fix)
 - [x] How do you get more Google reviews without begging? (`videos/google-reviews`)
 - [x] What should be prepped before the doors open? (`videos/prep-before-open`)
+- [x] Should you charge extra for oat milk? (`videos/oat-milk-charge`)
 
 Examples in the style guide:
 

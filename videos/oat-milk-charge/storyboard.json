@@ -1,0 +1,29 @@
+{
+  "title": "Should You Charge Extra for Oat Milk?",
+  "cover": { "hero": "number", "number": "$8,100", "label": "a year, if you don't" },
+  "background": "sky",
+  "output": "video.mp4",
+  "mix": { "pad": "mellow" },
+  "scenes": [
+    { "type": "hook", "duration": 2.8, "say": "Should you charge extra for oat milk?",
+      "props": { "kicker": "CAFE MATH", "headline": "Charge extra for *oat milk*?" } },
+    { "type": "scale", "duration": 4.5,
+      "say": "Say the dairy milk in a latte costs you a quarter. Oat milk, about a dollar. That's seventy-five cents more, every cup.",
+      "props": { "caption": "Milk cost per *latte*",
+        "left": { "label": "Dairy 25c", "weight": 1 },
+        "right": { "label": "Oat $1.00", "weight": 4 },
+        "verdict": "Oat costs *75c* more" } },
+    { "type": "jar", "duration": 4.5,
+      "say": "Thirty oat drinks a day, with no charge? That's about eight thousand dollars a year.",
+      "props": { "caption": "If you *don't* charge",
+        "lines": ["75c more a drink", "× 30 oat drinks a day", "× 360 days"],
+        "total": 8100, "label": "a year" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Maria",
+      "say": "I don't mind paying a bit more. I just don't want a surprise at the till.",
+      "props": { "name": "Maria", "role": "regular, oat latte", "quote": "Paying more is fine. A *surprise* isn't." } },
+    { "type": "fix", "duration": 4,
+      "say": "So: charge about the seventy-five cent gap. Show it on the menu board. Or add a little to every latte instead.",
+      "props": { "title": "The fix", "steps": ["Charge the gap, about 75c", "Show it on the menu board", "Or add a bit to every latte"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
