@@ -99,6 +99,7 @@ Made as videos:
 - [x] How do you get more Google reviews without begging? (`videos/google-reviews`)
 - [x] What should be prepped before the doors open? (`videos/prep-before-open`)
 - [x] Should you charge extra for oat milk? (`videos/oat-milk-charge`)
+- [x] Should your cafe try to be for everyone? (`videos/for-everyone`)
 
 Examples in the style guide:
 
