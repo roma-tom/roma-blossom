@@ -13,6 +13,13 @@ const t = Number(process.argv[3] ?? 1);
 
 const props = {
   hook: { kicker: 'CAFE MATH', headline: 'Why does your best seller make the *least* money?' },
+  street: {
+    caption: 'Same street. *Same* guests.',
+    days: ['MON', 'TUE', 'WED'],
+    top: { label: 'FOR EVERYONE', sign: 'Lunch for *everyone*', owner: 'Sam', counts: [0, 1, 2], shouts: ['Something for all!', 'Now with soup!', 'Tacos too!'] },
+    bottom: { label: 'FOR SOMEONE', sign: 'Lunch in *10 minutes*', owner: 'Dev', counts: [2, 7, 15] },
+    winner: 'bottom',
+  },
 }[type] || {};
 const scene = { type, draw: require(`./scenes/${type}.js`), props, push: 0 };
 
