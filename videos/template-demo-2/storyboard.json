@@ -27,7 +27,7 @@
     { "type": "tickets", "duration": 4.5, "props": {
       "caption": "Watch the *ticket* times",
       "tickets": [
-        { "table": "T4", "items": ["2 flat white", "1 toastie"], "minutes": 6 },
+        { "table": "T4", "items": ["2 flat white", "1 panini"], "minutes": 6 },
         { "table": "T7", "items": ["1 big brekkie", "1 oat latte"], "minutes": 15 },
         { "table": "T2", "items": ["2 pancakes", "1 juice"], "minutes": 9 }
       ],
@@ -47,7 +47,7 @@
         { "from": "them", "text": "Can't do Saturday, sorry! Sister's wedding!" },
         { "from": "me", "text": "Thanks for the heads up! I'll ask Ana." },
         { "from": "them", "text": "Legend. I can cover her Tuesday." },
-        { "from": "me", "text": "Done. Rota updated." }
+        { "from": "me", "text": "Done. Schedule updated." }
       ] } },
     { "type": "myth", "duration": 5, "props": {
       "caption": "Myth or *fact*?",
@@ -61,7 +61,7 @@
       "items": ["Wipe the menu boards", "Fix the wobbly table", "Learn 5 regulars' names"] } },
     { "type": "scale", "duration": 4.5, "props": {
       "caption": "What guests *weigh*",
-      "left": { "label": "50c cheaper", "weight": 1 },
+      "left": { "label": "50¢ cheaper", "weight": 1 },
       "right": { "label": "A warm hello", "weight": 3 },
       "verdict": "Price matters, *feeling* matters more" } },
     { "type": "stampcard", "duration": 4.5, "props": {
@@ -74,7 +74,7 @@
     { "type": "pricetag", "duration": 4.5, "props": {
       "caption": "Raise prices *a little*",
       "item": "Flat white", "from": "$4.50", "to": "$4.80",
-      "note": "*30c* once a year, not $1 at once" } },
+      "note": "*30¢* once a year, not $1 at once" } },
     { "type": "trend", "duration": 4.5, "props": {
       "caption": "Replies *pay* off",
       "label": "COVERS PER WEEK",

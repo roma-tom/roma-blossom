@@ -6,7 +6,9 @@ run a kitchen, not a pitch. Roma Tom products are never the topic; the owner's p
 
 ## Audience and topics
 
-Independent cafe, bakery, bar and restaurant owners and managers. They care about:
+Independent cafe, bakery, bar and restaurant owners and managers **in the United States**.
+Everything is written and spoken in American English, with prices in dollars and cents (see
+**American English** in `.claude/skills/roma-blossom/SKILL.md`). They care about:
 
 - **Money:** food cost, margins, menu pricing, waste, the real cost of a dish, cash flow
 - **People:** hiring, keeping staff, scheduling, training, tips, burnout
@@ -35,7 +37,7 @@ Every number shown needs a source or a worked calculation, kept in `script.md`.
 - The tomatoes speak. Roma Tom narrates; a guest can say their own line. Whoever speaks moves
   their mouth with the voice, and peeks in at the lower left if the scene doesn't show them.
 - The voice is Kokoro, run on this computer: Roma Tom is `am_michael`, and every other name
-  picks its own voice, so a recurring character always sounds the same.
+  picks its own American voice (never a British one), so a recurring character always sounds the same.
 - Warm and plain, like a friend across the counter: short sentences, numbers said the way
   people say them, no jargon.
 - Babble (cartoon syllables, no words) is the other mode, for lighter videos when asked.
@@ -115,13 +117,13 @@ for each are in `.claude/skills/roma-blossom/SKILL.md`.
 
 1. **Hook.** The question in big Gaegu with one word on a marker swash, a kicker pill above it
    ("CAFE MATH", "STAFF", "GUESTS"), and Roma Tom rising like the sun at the bottom, with pale rays behind.
-2. **The Receipt.** A paper till receipt prints line by line: the price of a dish, then food cost,
-   labour, rent, card fees… and the small number left at the bottom, circled in rose. For margins,
+2. **The Receipt.** A paper register receipt prints line by line: the price of a dish, then food cost,
+   labor, rent, card fees… and the small number left at the bottom, circled in rose. For margins,
    the real cost of a coffee, and why a discount hurts.
 3. **The Menu Board.** A hand-drawn menu card with items and prices. Items get stars, crosses,
    arrows and circled prices to show menu engineering: what sells, what earns, where the eye goes,
    price anchoring, "$12" vs "12".
-4. **The Rush.** A day drawn as a row of hourly bars, with a little queue of tomato guests growing
+4. **The Rush.** A day drawn as a row of hourly bars, with a little line of tomato guests growing
    at the door during the peak and a clock face. For staffing, slow afternoons, prep timing, ticket times.
 5. **The Regulars.** A crowd of named tomatoes. Some get a stamp card that fills and keep coming
    back; others fade away. Counts tick up beside them. For retention, loyalty, "it costs more to win a new
@@ -150,6 +152,6 @@ for each are in `.claude/skills/roma-blossom/SKILL.md`.
 21. **The Floor.** The dining room from above; guests sit, leave and new ones sit, turn after turn.
 22. **The Price Tag.** A swinging tag: the old price is crossed out and the new one written in.
 23. **The Trend.** A line chart drawing itself across the weeks, with a pinned note where something changed.
-24. **The Rota.** A week of shifts filling in, with the headcount underneath and the thin day circled.
+24. **The Rota** (the schedule). A week of shifts filling in, with the headcount underneath and the thin day circled.
 
 Plus a fixed **end card** on lime: the Roma Tom tomato, "Follow for more owner tips" and the handle.

@@ -38,6 +38,7 @@ const kit = require('./lib/kit.js');
 const { W, H, FPS, THEMES, frame, drawScene, pen, motion } = kit;
 const sound = require('./lib/sound.js');
 const voice = require('./lib/voice.js');
+const american = require('./lib/american.js');
 const { writeCover } = require('./cover.js');
 
 const WIPE = 0.5; // seconds
@@ -60,6 +61,16 @@ if (args.includes('--bg')) board.background = args[args.indexOf('--bg') + 1];
 const backgrounds = [].concat(board.background || 'paper');
 for (const b of backgrounds) if (!THEMES[b]) throw new Error(`unknown background "${b}" (try ${Object.keys(THEMES).join(', ')})`);
 const dir = path.dirname(file);
+
+// American English only: stop on British words or spellings anywhere a viewer sees or hears them.
+{
+  const capFile = path.join(dir, 'caption.txt');
+  const found = american.checkBoard(board, fs.existsSync(capFile) ? fs.readFileSync(capFile, 'utf8') : null);
+  if (found.length) {
+    console.error(`stopped: the audience is American, so fix these British words or spellings first:\n  ${found.join('\n  ')}`);
+    process.exit(1);
+  }
+}
 
 // "voice": absent → speech; false → off; "babble" → babble; or an object.
 function voiceConfig() {

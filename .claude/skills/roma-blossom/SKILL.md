@@ -5,8 +5,8 @@ description: Make a short, hand-drawn vertical explainer video (1080×1920 MP4 w
 
 # Roma Blossom videos
 
-Short explainers that help independent cafe and restaurant owners with one real problem at a
-time. They are drawn by hand on paper or lime, hosted by Roma Tom (a tomato), and posted to grow
+Short explainers that help independent cafe and restaurant owners in the **United States** with
+one real problem at a time. They are drawn by hand on paper or lime, hosted by Roma Tom (a tomato), and posted to grow
 a following. They are advice, not ads: never pitch a Roma Tom product.
 
 Everything lives in this repository's root: the folder that holds `.claude/`, three
@@ -50,12 +50,13 @@ and keeps it; later renders reuse it.
    cafe's costs), say so in the notes; the lines can frame them ("Say your burger sells for…").
    The caption never mentions it: nothing like "example numbers" or "run it with your own costs".
    **Never invent a statistic** ("70% of guests…") without a source; reframe it as an example
-   calculation instead.
+   calculation instead. Write everything in **American English** (see **American English** below).
 4. **Check the script yourself, then keep going.** Run the whole workflow through to the finished
    video without stopping to ask for approval. Before moving on, reread the script as the owner
    would: is every number backed by a fact note, is anything an invented statistic, is the tone
    kind and practical? Then read only the spoken lines, top to bottom, as someone who can't see
-   the screen: do they tell the whole story on their own? Fix it yourself. The user reviews the finished video and can ask for changes.
+   the screen: do they tell the whole story on their own? Then check every word is American
+   English: no "till", "rota", "queue", "takeaway" or British spellings. Fix it yourself. The user reviews the finished video and can ask for changes.
 5. **Write `storyboard.json`** from the script (format below), with each scene's spoken line in
    `say`. The lines set the length: aim for 25 to 40 s in all, about 90 spoken words at most.
    **Keep the feed varied:** every video should look different from the last three.
@@ -191,6 +192,32 @@ and keeps it; later renders reuse it.
 - In any headline or caption, `*word*` or `*several words*` gets the marker swash. Use it once
   per line, on the word that carries the point.
 - No emoji anywhere: the fonts don't have them, so they render as blank boxes.
+
+## American English
+
+The audience is American. Every word on screen, in the voice, in the caption and in the title is
+American English, and every price is in dollars and cents. The renderer stops with a list if it
+finds a British word or spelling anywhere a viewer sees or hears it (`scripts/lib/american.js`
+holds the list; add to it when you spot a new one). Common swaps:
+
+| not | write |
+| --- | --- |
+| till | register |
+| rota | schedule (the `rota` template keeps its name, but its labels say schedule) |
+| queue | line |
+| takeaway | to-go, takeout |
+| the bill | the check |
+| starter, mains | appetizer, entrée |
+| cutlery, serviette | silverware, napkin |
+| toastie | grilled cheese, panini |
+| rubbish, bin | trash, trash can |
+| labour, colour, flavour, favourite | labor, color, flavor, favorite |
+| organise, customise, realise | organize, customize, realize |
+| centre, litre, grey, cosy, maths | center, liter, gray, cozy, math |
+| 75c, £, pence | 75¢, $, cents |
+
+The voices are American too: Roma Tom is `am_michael` and guests only get American (`af_`/`am_`)
+Kokoro voices. Never set a British (`bf_`/`bm_`) voice in `cast`.
 
 ## The voiceover
 

@@ -1,7 +1,7 @@
 // 22. The Price Tag: a swinging tag. The old price gets crossed out and the new one is
 // written in below it.
 //
-// props: { caption, item: 'Flat white', from: '$4.50', to: '$4.80', note: '*30c* more, same smile' }
+// props: { caption, item: 'Flat white', from: '$4.50', to: '$4.80', note: '*30¢* more, same smile' }
 
 const { C, headline, pen, motion } = require('../lib/kit.js');
 const { text, measure, caption, strike, squiggle } = require('../lib/marks.js');

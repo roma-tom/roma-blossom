@@ -3,7 +3,7 @@
 //
 // props: {
 //   caption,
-//   tickets: [{ table: 'T4', items: ['2 flat white', '1 toastie'], minutes: 6 }, ...] (up to 3),
+//   tickets: [{ table: 'T4', items: ['2 flat white', '1 panini'], minutes: 6 }, ...] (up to 3),
 //   limit: 12, goal: 'GOAL: UNDER 12 MIN', cook: 'Dev'
 // }
 

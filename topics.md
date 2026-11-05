@@ -56,7 +56,7 @@ The topics are mixed so that consecutive videos cover different areas: money, st
 - [ ] Is a supplier's price rise worth fighting? (pricetag, receipt)
 - [ ] How do you price your menu on the delivery apps? (receipt, versus)
 - [ ] Hire for attitude or for experience? (scale, myth)
-- [ ] Should you charge for takeaway cups? (pricetag, versus)
+- [ ] Should you charge for to-go cups? (pricetag, versus)
 - [ ] How do you plan a seasonal menu change? (calendar, menu)
 - [ ] Gift cards: free money or a promise you have to keep? (myth, jar)
 - [ ] How do you deal with a guest who is never happy? (quote, fix)
@@ -84,7 +84,7 @@ The topics are mixed so that consecutive videos cover different areas: money, st
 - [ ] Do stamp cards actually make it easier to come back? (stampcard, regulars)
 - [ ] How many times can you turn every table on a busy night? (floor, receipt)
 - [ ] Should you raise prices a little once a year? (pricetag, myth)
-- [ ] Is Saturday covered on the rota? (rota, chat)
+- [ ] Is Saturday covered on the schedule? (rota, chat)
 
 ## Covered
 

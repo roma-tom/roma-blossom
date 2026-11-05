@@ -18,10 +18,12 @@ const DTYPE = 'fp32';
 const CACHE = path.join(__dirname, '..', '.cache', 'voice');
 
 // Roma Tom's voice, and the pool every other tomato's name picks from (the same name always
-// gets the same voice). Kokoro's American and British English voices.
+// gets the same voice). American English voices only: the audience is American, so no British
+// (bf_/bm_) voices. A few recurring characters are pinned so they keep a fitting voice.
 const HOST = 'roma tom';
 const HOST_VOICE = 'am_michael';
-const GUEST_VOICES = ['af_heart', 'am_puck', 'af_bella', 'am_fenrir', 'bf_emma', 'af_nicole', 'bm_george', 'af_sarah'];
+const GUEST_VOICES = ['af_heart', 'am_puck', 'af_bella', 'am_fenrir', 'af_kore', 'af_nicole', 'am_fenrir', 'af_sarah'];
+const RECURRING = { dev: 'am_puck' };
 
 const key = (name) => String(name).trim().toLowerCase();
 const hash = (s) => parseInt(crypto.createHash('sha1').update(s).digest('hex').slice(0, 8), 16);
@@ -29,6 +31,7 @@ const hash = (s) => parseInt(crypto.createHash('sha1').update(s).digest('hex').s
 function voiceFor(name, cast = {}) {
   for (const [n, v] of Object.entries(cast)) if (key(n) === key(name)) return v;
   if (key(name) === HOST) return HOST_VOICE;
+  if (RECURRING[key(name)]) return RECURRING[key(name)];
   return GUEST_VOICES[hash(key(name)) % GUEST_VOICES.length];
 }
 
