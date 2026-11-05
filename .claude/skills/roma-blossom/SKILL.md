@@ -236,12 +236,12 @@ unless another suits the topic better, as long as it still differs from the last
 
 | pad | sound | good for |
 | --- | --- | --- |
-| `warm` | Fmaj9, round (the original) | anything |
-| `sunny` | Cmaj9, open and bright | mornings, coffee, good news |
-| `mellow` | Dm9, soft and thoughtful | money, careful how-tos |
-| `cosy` | Abmaj9, deep and warm | evenings, regulars, people |
-| `drift` | Fmaj9 drifting to Dm9 and back | longer videos, calm topics |
-| `sway` | Cmaj9 swaying to Am9 | hopeful, light, quick wins |
+| `warm` | round, steady chord (the original) | anything |
+| `sunny` | bright and high, soft chimes ringing over it | mornings, coffee, good news |
+| `mellow` | dark and pure, slow electric-piano tremolo | money, careful how-tos |
+| `cosy` | old tape: wobbly pitch, hiss, vinyl crackle | evenings, regulars, people |
+| `drift` | wide and chorused, a filter opening and closing, two chords | longer videos, calm topics |
+| `sway` | four chords breathing softly on the beat | hopeful, light, quick wins |
 
 ## Templates
 

@@ -169,28 +169,37 @@ const SFX = {
   },
 };
 
-// The beds: soft chords, gently detuned, swelling slowly, under the whole video. Each is one
-// chord, or two that drift into each other every `every` seconds. Notes in Hz, lowest first;
-// the lowest is the root and sits a little louder. cutoff is the lowpass (Hz) that keeps it warm.
+// The beds: soft chords made in code under the whole video. They share the original's recipe
+// (gently detuned voices, swelling slowly, filtered warm) but each has its own colour and one
+// kind of movement, so the feed doesn't sound the same:
+//   chords    one chord, or several that drift into each other every `every` seconds (Hz, root first)
+//   tone      harmonic amplitudes per voice: [1, 0.3, 0.08] is round, [1] pure, more is reedier
+//   detune    Hz either side for the two voices of each note (chorus width)
+//   cutoff    lowpass (Hz); `sweep` [lo, hi, seconds] moves it slowly instead; `poles` 1 or 2
+//   tremolo   [rate Hz, depth]: a slow wobble in volume
+//   pulse     [bpm, depth]: a soft breathing on every beat
+//   wow       [rate Hz, cents]: a tape-like wobble in pitch
+//   air       soft hiss level; crackle: clicks per second (vinyl)
+//   sparkle   [notes per second, gain]: soft high chimes from the chord, two octaves up
 const PADS = {
   // The original: Fmaj9, warm and round.
   warm: { chords: [[87.31, 174.61, 220, 261.63, 329.63, 392]], cutoff: 1400 },
-  // Cmaj9, open and a little brighter: sunny mornings, good news.
-  sunny: { chords: [[65.41, 130.81, 196, 246.94, 293.66, 329.63]], cutoff: 1700 },
-  // Dm9, soft and thoughtful: careful money talk.
-  mellow: { chords: [[73.42, 146.83, 174.61, 220, 261.63, 329.63]], cutoff: 1250 },
-  // Abmaj9, deep and cosy: evenings, regulars.
-  cosy: { chords: [[103.83, 155.56, 196, 233.08, 261.63, 311.13]], cutoff: 1300 },
-  // Fmaj9 drifting to Dm9 and back: gentle movement for longer videos.
-  drift: { chords: [[87.31, 174.61, 220, 261.63, 329.63, 392], [73.42, 146.83, 174.61, 220, 261.63, 329.63]], every: 6, cutoff: 1400 },
-  // Cmaj9 swaying to Am9: light and hopeful.
-  sway: { chords: [[65.41, 130.81, 196, 246.94, 293.66, 329.63], [110, 164.81, 196, 246.94, 261.63, 329.63]], every: 5, cutoff: 1600 },
+  // Cmaj9 up high, bright and open, with soft chimes ringing over it.
+  sunny: { chords: [[130.81, 261.63, 392, 493.88, 587.33, 659.25]], tone: [1, 0.15], detune: 0.25, cutoff: 2600, sparkle: [1.4, 0.14] },
+  // Dm9, pure and dark, with a slow tremolo, like an electric piano held down.
+  mellow: { chords: [[73.42, 146.83, 174.61, 220, 261.63, 329.63]], tone: [1, 0.05], detune: 0.08, cutoff: 750, poles: 2, tremolo: [3.2, 0.35] },
+  // Abmaj9 through an old tape: wobbly pitch, a little hiss and vinyl crackle.
+  cosy: { chords: [[103.83, 155.56, 196, 233.08, 261.63, 311.13]], tone: [1, 0.4, 0.15], detune: 0.12, cutoff: 1100, poles: 2, wow: [0.5, 14], air: 0.012, crackle: 9 },
+  // Fmaj9 to Dm9 and back, wide and chorused, a filter opening and closing like a breath.
+  drift: { chords: [[87.31, 174.61, 220, 261.63, 329.63, 392], [73.42, 146.83, 174.61, 220, 261.63, 329.63]], every: 8, tone: [1, 0.45, 0.2, 0.1], detune: 0.7, sweep: [450, 2600, 9] },
+  // Cmaj9 to Am9 to Fmaj7 to G, breathing softly on the beat at 84 bpm.
+  sway: { chords: [[65.41, 130.81, 196, 246.94, 293.66, 329.63], [110, 164.81, 196, 246.94, 261.63, 329.63], [87.31, 174.61, 220, 261.63, 329.63, 349.23], [98, 146.83, 196, 246.94, 293.66, 392]], every: 60 / 84 * 8, tone: [1, 0.25, 0.1], detune: 0.2, cutoff: 1800, pulse: [84, 0.55] },
 };
 
-// How loud chord j of n is at time t (0 to 1): each holds for `every` s, crossfading over 2 s.
+// How loud chord j of n is at time t (0 to 1): each holds for `every` s, crossfading at the end.
 function chordWeight(t, j, n, every) {
   if (n === 1) return 1;
-  const fade = Math.min(2, every / 2);
+  const fade = Math.min(2, every / 3);
   const pos = t / every, k = Math.floor(pos), u = (pos - k) * every; // seconds into chord k
   const cur = k % n, next = (k + 1) % n;
   const x = Math.max(0, (u - (every - fade)) / fade); // 0 until the crossfade, then to 1
@@ -198,30 +207,78 @@ function chordWeight(t, j, n, every) {
   return (j === cur ? 1 - into : 0) + (j === next ? into : 0);
 }
 
+const PAD_RMS = 0.177; // every bed is matched to the original's loudness
+
 // The bed under everything, by name (see PADS; default warm).
 function pad(sec, name = 'warm') {
   const def = PADS[name];
   if (!def) throw new Error(`unknown pad "${name}" (one of: ${Object.keys(PADS).join(', ')})`);
-  const { chords, every = 6, cutoff } = def;
+  const { chords, every = 6, tone = [1, 0.3, 0.08], detune = 0.18, cutoff = 1400, poles = 1 } = def;
   const b = buf(sec);
   for (let i = 0; i < b.length; i++) {
     const t = i / SR;
+    // Tape wobble: warp time so every pitch bends together.
+    const tw = def.wow ? t + ((def.wow[1] / 1731) * Math.sin(TAU * def.wow[0] * t)) / (TAU * def.wow[0]) : t;
     let s = 0;
     chords.forEach((notes, j) => {
       const w = chordWeight(t, j, chords.length, every);
       if (w <= 0) return;
       notes.forEach((f, k) => {
         const swell = 0.75 + 0.25 * Math.sin(TAU * (0.07 + k * 0.013) * t + k);
-        for (const d of [-0.18, 0.18]) {
-          const ph = TAU * (f + d) * t;
-          s += w * swell * (Math.sin(ph) + 0.3 * Math.sin(2 * ph) + 0.08 * Math.sin(3 * ph)) / (k === 0 ? 1.2 : 2);
+        for (const d of [-detune, detune]) {
+          const ph = TAU * (f + d) * tw;
+          let v = 0;
+          tone.forEach((a, h) => (v += a * Math.sin((h + 1) * ph)));
+          s += (w * swell * v) / (k === 0 ? 1.2 : 2);
         }
       });
     });
-    const fade = Math.min(1, t / 1.2, (sec - t) / 1.5);
-    b[i] = (s / chords[0].length) * Math.max(0, fade);
+    if (def.tremolo) s *= 1 - def.tremolo[1] * (0.5 + 0.5 * Math.sin(TAU * def.tremolo[0] * t));
+    if (def.pulse) {
+      const u = (t * def.pulse[0]) / 60 % 1; // place in the beat
+      s *= 1 - def.pulse[1] * Math.exp(-u * 5) * Math.min(1, u * 40 + 0.4);
+    }
+    b[i] = s / chords[0].length;
   }
-  return lowpass(b, cutoff);
+  const cut = def.sweep
+    ? (t) => def.sweep[0] + (def.sweep[1] - def.sweep[0]) * (0.5 - 0.5 * Math.cos((TAU * t) / def.sweep[2]))
+    : cutoff;
+  let out = lowpass(b, cut);
+  if (poles > 1) out = lowpass(out, cut);
+
+  // Texture on top of the filtered chord.
+  if (def.sparkle) {
+    const r = rng(51), [rate, g] = def.sparkle;
+    for (let at = 0.8 + r() * 0.5; at < sec - 1.5; at += (0.4 + r() * 1.2) / rate) {
+      const notes = chords[0], f = notes[1 + Math.floor(r() * (notes.length - 1))] * 4;
+      const ring = bell(2.2, [[f, 1, 2.2], [f * 2.01, 0.25, 4]], 0.01);
+      const i0 = Math.round(at * SR), amp = g * (0.6 + r() * 0.4);
+      for (let i = 0; i < ring.length && i0 + i < out.length; i++) out[i0 + i] += ring[i] * amp;
+    }
+  }
+  if (def.air) {
+    const hiss = lowpass(noise(out.length, 61), 3500);
+    for (let i = 0; i < out.length; i++) out[i] += hiss[i] * def.air * 4;
+  }
+  if (def.crackle) {
+    const r = rng(71);
+    for (let i = 0; i < out.length; i++) {
+      if (r() < def.crackle / SR) {
+        const amp = (0.02 + r() * 0.05) * (r() < 0.5 ? -1 : 1);
+        for (let k = 0; k < 24 && i + k < out.length; k++) out[i + k] += amp * Math.exp(-k / 4);
+      }
+    }
+  }
+
+  // Match the original's loudness, then fade in and out.
+  let sum = 0;
+  for (const v of out) sum += v * v;
+  const norm = PAD_RMS / Math.max(1e-6, Math.sqrt(sum / out.length));
+  for (let i = 0; i < out.length; i++) {
+    const t = i / SR;
+    out[i] *= norm * Math.max(0, Math.min(1, t / 1.2, (sec - t) / 1.5));
+  }
+  return out;
 }
 
 // How much to duck the bed under the voice, per sample (0 to 1): fast in, slow out.
