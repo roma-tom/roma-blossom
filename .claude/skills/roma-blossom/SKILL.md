@@ -88,8 +88,9 @@ and keeps it; later renders reuse it.
    Re-make just the cover with `node scripts/cover.js videos/<slug>/storyboard.json --guides`,
    which also writes the image with the crops drawn on to `out/`. Open it and check it.
 8. **Write `caption.txt`** in the video folder: the post caption from `script.md` with its 3 to 5
-   hashtags, as plain text ready to paste, and nothing else. Never use emoji in a caption (or in
-   the post caption in `script.md`): words only. Never say the numbers are examples, made up or
+   hashtags, as plain text ready to paste, and nothing else: no newline at the end of the file
+   (after writing it, strip one with `perl -pi -e 'chomp if eof' caption.txt`). Never use emoji
+   in a caption (or in the post caption in `script.md`): words only. Never say the numbers are examples, made up or
    illustrative, and never tell the viewer to swap in their own figures.
 9. **Update `topics.md`, then commit and push.** Move the video's topic from **Up next** to the
    end of the **Made as videos** list under **Covered**, ticked, with its folder:

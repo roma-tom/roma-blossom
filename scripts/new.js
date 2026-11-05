@@ -46,7 +46,7 @@ Mark example figures as examples here (not in the post caption).
 #cafeowner #restaurantowner …
 `);
 
-fs.writeFileSync(path.join(dir, 'caption.txt'), 'The post caption, ready to paste.\n\n#cafeowner #restaurantowner\n');
+fs.writeFileSync(path.join(dir, 'caption.txt'), 'The post caption, ready to paste.\n\n#cafeowner #restaurantowner');
 
 // Variety: start from a background the last three videos didn't use.
 const BACKGROUNDS = ['paper', 'sky', 'butter', 'blush', 'mint', 'lime'];
