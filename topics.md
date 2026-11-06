@@ -10,7 +10,6 @@ The topics are mixed so that consecutive videos cover different areas: money, st
 
 ## Up next
 
-- [ ] Should you take reservations or stay walk-in only? (versus, scale)
 - [ ] How do you handle running out of a dish mid-service? (tickets, fix)
 - [ ] Is your happy hour making or losing money? (receipt, gauge)
 - [ ] How do you run a five-minute pre-shift huddle? (day, countdown)
@@ -99,6 +98,7 @@ Made as videos:
 - [x] Should you charge extra for oat milk? (`videos/oat-milk-charge`)
 - [x] Do guests actually like QR code menus? (`videos/qr-menus`)
 - [x] What does it really cost to replace one barista? (`videos/replace-a-barista`)
+- [x] Should you take reservations or stay walk-in only? (`videos/reservations-or-walk-in`)
 
 Examples in the style guide:
 

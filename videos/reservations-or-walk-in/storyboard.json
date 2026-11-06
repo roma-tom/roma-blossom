@@ -1,0 +1,26 @@
+{
+  "title": "Should You Take Reservations or Stay Walk-In Only?",
+  "cover": { "hero": "headline" },
+  "background": "paper",
+  "output": "video.mp4",
+  "mix": { "pad": "cosy" },
+  "voice": { "mode": "babble" },
+  "scenes": [
+    { "type": "hook", "duration": 2.8,
+      "say": "Should you take reservations, or stay walk-in only?",
+      "props": { "kicker": "THE ROOM", "headline": "Reservations or *walk-in* only?" } },
+    { "type": "versus", "duration": 5,
+      "say": "Reservations help you plan staff and food for the night. Walk-in only keeps things simple, with no no-shows to chase.",
+      "props": { "caption": "Each one *wins* at something",
+        "left": { "name": "Maria", "label": "Reservations", "value": "Plan", "note": "staff and prep for the night" },
+        "right": { "name": "Leo", "label": "Walk-in only", "value": "Simple", "note": "no no-shows to chase" } } },
+    { "type": "quote", "duration": 4.5, "speaker": "Maria",
+      "say": "I book for a Friday dinner. For a coffee, I just walk in.",
+      "props": { "name": "Maria", "role": "regular", "quote": "Friday dinner? I *book*. Coffee? I walk in." } },
+    { "type": "fix", "duration": 5,
+      "say": "So most places can mix both. Take bookings for big tables and busy nights. Keep some tables for walk-ins. And a quick cafe can stay walk-in.",
+      "props": { "title": "Mix both",
+        "steps": ["Book big tables, busy nights", "Keep some tables walk-in", "Quick cafe? Stay walk-in"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
