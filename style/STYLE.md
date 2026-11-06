@@ -30,7 +30,8 @@ Every number shown needs a source or a worked calculation, kept in `script.md`.
   the feed doesn't sound the same), with sound effects on the action; no music
 - The voiceover tells the whole story on its own, for people listening without watching; the
   on-screen text tells it too, for people watching muted
-- One idea per video, a hook in the first second, a takeaway at the end
+- One idea per video, a hook in the first second, an ending that lands: a takeaway for advice,
+  a punchline, answer or feeling for the other kinds (`style/KINDS.md`)
 
 ## Voice
 

@@ -5,8 +5,9 @@ description: Make a short, hand-drawn vertical explainer video (1080×1920 MP4 w
 
 # Roma Blossom videos
 
-Short explainers that help independent cafe and restaurant owners in the **United States** with
-one real problem at a time. They are drawn by hand on paper or lime, hosted by Roma Tom (a tomato), and posted to grow
+Short videos for independent cafe and restaurant owners in the **United States**. Most help with
+one real problem at a time; the rest are just for owners: a day in the cafe, a relatable moment,
+a story from the cast, a hot take, a quiz (the kinds are in `style/KINDS.md`). They are drawn by hand on paper or lime, hosted by Roma Tom (a tomato), and posted to grow
 a following. They are advice, not ads: never pitch a Roma Tom product.
 
 Everything lives in this repository's root: the folder that holds `.claude/`, three
@@ -35,16 +36,19 @@ and keeps it; later renders reuse it.
    "Is a 10% off coupon worth it?" One idea per video. If the user gave only a broad area
    ("staffing"), pick the strongest question yourself and say which one you chose when you hand over.
    - **No topic given** ("make the next video", "next one"): take the first unticked topic under
-     **Up next** in `topics.md`.
+     **Up next** in `topics.md`. Its `[kind]` says what sort of video it is (`style/KINDS.md`),
+     and its `Hook:` is a ready opener and hook type (rework it if a better one comes up). Skip
+     to the next one if it's the same kind as the last video made.
    - **A topic given:** check **Covered** in `topics.md` first. If it's already been made, say so
      and suggest a fresh angle on it, or the next topic from **Up next** instead.
    - **"Add … to the backlog":** append it to the end of **Up next** as
-     `- [ ] Question (templates that could fit)`, after checking it isn't in either list, then
+     `- [ ] Topic [kind] Hook: "opener" (hook type; templates)`, after checking it isn't in either list, then
      commit and push `topics.md`. No video is made.
 2. **Scaffold the folder:** `node scripts/new.js <slug>` creates `videos/<slug>/` with a
    `script.md`, a `caption.txt` and a starter `storyboard.json`. The starter already has a
    `background` that the last three videos didn't use.
-3. **Write `script.md`:** the hook, 3 to 5 beats and the takeaway, with the exact on-screen
+3. **Write `script.md`:** the hook, 3 to 5 beats and the ending (the takeaway for advice; a
+   punchline, answer, feeling or comment question for the other kinds, see `style/KINDS.md`), with the exact on-screen
    text for each, what the tomato says (see **The voiceover** below), and the template each beat uses. Every number gets a fact note: a source
    (a link or a named report) or a worked calculation. When you use example figures (a made-up
    cafe's costs), say so in the notes; the lines can frame them ("Say your burger sells for…").
@@ -101,7 +105,7 @@ and keeps it; later renders reuse it.
    illustrative, and never tell the viewer to swap in their own figures.
 9. **Update `topics.md`, then commit and push.** Move the video's topic from **Up next** to the
    end of the **Made as videos** list under **Covered**, ticked, with its folder:
-   `- [x] Question (`videos/<slug>`)`. (If the topic wasn't in the backlog, just add it there.)
+   `- [x] Topic (`videos/<slug>`)` (drop the kind, hook and templates). (If the topic wasn't in the backlog, just add it there.)
    Commit it together with the video folder: `script.md`, `storyboard.json`, `caption.txt`,
    `video.mp4` and `cover.jpg` (WAVs and frames are ignored). In a cloud session, push the session's branch.
    Pushing a video can take a few minutes on a slow connection, so run the push with a
@@ -246,7 +250,8 @@ the same story for people watching muted, so the two cover each other.
     or give the sounds as `[gyro](/ˈjiɹO/)` (Kokoro's phonemes) when respelling isn't enough
   - no `*swash*` asterisks and no emoji
 - **Short sentences,** about 2.5 words a second. Most lines are one or two sentences; the
-  hook is one. The end card says "Follow for more owner tips."
+  hook is one. The end card says "Follow for more owner tips." (for day, story and relatable
+  videos, "Follow for more cafe life.", with `"cta": "Follow for more *cafe life*"` to match)
 - **Who speaks:** Roma Tom narrates. A guest can say their own line, such as Maria in a `quote`
   scene: set `"speaker": "Maria"` and write it in her words.
 

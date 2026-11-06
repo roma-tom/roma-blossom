@@ -69,8 +69,9 @@ Five shapes. Change the type from one video to the next, so no two videos in a r
 
 ## Hook bank: the backlog, rewritten
 
-Ready-made openers for topics in **Up next** (`topics.md`). A number in brackets means: use
-the figure from that video's own worked example.
+The openers below were the first draft. Each topic in **Up next** (`topics.md`) now carries its
+own `Hook:`, so use that; this table stays as examples. A number in brackets means: use the
+figure from that video's own worked example.
 
 | Topic | Type | On screen | Said |
 | --- | --- | --- | --- |
