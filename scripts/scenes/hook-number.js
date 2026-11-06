@@ -14,7 +14,7 @@ function hookNumber(ctx, theme, t, props, info = {}) {
   const host = props.host || 'Roma Tom';
   const num = String(props.number || '');
   let size = 300;
-  while (size > 140 && measure(num, { size }) > 760) size -= 10;
+  while (size > 120 && measure(num, { size }) > 600) size -= 10;
   const w = measure(num, { size });
 
   rays(ctx, theme, { cx: X, cy: NY - size * 0.3, spin: sec * 0.15, reach: 1000 });

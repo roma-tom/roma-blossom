@@ -20,7 +20,6 @@ behind a non-advice topic in the order.
 
 ## Up next
 
-- [ ] A Saturday in Roma Tom's cafe, from the first delivery to lights out [day] Hook: "Six oh two in the morning. The milk is late." (hook-number "6:02 am"; day, rush, chat)
 - [ ] Is your happy hour making or losing money? [advice] Hook: "Happy hour fills the room. It might also be emptying the register." (hook-rule; receipt, gauge)
 - [ ] One water, four hours, your best table [relatable] Hook: (guest) "Just a tap water, thanks. I'll be here a while." (hook-callout; floor, scale)
 - [ ] Markup and margin are not the same thing [advice] Hook: "Markup and margin sound like the same thing. They're not." (hook-same; receipt, pricetag)
@@ -124,6 +123,7 @@ Made as videos:
 - [x] Do guests actually like QR code menus? (`videos/qr-menus`)
 - [x] What does it really cost to replace one barista? (`videos/replace-a-barista`)
 - [x] Should you take reservations or stay walk-in only? (`videos/reservations-or-walk-in`)
+- [x] A Saturday in Roma Tom's cafe, from the first delivery to lights out (`videos/saturday-at-the-cafe`)
 
 Examples in the style guide:
 

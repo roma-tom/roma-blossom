@@ -1,0 +1,44 @@
+{
+  "title": "A Saturday in the Life of a Cafe Owner",
+  "cover": { "hero": "number", "kicker": "CAFE LIFE", "headline": "Saturday. The milk is *late*.", "number": "6:02 am", "label": "and we open at 7" },
+  "background": "mint",
+  "output": "video.mp4",
+  "mix": { "pad": "sway" },
+  "scenes": [
+    { "type": "hook-number", "duration": 3,
+      "say": "Six oh two on a Saturday morning. And the milk is late.",
+      "props": { "kicker": "SATURDAY", "number": "6:02 am", "line": "and the milk is *late*" } },
+    { "type": "chat", "duration": 5,
+      "say": "Sam texts. The truck is stuck. Twenty minutes, and the doors open at seven.",
+      "props": { "caption": "The milk *truck*",
+        "contact": "Sam", "status": "MILK DELIVERY",
+        "messages": [
+          { "from": "me", "text": "Morning! No milk yet?" },
+          { "from": "them", "text": "Truck's stuck. 20 minutes!" },
+          { "from": "me", "text": "We open at 7. Hurry!" },
+          { "from": "them", "text": "Pulling in now. Sorry!" }
+        ] } },
+    { "type": "rush", "duration": 5,
+      "say": "By ten, the line is out the door. Maria's oat latte is on the bar before she even orders.",
+      "props": { "caption": "Ten o'clock: *the* line",
+        "label": "GUESTS PER HOUR",
+        "hours": ["7", "8", "9", "10", "11", "12", "1", "2", "3"],
+        "values": [12, 24, 38, 52, 44, 36, 28, 14, 8],
+        "queue": ["Maria", "Ivan", "Leo", "Ana"], "queueLabel": "THE 10 O'CLOCK LINE" } },
+    { "type": "day", "duration": 5,
+      "say": "Then the lunch crowd, the afternoon restock, the closing count, and the floors.",
+      "props": { "caption": "The rest of the *day*",
+        "steps": [
+          { "time": "12:00", "label": "Lunch crowd" },
+          { "time": "3:00", "label": "Restock" },
+          { "time": "6:00", "label": "Closing count" },
+          { "time": "8:30", "label": "Floors" },
+          { "time": "9:00", "label": "Lights out" }
+        ],
+        "highlight": 4 } },
+    { "type": "quote", "duration": 5,
+      "say": "Nine at night, lights off. On the counter, a note from Maria. Best Saturday latte in town. Worth the six a.m.",
+      "props": { "caption": "On the *counter*", "name": "Maria", "role": "regular, left a note", "quote": "Best Saturday latte in *town*." } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more cafe life.", "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
