@@ -135,59 +135,65 @@ function resonator(f, bw) {
 // Mouth shapes for each vowel: first and second formant (Hz).
 const VOWELS = { a: [800, 1250], e: [520, 1850], i: [330, 2250], o: [520, 900], u: [370, 800], y: [330, 2250] };
 
-// Cartoon talk, kept warm and friendly: one soft, rounded, vowel-coloured hum per syllable of
-// the line, with the pitch gliding smoothly from one syllable to the next (no jumps), gentle
-// fade-ins and fade-outs, pauses at spaces and punctuation, and a lift at a question. Each
-// name has its own pitch.
+// Cartoon talk, kept bright and friendly: one soft "boop" per syllable of the line, sung in tune
+// on a cheerful major pentatonic scale (so it sounds like a happy little tune, never off-key),
+// each note scooping up into place. There is barely any vowel colour, so it reads as a cartoon
+// voice rather than an almost-human one. Pauses at spaces and punctuation, a hop up at a
+// question and a step down at the end of a sentence. Each name has its own key.
+const SCALE = [0, 2, 4, 7, 9]; // major pentatonic, in semitones
 function babble(text, name) {
   const r = rng(seedOf('babble', key(name), text));
-  const base = key(name) === HOST ? 145 : 135 + (hash(key(name)) % 110);
+  // Roma Tom sits around E4; everyone else gets their own key between about D4 and A4.
+  const base = key(name) === HOST ? 330 : 294 * Math.pow(2, (hash(key(name)) % 8) / 12);
+  const note = (step) => {
+    const o = Math.floor(step / SCALE.length), d = ((step % SCALE.length) + SCALE.length) % SCALE.length;
+    return base * Math.pow(2, (12 * o + SCALE[d]) / 12);
+  };
   const words = String(text).replace(/\[([^\]]*)\]\(\/[^)]*\/\)/g, '$1').match(/[A-Za-z']+[^A-Za-z']*/g) || [];
   const plan = [];
   words.forEach((w) => {
     const letters = w.match(/[A-Za-z']+/)[0].toLowerCase();
     const groups = letters.match(/[aeiouy]+/g) || ['a'];
     const n = Math.min(4, groups.length);
-    for (let k = 0; k < n; k++) plan.push({ v: groups[k][0], gap: 0.018 });
+    for (let k = 0; k < n; k++) plan.push({ v: groups[k][0], gap: 0.02 });
     const p = w.slice(letters.length);
-    plan[plan.length - 1].gap = /[.!?]/.test(p) ? 0.3 : /[,;:—–-]/.test(p) ? 0.17 : 0.055;
+    plan[plan.length - 1].gap = /[.!?]/.test(p) ? 0.3 : /[,;:—–-]/.test(p) ? 0.17 : 0.06;
     plan[plan.length - 1].end = /\?/.test(p) ? 'up' : /[.!]/.test(p) ? 'down' : null;
   });
+  // The tune: a gentle random walk on the scale, pulled back toward the home note.
   const parts = [];
-  let total = 0;
-  plan.forEach((s, i) => {
-    const dur = 0.11 + r() * 0.05;
-    // A small, smooth wander around the speaker's pitch, easing down over the line.
-    let f0 = base * Math.pow(2, (r() - 0.5) * 0.14) * (1 - 0.06 * (i / Math.max(1, plan.length - 1)));
-    if (s.end === 'up') f0 *= 1.15;
-    if (s.end === 'down') f0 *= 0.92;
+  let total = 0, step = 0;
+  plan.forEach((s) => {
+    const move = r() < 0.35 ? 0 : r() < 0.5 ? 1 : -1;
+    step = Math.max(-2, Math.min(3, step + move - (step > 1 ? 1 : 0) + (step < -1 ? 1 : 0)));
+    let f0 = note(step);
+    if (s.end === 'up') f0 = note(step + 2);
+    if (s.end === 'down') f0 = note(Math.min(step, 0) - 1);
+    if (s.end) step = 0;
+    const dur = 0.085 + r() * 0.035;
     parts.push({ ...s, dur, f0 });
     total += dur + s.gap;
   });
   const out = new Float32Array(Math.ceil((total + 0.1) * SR));
   const ease = (x) => 0.5 - 0.5 * Math.cos(Math.PI * Math.max(0, Math.min(1, x)));
-  let at = 0, ph = 0, last = parts.length ? parts[0].f0 : base, lp = 0;
-  const cut = 1 - Math.exp((-TAU * 2800) / SR); // a gentle roll-off of the top end
+  const cut = 1 - Math.exp((-TAU * 4000) / SR);
+  let at = 0, ph = 0, lp = 0;
   for (const s of parts) {
-    const [f1, f2] = VOWELS[s.v] || VOWELS.a;
-    const r1 = resonator(f1, 160), r2 = resonator(f2, 220);
-    const n = Math.round(s.dur * SR), a = 0.025 * SR, d = 0.05 * SR;
-    const from = last;
+    const [f1] = VOWELS[s.v] || VOWELS.a;
+    const r1 = resonator(Math.max(f1, s.f0 * 1.5), 400); // a faint, wide hint of the vowel
+    const n = Math.round(s.dur * SR), a = 0.012 * SR, d = 0.04 * SR, scoop = 0.03 * SR;
     for (let i = 0; i < n; i++) {
-      const t = (at * SR + i) / SR;
-      // Glide from the last syllable's pitch over the first part of this one, then the lift or fall.
-      let f = from + (s.f0 - from) * ease(i / (0.4 * n));
-      if (s.end === 'up') f *= 1 + 0.15 * ease(i / n);
-      if (s.end === 'down') f *= 1 - 0.08 * ease(i / n);
-      ph = (ph + (f * (1 + 0.007 * Math.sin(TAU * 5 * t))) / SR) % 1;
-      // A soft, rounded tone: the fundamental with a few quiet harmonics, not a buzzy saw.
+      // Scoop up a semitone and a half into the note, like a cheerful "boop".
+      let f = s.f0 * Math.pow(2, (-1.5 * (1 - ease(i / scoop))) / 12);
+      if (s.end === 'up') f *= 1 + 0.12 * ease((i - 0.4 * n) / (0.6 * n));
+      ph = (ph + f / SR) % 1;
       const w = TAU * ph;
-      const src = Math.sin(w) + 0.32 * Math.sin(2 * w) + 0.14 * Math.sin(3 * w) + 0.06 * Math.sin(4 * w) + 0.025 * Math.sin(5 * w);
-      const env = ease(i / a) * ease((n - i) / d);
-      lp += cut * ((r1(src) * 0.9 + r2(src) * 0.3 + src * 0.35) - lp);
+      const src = Math.sin(w) + 0.25 * Math.sin(2 * w) + 0.08 * Math.sin(3 * w);
+      // Quick soft start, a light fall through the syllable, soft end.
+      const env = ease(i / a) * (1 - 0.35 * (i / n)) * ease((n - i) / d);
+      lp += cut * ((src * 0.75 + r1(src) * 0.35) - lp);
       out[Math.round(at * SR) + i] += lp * env;
     }
-    last = s.f0 * (s.end === 'up' ? 1.15 : s.end === 'down' ? 0.92 : 1);
     at += s.dur + s.gap;
   }
   return normalize(trim(out, SR));
