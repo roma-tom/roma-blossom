@@ -1,0 +1,34 @@
+{
+  "title": "Is Your Happy Hour Losing You Money?",
+  "cover": { "hero": "crowd", "names": ["Leo", "Maria", "Ana"], "kicker": "BAR MATH", "headline": "Is happy hour *losing* you money?" },
+  "background": "lime",
+  "output": "video.mp4",
+  "mix": { "pad": "mellow" },
+  "scenes": [
+    { "type": "hook-rule", "duration": 3,
+      "say": "Happy hour fills the room. It might also be emptying the register.",
+      "props": { "line": "The deal that can *drain the register*", "label": "BAR WISDOM", "note": "Happy hour fills the room", "stamp": "AT A LOSS?" } },
+    { "type": "receipt", "duration": 5.5,
+      "say": "Say a glass of house wine is nine dollars. At happy hour it's five. Take out the wine, the labor and the card fee, and you keep about a dollar thirty-five.",
+      "props": { "caption": "One *happy hour* glass",
+        "title": "HOUSE WINE · HAPPY HOUR",
+        "items": [
+          { "label": "Happy hour price", "amount": 5 },
+          { "label": "The wine", "amount": -2.25 },
+          { "label": "Labor", "amount": -1.25 },
+          { "label": "Card fee", "amount": -0.15 }
+        ],
+        "totalLabel": "You keep" } },
+    { "type": "versus", "duration": 5,
+      "say": "At the full nine dollars, you keep about five twenty-three. So it takes almost four happy hour glasses to match one.",
+      "props": { "caption": "Same glass, *less* kept",
+        "left": { "name": "Leo", "label": "Full price", "value": "$5.23", "note": "kept per glass" },
+        "right": { "name": "Maria", "label": "Happy hour", "value": "$1.35", "note": "kept per glass" },
+        "winner": "left" } },
+    { "type": "fix", "duration": 5,
+      "say": "So run it only in hours that would sit empty. Pair the deal with food. And compare sales to a normal week.",
+      "props": { "title": "Make it pay",
+        "steps": ["Only in hours that sit empty", "Pair the deal with food", "Compare to a normal week"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}

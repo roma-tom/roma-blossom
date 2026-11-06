@@ -38,7 +38,7 @@ function hookRule(ctx, theme, t, props, info = {}) {
   if (s > 0) {
     const label = props.stamp || 'COSTS YOU';
     const size = 92, tw = measure(label, { font: 'Inter', size, spacing: 6 });
-    const sw = tw + 90, sh = 160, cx = NX + NW / 2 + 40, cy = NY + NH - 40;
+    const sw = tw + 90, sh = 160, cx = NX + NW / 2 + 10, cy = NY + NH - 30;
     const sc = 1 + 1.2 * (1 - easeOut(s));
     ctx.save();
     ctx.globalAlpha = Math.min(1, s * 2);
