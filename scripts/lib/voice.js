@@ -135,11 +135,13 @@ function resonator(f, bw) {
 // Mouth shapes for each vowel: first and second formant (Hz).
 const VOWELS = { a: [800, 1250], e: [520, 1850], i: [330, 2250], o: [520, 900], u: [370, 800], y: [330, 2250] };
 
-// Cartoon talk: one pitched, vowel-coloured blip per syllable of the line, with pauses at
-// spaces and punctuation and a rise at a question. Each name has its own pitch.
+// Cartoon talk, kept warm and friendly: one soft, rounded, vowel-coloured hum per syllable of
+// the line, with the pitch gliding smoothly from one syllable to the next (no jumps), gentle
+// fade-ins and fade-outs, pauses at spaces and punctuation, and a lift at a question. Each
+// name has its own pitch.
 function babble(text, name) {
   const r = rng(seedOf('babble', key(name), text));
-  const base = key(name) === HOST ? 190 : 150 + (hash(key(name)) % 170);
+  const base = key(name) === HOST ? 145 : 135 + (hash(key(name)) % 110);
   const words = String(text).replace(/\[([^\]]*)\]\(\/[^)]*\/\)/g, '$1').match(/[A-Za-z']+[^A-Za-z']*/g) || [];
   const plan = [];
   words.forEach((w) => {
@@ -154,27 +156,38 @@ function babble(text, name) {
   const parts = [];
   let total = 0;
   plan.forEach((s, i) => {
-    const dur = 0.07 + r() * 0.055;
-    let f0 = base * Math.pow(2, (r() - 0.5) * 0.45) * (1 - 0.08 * (i / Math.max(1, plan.length - 1)));
-    if (s.end === 'up') f0 *= 1.3;
-    if (s.end === 'down') f0 *= 0.86;
+    const dur = 0.11 + r() * 0.05;
+    // A small, smooth wander around the speaker's pitch, easing down over the line.
+    let f0 = base * Math.pow(2, (r() - 0.5) * 0.14) * (1 - 0.06 * (i / Math.max(1, plan.length - 1)));
+    if (s.end === 'up') f0 *= 1.15;
+    if (s.end === 'down') f0 *= 0.92;
     parts.push({ ...s, dur, f0 });
     total += dur + s.gap;
   });
-  const out = new Float32Array(Math.ceil((total + 0.05) * SR));
-  let at = 0;
+  const out = new Float32Array(Math.ceil((total + 0.1) * SR));
+  const ease = (x) => 0.5 - 0.5 * Math.cos(Math.PI * Math.max(0, Math.min(1, x)));
+  let at = 0, ph = 0, last = parts.length ? parts[0].f0 : base, lp = 0;
+  const cut = 1 - Math.exp((-TAU * 2800) / SR); // a gentle roll-off of the top end
   for (const s of parts) {
     const [f1, f2] = VOWELS[s.v] || VOWELS.a;
-    const r1 = resonator(f1, 90), r2 = resonator(f2, 120);
-    const n = Math.round(s.dur * SR), a = Math.round(0.008 * SR), d = Math.round(0.03 * SR);
-    let ph = 0;
+    const r1 = resonator(f1, 160), r2 = resonator(f2, 220);
+    const n = Math.round(s.dur * SR), a = 0.025 * SR, d = 0.05 * SR;
+    const from = last;
     for (let i = 0; i < n; i++) {
-      const t = i / SR, glide = s.end === 'up' ? 1 + 0.25 * (i / n) : s.end === 'down' ? 1 - 0.12 * (i / n) : 1;
-      ph = (ph + (s.f0 * glide * (1 + 0.012 * Math.sin(TAU * 6 * t))) / SR) % 1;
-      const src = 2 * ph - 1; // a buzzy sawtooth, like vocal folds
-      const env = Math.min(1, i / a, (n - i) / d);
-      out[Math.round(at * SR) + i] += (r1(src) * 1.0 + r2(src) * 0.55 + src * 0.04) * env;
+      const t = (at * SR + i) / SR;
+      // Glide from the last syllable's pitch over the first part of this one, then the lift or fall.
+      let f = from + (s.f0 - from) * ease(i / (0.4 * n));
+      if (s.end === 'up') f *= 1 + 0.15 * ease(i / n);
+      if (s.end === 'down') f *= 1 - 0.08 * ease(i / n);
+      ph = (ph + (f * (1 + 0.007 * Math.sin(TAU * 5 * t))) / SR) % 1;
+      // A soft, rounded tone: the fundamental with a few quiet harmonics, not a buzzy saw.
+      const w = TAU * ph;
+      const src = Math.sin(w) + 0.32 * Math.sin(2 * w) + 0.14 * Math.sin(3 * w) + 0.06 * Math.sin(4 * w) + 0.025 * Math.sin(5 * w);
+      const env = ease(i / a) * ease((n - i) / d);
+      lp += cut * ((r1(src) * 0.9 + r2(src) * 0.3 + src * 0.35) - lp);
+      out[Math.round(at * SR) + i] += lp * env;
     }
+    last = s.f0 * (s.end === 'up' ? 1.15 : s.end === 'down' ? 0.92 : 1);
     at += s.dur + s.gap;
   }
   return normalize(trim(out, SR));
