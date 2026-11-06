@@ -35,10 +35,10 @@ function hookNumber(ctx, theme, t, props, info = {}) {
 
   headline(ctx, theme, props.line || '', { x: X, y: NY + size * 0.45, size: 100, maxW: 800, appear: easeOut(seg(sec, 0.2, 0.7)), seed: 2202 });
 
-  // The host leans in from the bottom, wide-eyed, with a jolt when the number lands.
+  // The host rises in the middle at the bottom, with a jolt when the number lands.
   const rise = spring(seg(sec, 0.15, 0.55));
   const squash = 1 + 0.1 * settle(seg(sec, 0.15, 0.8)) + (breathe(sec) - 1);
-  tomato(ctx, host, X + 150, 1680 + (1 - rise) * 600, 660, { squash, angle: -0.12 });
+  tomato(ctx, host, W / 2, 1680 + (1 - rise) * 600, 660, { squash, angle: Math.sin(sec * 1.6) * 0.03 });
 }
 
 hookNumber.cues = () => [

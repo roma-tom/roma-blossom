@@ -61,7 +61,7 @@ function hookSame(ctx, theme, t, props, info = {}) {
   // The host pops up below and flinches when the slash lands.
   const rise = spring(seg(sec, 0.25, 0.7));
   const squash = 1 + 0.12 * settle(seg(sec, SLASH, SLASH + 0.6)) + (breathe(sec) - 1);
-  tomato(ctx, host, MID, 1660 + (1 - rise) * 600, 720, { squash, angle: Math.sin(sec * 1.6) * 0.03 });
+  tomato(ctx, host, W / 2, 1660 + (1 - rise) * 600, 720, { squash, angle: Math.sin(sec * 1.6) * 0.03 });
 }
 
 hookSame.cues = () => [

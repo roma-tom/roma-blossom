@@ -5,7 +5,7 @@
 // props: { line: 'The rule that quietly *costs you*', note: 'Price everything at 3× food cost',
 //          label: 'THE RULE', stamp: 'COSTS YOU', host = 'Roma Tom' }
 
-const { C, THEMES, headline, tomato, pen, motion } = require('../lib/kit.js');
+const { W, C, THEMES, headline, tomato, pen, motion } = require('../lib/kit.js');
 const { text, wrapText, measure } = require('../lib/marks.js');
 const { seg, easeOut, spring, settle, breathe } = motion;
 
@@ -50,10 +50,10 @@ function hookRule(ctx, theme, t, props, info = {}) {
     ctx.restore();
   }
 
-  // The host watches from below and winces at the stamp.
+  // The host rises in the middle at the bottom and winces at the stamp.
   const rise = spring(seg(sec, 0.3, 0.7));
   const squash = 1 + 0.14 * settle(seg(sec, STAMP, STAMP + 0.6)) + (breathe(sec) - 1);
-  tomato(ctx, host, 330, 1700 + (1 - rise) * 600, 620, { squash, angle: 0.1 });
+  tomato(ctx, host, W / 2, 1700 + (1 - rise) * 600, 620, { squash, angle: Math.sin(sec * 1.6) * 0.03 });
 }
 
 hookRule.cues = () => [
