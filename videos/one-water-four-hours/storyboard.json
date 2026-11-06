@@ -1,0 +1,22 @@
+{
+  "title": "One Water, Four Hours, Your Best Table",
+  "cover": { "hero": "tomato", "name": "Leo", "kicker": "CAFE LIFE", "headline": "One water. *Four hours.*" },
+  "background": "butter",
+  "output": "video.mp4",
+  "mix": { "pad": "sunny" },
+  "scenes": [
+    { "type": "hook-callout", "duration": 3, "speaker": "Leo",
+      "say": "Just a tap water, thanks. I'll be here a while.",
+      "props": { "callout": "Cafe owners,", "speaker": "Leo", "quote": "Just a tap water. I'll be here *a while*." } },
+    { "type": "floor", "duration": 5, "peek": false,
+      "say": "The best table in the cafe, by the window. Four hours later, it's still his. And the lunch rush is walking in.",
+      "props": { "caption": "The best table, *by the window*", "tables": 6, "turns": 1, "fill": 0.9, "guests": ["Leo", "Maria", "Ana"], "stat": { "value": "4 hrs", "label": "one glass of water" } } },
+    { "type": "scale", "duration": 5,
+      "say": "You do the math in your head. But you also remember being the one who needed a quiet table.",
+      "props": { "caption": "The *math* versus the heart", "left": { "label": "One empty glass", "weight": 1 }, "right": { "label": "A guest who feels welcome", "weight": 2 }, "verdict": "REFILL IT" } },
+    { "type": "quote", "duration": 5,
+      "say": "Next Friday, Leo's back. Two lattes and a muffin, and he brought a friend.",
+      "props": { "caption": "The *next* Friday", "name": "Leo", "role": "now a regular", "quote": "Two lattes and a muffin. Bringing *a friend*." } },
+    { "type": "endcard", "duration": 2.6, "say": "Tag an owner who has this table. Follow for more cafe life.", "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
