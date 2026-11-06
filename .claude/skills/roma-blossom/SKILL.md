@@ -64,6 +64,11 @@ and keeps it; later renders reuse it.
    and keep the scaffold's pick unless the topic suits another one better (see **Look and
    sound** below), as long as it still differs from the last three. Do the same for the pad
    (`mix.pad`, which the scaffold also picks): `grep -h '"pad"'` over the same three files.
+   **The hook changes too:** read `style/HOOKS.md`, pick the hook type that fits the topic
+   (`hook-same`, `hook-number`, `hook-rule`, `hook-callout` or the original `hook`), and don't
+   reuse the hook type of the last video (`grep -h -m1 '"type"'` over the same three files).
+   Open on a claim, a number, a rule to break or a guest's line, not "Should you…" or "How do
+   you…"; the hook bank in `style/HOOKS.md` has openers for the backlog.
 6. **Check frames before the full render.** Render the end of each scene (where everything is on
    screen) and look at them:
    ```bash
@@ -274,16 +279,21 @@ unless another suits the topic better, as long as it still differs from the last
 
 ## Templates
 
-There are 24. `videos/template-demo/` (the first 8) and `videos/template-demo-2/` (the other 16)
-show each one with example content; copy their props as a starting point.
+There are 28. `videos/template-demo/` (the first 8) and `videos/template-demo-2/` (the other 16)
+show each one with example content, and `videos/template-demo-hooks/` shows the four newer hooks; copy
+their props as a starting point.
 
-Every scene except the hook and end card takes an optional `caption`: one short line at the top
+Every scene except the hooks and end card takes an optional `caption`: one short line at the top
 (keep it under about 40 characters). The minimum comfortable durations are a guide; give
 reading-heavy scenes more.
 
 | type | use for | props | min |
 | --- | --- | --- | --- |
 | `hook` | the question, first scene | `kicker` (2 to 3 words, caps), `headline` (under about 60 characters), `host` | 2.8 s |
+| `hook-same` | first scene: two things owners mix up | `kicker`, `left`, `right` (one or two short words each), `line` ("Sound the same. They're *not*."), `host` | 3 s |
+| `hook-number` | first scene: one big number first | `kicker`, `number` (a string, such as "$8,100"), `line` (what it is, under about 40 characters), `host` | 3 s |
+| `hook-rule` | first scene: a common rule, stamped | `line` (under about 40 characters), `label` (caps, default "THE RULE"), `note` (the rule, under about 40 characters), `stamp` (caps, 1 to 2 words), `host` | 3 s |
+| `hook-callout` | first scene: who it's for, plus a guest's line | `callout` ("Cafe owners,"), `speaker` (the guest), `quote` (under about 40 characters; `*swash*` allowed); set the scene's `speaker` too | 3 s |
 | `receipt` | where the money goes | `title`, `items` [{`label`, `amount`}] (up to 7; the price as a positive first line, then costs as negatives), `totalLabel`, `total` (default: the sum), `currency` | 4 s |
 | `menu` | menu engineering, pricing | `title`, `items` [{`name`, `price` (a string), `mark`: `star`/`circle`/`cross`/`underline`, `note`}] (up to 4; names under about 16 characters) | 4 s |
 | `rush` | the shape of a day, staffing | `label`, `hours` [], `values` [] (6 to 10 bars; the highest is the peak, in rose), `queue` [names] (up to 5), `queueLabel` | 4 s |

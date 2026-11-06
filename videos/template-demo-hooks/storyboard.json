@@ -1,0 +1,20 @@
+{
+  "title": "Hook Templates",
+  "background": "paper",
+  "output": "video.mp4",
+  "mix": { "pad": "sway" },
+  "scenes": [
+    { "type": "hook-same", "duration": 3, "background": "paper",
+      "say": "Markup and margin sound like the same thing. They're not.",
+      "props": { "kicker": "CAFE MATH", "left": "Markup", "right": "Margin", "line": "Sound the same. They're *not*." } },
+    { "type": "hook-number", "duration": 3, "background": "sky",
+      "say": "Eight thousand one hundred dollars a year. That's what free oat milk can cost you.",
+      "props": { "kicker": "CAFE MATH", "number": "$8,100", "line": "a year, on *free* oat milk" } },
+    { "type": "hook-rule", "duration": 3, "background": "mint",
+      "say": "Never raise your prices, people say. That rule quietly costs you.",
+      "props": { "line": "The rule that quietly *costs you*", "label": "OWNER ADVICE", "note": "Never raise your prices", "stamp": "COSTS YOU" } },
+    { "type": "hook-callout", "duration": 3, "background": "blush", "speaker": "Maria",
+      "say": "You remembered my name? Okay, I'm coming back tomorrow.",
+      "props": { "callout": "Cafe owners,", "speaker": "Maria", "quote": "You remembered *my name*?" } }
+  ]
+}

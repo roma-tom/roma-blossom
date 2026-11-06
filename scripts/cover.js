@@ -144,7 +144,10 @@ function inkRows(canvas) {
 }
 
 function renderCover(board, slug = '') {
-  const hook = (board.scenes || []).find((s) => s.type === 'hook')?.props || {};
+  // The first hook scene of any kind; the newer hook types say what their cover text is.
+  const first = (board.scenes || []).find((s) => String(s.type).startsWith('hook'));
+  const draw = first && first.type !== 'hook' ? require(`./scenes/${first.type}.js`) : null;
+  const hook = (draw?.cover ? draw.cover(first.props || {}) : first?.props) || {};
   const o = { ...hook, ...(board.cover || {}) };
   const theme = THEMES[o.background || [].concat(board.background || 'paper')[0]];
   const hero = pickHero(board, o, slug);

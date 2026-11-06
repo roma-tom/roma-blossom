@@ -23,7 +23,7 @@
 // mouth follows the voice wherever that tomato is drawn; if the scene doesn't draw them, they
 // peek in at the lower left (`"peek": false` on the scene leaves them out). See lib/voice.js.
 //
-// Sound: each scene module may export draw.cues(props) → [{ t (0..1 in the scene), sfx, gain }].
+// Sound: each scene module may export draw.cues(props) → [{ t (0..1 in the scene) or sec (seconds in), sfx, gain }].
 // The renderer adds a whoosh on every wipe (or mix.wipe), mixes them over the pad (mix.pad, see lib/sound.js) with the
 // voice into sound.wav (and the voice alone into voice.wav), saves each effect used to
 // sfx/<name>.wav for your own edits, and muxes the mix into the MP4.
@@ -214,7 +214,7 @@ function soundtrack() {
   scenes.forEach((sc, i) => {
     const dur = (sc.frames - 1) / FPS, start = sc.start / FPS;
     if (i > 0) cues.push({ at: start, sfx: wipe, gain: 0.5 });
-    for (const c of sc.draw.cues?.(sc.props || {}) || []) cues.push({ ...c, at: start + c.t * dur });
+    for (const c of sc.draw.cues?.(sc.props || {}) || []) cues.push({ ...c, at: start + (c.sec != null ? Math.min(c.sec, dur) : c.t * dur) });
   });
   const vt = voiceTrack();
   if (vt) fs.writeFileSync(path.join(dir, 'voice.wav'), sound.wav(vt));
