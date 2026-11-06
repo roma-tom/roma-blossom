@@ -18,7 +18,8 @@
 // ink-edged blob, during its first WIPE seconds.
 //
 // Voice: on by default. A scene's `say` is spoken by its `speaker` (the narrator, Roma Tom,
-// unless set), and the scene grows to fit the line: its duration is a minimum. The speaker's
+// unless set), and the scene grows to fit the line: its duration is a minimum. Babble has no
+// words to wait for, so it's trimmed to fit the scene's duration and the scenes move quicker. The speaker's
 // mouth follows the voice wherever that tomato is drawn; if the scene doesn't draw them, they
 // peek in at the lower left (`"peek": false` on the scene leaves them out). See lib/voice.js.
 //
@@ -98,7 +99,12 @@ async function layout(vc) {
       const problems = voice.checkLine(s.say);
       if (problems.length) console.warn(`warning: scene ${i + 1} "say" has ${problems.join('; ')}:\n  ${s.say}`);
       const speaker = s.speaker || vc.narrator;
-      const clip = vc.mode === 'speech' ? await voice.speak(s.say, voice.voiceFor(speaker, vc.cast), vc.speed) : voice.babble(s.say, speaker);
+      // Speech: the scene grows to fit the line. Babble carries no words, so it fits inside the
+      // scene's own duration instead, and the scenes keep their quicker pace.
+      const lead = i === 0 ? LEAD_FIRST : LEAD, tail = i === board.scenes.length - 1 ? TAIL_LAST : TAIL;
+      const clip = vc.mode === 'speech'
+        ? await voice.speak(s.say, voice.voiceFor(speaker, vc.cast), vc.speed)
+        : voice.babble(s.say, speaker, Math.max(0.6, (s.duration || 0) - lead - tail));
       lines.push({ speaker, clip, mouth: voice.mouth(clip, FPS) });
     }
   }

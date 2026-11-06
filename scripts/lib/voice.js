@@ -141,7 +141,7 @@ const VOWELS = { a: [800, 1250], e: [520, 1850], i: [330, 2250], o: [520, 900], 
 // voice rather than an almost-human one. Pauses at spaces and punctuation, a hop up at a
 // question and a step down at the end of a sentence. Each name has its own key.
 const SCALE = [0, 2, 4, 7, 9]; // major pentatonic, in semitones
-function babble(text, name) {
+function babble(text, name, max = Infinity) {
   const r = rng(seedOf('babble', key(name), text));
   // Roma Tom sits around B4; everyone else gets their own key between about A4 and E5.
   const base = key(name) === HOST ? 494 : 440 * Math.pow(2, (hash(key(name)) % 8) / 12);
@@ -163,6 +163,17 @@ function babble(text, name) {
   // The tune: a gentle random walk on the scale, pulled back toward the home note.
   const parts = [];
   let total = 0, step = 0;
+  // With a time budget (babble mode keeps each scene at its own duration), stop once the next
+  // syllable would run over, and end the phrase the way the line ends.
+  const question = /\?\s*$/.test(String(text));
+  for (let i = 0, t = 0; i < plan.length; i++) {
+    t += 0.1 + plan[i].gap;
+    if (t > max && i > 0) {
+      plan.length = i;
+      plan[i - 1].end = question ? 'up' : 'down';
+      break;
+    }
+  }
   plan.forEach((s) => {
     const move = r() < 0.35 ? 0 : r() < 0.5 ? 1 : -1;
     step = Math.max(-2, Math.min(3, step + move - (step > 1 ? 1 : 0) + (step < -1 ? 1 : 0)));

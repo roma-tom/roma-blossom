@@ -183,7 +183,9 @@ and keeps it; later renders reuse it.
   left; `"peek": false` on the scene leaves them out.
 - `voice`: on by default as `speech`. `"mode": "babble"` (or `"voice": "babble"`) makes the
   tomatoes talk in cartoon syllables instead, still with the timing and mouths of the lines;
-  use it only when the user asks for it. `"voice": false` leaves the voice out. `speed`
+  use it only when the user asks for it. Babble doesn't stretch scenes to fit the line: it's
+  trimmed to fit each scene's `duration`, so the video moves quicker (about 12 to 20 s). Set
+  each `duration` for reading time, a little above the template minimum for busy scenes. `"voice": false` leaves the voice out. `speed`
   (default 1) speeds every line up or down; `cast` sets a tomato's Kokoro voice by name, such
   as `{ "Maria": "af_bella" }` (Roma Tom is `am_michael`; everyone else gets one from their name).
 - Optional per scene: `push` (slow camera push, default 0.03; 0 for none).
