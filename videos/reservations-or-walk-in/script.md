@@ -2,10 +2,8 @@
 
 **Question:** "Should you take reservations, or stay walk-in only?"
 **Background:** paper (pad: cosy)
-**Length:** about 20 s
-**Voice:** babble. The speech voice model couldn't be downloaded in the session that made this
-video (the session's network allowlist denies huggingface.co). The `say` lines are written for
-speech: delete the `voice` line in `storyboard.json` and render again to get Roma Tom speaking.
+**Length:** about 31 s
+**Voice:** speech (Roma Tom narrates; first made in babble when the voice model couldn't download, then redone with speech).
 
 The idea: it isn't one or the other. Reservations help you plan staff and prep; walk-in only is
 simple and has no no-shows. Most places do best mixing both, and a quick cafe can stay walk-in.

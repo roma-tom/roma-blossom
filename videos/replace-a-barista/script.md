@@ -2,10 +2,8 @@
 
 **Question:** "What does it really cost to replace one barista?"
 **Background:** blush (pad: drift)
-**Length:** about 25 s
-**Voice:** babble. The speech voice model couldn't be downloaded in the session that made this
-video (huggingface.co was blocked). The `say` lines are written for speech: delete the `voice`
-line in `storyboard.json` and render again to get Roma Tom speaking them.
+**Length:** about 34 s
+**Voice:** speech (Roma Tom narrates; first made in babble when the voice model couldn't download, then redone with speech).
 
 The idea: when a barista quits, the cost isn't just the job ad. Training pay, the trainer's time,
 remakes and a slower line add up to about $2,000. Lose three a year and that's $6,000. Spending a

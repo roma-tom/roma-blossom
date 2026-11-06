@@ -4,7 +4,6 @@
   "background": "blush",
   "output": "video.mp4",
   "mix": { "pad": "drift" },
-  "voice": { "mode": "babble" },
   "scenes": [
     { "type": "hook", "duration": 2.8,
       "say": "What does it really cost to replace one barista?",

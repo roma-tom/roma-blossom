@@ -4,7 +4,6 @@
   "background": "paper",
   "output": "video.mp4",
   "mix": { "pad": "cosy" },
-  "voice": { "mode": "babble" },
   "scenes": [
     { "type": "hook", "duration": 2.8,
       "say": "Should you take reservations, or stay walk-in only?",
