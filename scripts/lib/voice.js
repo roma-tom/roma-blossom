@@ -150,24 +150,16 @@ function babble(text, name) {
     return base * Math.pow(2, (12 * o + SCALE[d]) / 12);
   };
   const words = String(text).replace(/\[([^\]]*)\]\(\/[^)]*\/\)/g, '$1').match(/[A-Za-z']+[^A-Za-z']*/g) || [];
-  // One bab per word (two for a long word), leaving out tiny words like "a" and "the" unless a
-  // phrase ends on them, with room to breathe between words.
   const plan = [];
   words.forEach((w) => {
     const letters = w.match(/[A-Za-z']+/)[0].toLowerCase();
     const groups = letters.match(/[aeiouy]+/g) || ['a'];
+    const n = Math.min(4, groups.length);
+    for (let k = 0; k < n; k++) plan.push({ v: groups[k][0], gap: 0.02 });
     const p = w.slice(letters.length);
-    const ends = /[.!?,;:\u2014\u2013-]/.test(p);
-    if (letters.length <= 3 && !ends && plan.length) {
-      plan[plan.length - 1].gap += 0.06; // a tiny word: a short pause, no bab
-      return;
-    }
-    const n = groups.length >= 3 ? 2 : 1;
-    for (let k = 0; k < n; k++) plan.push({ v: groups[k][0], gap: 0.04 });
-    plan[plan.length - 1].gap = /[.!?]/.test(p) ? 0.4 : /[,;:\u2014\u2013-]/.test(p) ? 0.25 : 0.12;
+    plan[plan.length - 1].gap = /[.!?]/.test(p) ? 0.3 : /[,;:—–-]/.test(p) ? 0.17 : 0.06;
     plan[plan.length - 1].end = /\?/.test(p) ? 'up' : /[.!]/.test(p) ? 'down' : null;
   });
-  if (!plan.length) plan.push({ v: 'a', gap: 0.1, end: 'down' });
   // The tune: a gentle random walk on the scale, pulled back toward the home note.
   const parts = [];
   let total = 0, step = 0;
@@ -178,7 +170,7 @@ function babble(text, name) {
     if (s.end === 'up') f0 = note(step + 2);
     if (s.end === 'down') f0 = note(Math.min(step, 0) - 1);
     if (s.end) step = 0;
-    const dur = 0.11 + r() * 0.04;
+    const dur = 0.085 + r() * 0.035;
     parts.push({ ...s, dur, f0 });
     total += dur + s.gap;
   });
