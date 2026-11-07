@@ -1,0 +1,32 @@
+{
+  "title": "Markup and Margin Are Not the Same Thing",
+  "cover": { "hero": "headline", "kicker": "MENU MATH", "headline": "Markup and margin are *not* the same" },
+  "background": "paper",
+  "output": "video.mp4",
+  "mix": { "pad": "warm" },
+  "scenes": [
+    { "type": "hook-same", "duration": 3,
+      "say": "Markup and margin sound like the same thing. They're not.",
+      "props": { "kicker": "MENU MATH", "left": "Markup", "right": "Margin", "line": "Sound the same. They're *not*." } },
+    { "type": "receipt", "duration": 5,
+      "say": "Say a croissant costs three dollars to make. Add fifty percent, sell it for four fifty, and keep a dollar fifty.",
+      "props": { "caption": "One *croissant*",
+        "title": "CROISSANT · 50% MARKUP",
+        "items": [
+          { "label": "Menu price", "amount": 4.5 },
+          { "label": "Cost to make", "amount": -3 }
+        ],
+        "totalLabel": "You keep" } },
+    { "type": "versus", "duration": 5,
+      "say": "That's a fifty percent markup on the cost. But it's only a third of the price. That third is your margin.",
+      "props": { "caption": "Same *$1.50*, two numbers",
+        "left": { "name": "Dev", "label": "Markup", "value": "50%", "note": "of the $3 cost" },
+        "right": { "name": "Maria", "label": "Margin", "value": "33%", "note": "of the $4.50 price" },
+        "winner": "right" } },
+    { "type": "fix", "duration": 5,
+      "say": "Want to keep half of every sale? Divide the cost by one minus the margin. Three dollars over a half is six dollars.",
+      "props": { "title": "Hit your margin",
+        "steps": ["Pick the margin you want", "Price = cost ÷ (1 − margin)", "$3 ÷ 0.5 = $6"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}

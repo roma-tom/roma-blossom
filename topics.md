@@ -20,7 +20,6 @@ behind a non-advice topic in the order.
 
 ## Up next
 
-- [ ] Markup and margin are not the same thing [advice] Hook: "Markup and margin sound like the same thing. They're not." (hook-same; receipt, pricetag)
 - [ ] Five guests every cafe gets [guests] Hook: "Every cafe gets these five guests. Which one came in today?" (hook; countdown, quote)
 - [ ] The customer isn't always king. Your staff are. [hot take] Hook: "The customer is always right, they say. Not always." (hook-rule; myth, scale)
 - [ ] What's the real cost of a free refill? [advice] Hook: "[Yearly number] dollars a year. That's what free refills can cost." (hook-number; receipt, jar)
@@ -124,6 +123,7 @@ Made as videos:
 - [x] A Saturday in Roma Tom's cafe, from the first delivery to lights out (`videos/saturday-at-the-cafe`)
 - [x] Is your happy hour making or losing money? (`videos/happy-hour-math`)
 - [x] One water, four hours, your best table (`videos/one-water-four-hours`)
+- [x] Markup and margin are not the same thing (`videos/markup-vs-margin`)
 
 Examples in the style guide:
 
