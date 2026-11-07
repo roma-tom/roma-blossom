@@ -1,0 +1,25 @@
+{
+  "title": "Animated Hook Templates",
+  "background": "paper",
+  "output": "video.mp4",
+  "mix": { "pad": "sway" },
+  "scenes": [
+    { "type": "hook-pov", "duration": 3, "background": "butter", "speaker": "Ivan",
+      "say": "Hi! Are you guys still doing food?",
+      "props": { "pov": "Two minutes to close.", "guest": "Ivan", "quote": "Still doing *food*?", "react": "shock" } },
+    { "type": "hook-split", "duration": 3.5, "background": "sky",
+      "say": "Same street, same coffee. Only one of these cafes is full at lunch.",
+      "props": { "line": "Same street. Same coffee.", "left": { "name": "Leo", "sign": "Lunch for everyone" },
+        "right": { "name": "Roma Tom", "sign": "Lunch in 10 minutes" }, "winner": "right", "payoff": "Only one is *full*.", "guests": ["Maria", "Ivan", "Ana"] } },
+    { "type": "hook-freeze", "duration": 3.5, "background": "mint",
+      "say": "Stop. See table four? That ticket is about to cost you a regular.",
+      "props": { "label": "TABLE 4", "line": "This ticket is about to cost you a *regular*", "at": 0.9,
+        "focus": { "x": 540, "y": 900, "rx": 200, "ry": 160 },
+        "scene": { "type": "tickets", "props": {
+          "tickets": [
+            { "table": "T2", "items": ["2 flat white", "1 croissant"], "minutes": 4 },
+            { "table": "T4", "items": ["1 grilled cheese", "1 soup"], "minutes": 16 },
+            { "table": "T7", "items": ["3 latte"], "minutes": 2 }
+          ], "limit": 12, "goal": "GOAL: UNDER 12 MIN", "cook": "Dev" } } } }
+  ]
+}

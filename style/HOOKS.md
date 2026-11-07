@@ -3,7 +3,42 @@
 The first second decides whether anyone sees the rest. Instagram counts how many viewers skip
 a reel in its first 3 seconds, and that number feeds whether it shows the reel to more people.
 
-## What's working in this niche (researched November 2026)
+## Animated videos for owners: what opens best (researched November 7, 2026)
+
+Roma Tom's niche is **animated videos for cafe and restaurant owners**. An Instagram and TikTok
+index turned up no other account doing exactly that: searches for animated restaurant or cafe
+content came back empty. So the lessons come from the two nearest neighbors: the biggest
+animated explainer and animated relatable accounts, and the owner-education accounts below.
+
+**Animated accounts, most-viewed reels**
+
+| Views | Account | What the first seconds show | Pattern |
+| --- | --- | --- | --- |
+| 44.9M | an animated news explainer (3D) | "Dangerous Blind Spot": the scene itself, a truck and a scooter, right before it goes wrong | **Freeze on the moment** |
+| 37.5M | same | "How Saddam Hussein was captured?": straight into the scene, then the explanation over it | **Freeze on the moment** |
+| 9.6M | same | "Petrol vs EV Scooter": two side by side from the first frame | **Split** |
+| 19.8M (518k shares) | an animated relatable-skit account | "I can't STAND the morning cold": a character mid-moment that everyone knows, no title | **POV cold open** |
+| 7.8M | same | "Why does it ALWAYS work??": the familiar moment, then the reaction | **POV cold open** |
+| 9.6M | an animated health explainer | "What your food actually does to your bones (healthy vs unhealthy)": two versions side by side | **Split** |
+| 21.5M (1.4M shares) | an animated comedy account | relatable moments, captioned "Tag your friends" | **POV cold open** |
+
+What they have in common:
+
+- **They open inside the scene, not on a title card.** Characters are already doing something on
+  frame one: walking in, about to crash, mid-reaction. The words sit over the action.
+- **Comparison is instant.** Two versions side by side need no explaining; the eye compares
+  before the voice starts.
+- **The pause is the hook.** Explainers stop the action at the moment of trouble and point at
+  it, which opens a question the rest of the video answers.
+- **Relatable beats informative for shares.** The skit accounts get hundreds of thousands of shares a
+  reel: people send them with "this is us". For owners, that is the staff group chat.
+- Hook guides agree on the mechanics: movement in the first frame, a pattern interrupt, a
+  signal of who it's for ("Cafe owners", "POV: two minutes to close"), and an open loop.
+
+Our old hooks all opened on a title card: a kicker pill, a line of text, Roma Tom rising. That
+reads as a slide, not a cartoon, and an animated channel's edge is the animation.
+
+## Owner-education accounts: what they say first (researched November 2026)
 
 **Our own reels** (Metricool, Nov 3 to 5; all about 130 to 230 views, so a hint, not proof). This
 is the share of viewers who watched past 3 seconds:
@@ -47,7 +82,21 @@ takes: "Customers aren't the real kings of business, employees are."
 
 ## The hook templates
 
-Five shapes. Change the type from one video to the next, so no two videos in a row open the same way.
+**Open on a scene.** Use one of the three animated hooks for most videos, and change the type from
+one video to the next, so no two videos in a row open the same way. The text-card hooks stay for
+when the words really are the scene (a number so big it is the picture), at most one video in three.
+
+**Animated (the default)**
+
+| type | what happens on screen | fits | say it like |
+| --- | --- | --- | --- |
+| `hook-pov` | "POV:" and the setup on screen; a guest walks up to Roma Tom's counter and says the line; Roma Tom jumps (shock, sweat or joy) | relatable, guests, story, a problem every owner knows | (the guest) "Hi! Are you guys still doing food?" |
+| `hook-split` | two storefronts side by side with different signs; guests stroll past and all turn into one door | any choice between two ways (signs, prices, menus, hours) | "Same street, same coffee. Only one of these cafes is full at lunch." |
+| `hook-freeze` | any other template plays, then stops with a record scratch; everything goes pale but one spot, circled, with a label and an arrow | advice and quizzes: the receipt line, the late ticket, the empty table, the dial in the red | "Stop. See table four? That ticket is about to cost you a regular." |
+
+`videos/template-demo-hooks-2/` shows them back to back.
+
+**Text cards (sometimes)**
 
 | type | pattern | say it like |
 | --- | --- | --- |
@@ -55,12 +104,13 @@ Five shapes. Change the type from one video to the next, so no two videos in a r
 | `hook-number` | one big number slams in first, then what it is | "Eight thousand one hundred dollars a year. That's what free oat milk can cost you." |
 | `hook-rule` | a common rule on a sticky note, stamped | "Never raise your prices, people say. That rule quietly costs you." |
 | `hook-callout` | "Cafe owners," plus a line a guest really says | (the guest speaks) "You remembered my name? Okay, I'm coming back tomorrow." |
-| `hook` | the original: a question with Roma Tom rising | Use it for a question that really does stop people, and keep the question short and sharp. |
+| `hook` | the original: a question with Roma Tom rising | Rarely; a short, sharp question only. |
 
-`videos/template-demo-hooks/` shows the four new ones back to back.
+`videos/template-demo-hooks/` shows the text cards.
 
-**Rules for any hook line**
+**Rules for any hook**
 
+- Something moves on the first frame, and who it's for is clear in the first second.
 - Lead with the claim, the number, the rule or the guest. Not "Should you…".
 - A number in the hook must be the video's own worked number, with the same fact note.
 - One idea. If the hook needs "and", it's two hooks.

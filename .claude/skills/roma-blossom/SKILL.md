@@ -68,11 +68,15 @@ and keeps it; later renders reuse it.
    and keep the scaffold's pick unless the topic suits another one better (see **Look and
    sound** below), as long as it still differs from the last three. Do the same for the pad
    (`mix.pad`, which the scaffold also picks): `grep -h '"pad"'` over the same three files.
-   **The hook changes too:** read `style/HOOKS.md`, pick the hook type that fits the topic
-   (`hook-same`, `hook-number`, `hook-rule`, `hook-callout` or the original `hook`), and don't
-   reuse the hook type of the last video (`grep -h -m1 '"type"'` over the same three files).
-   Open on a claim, a number, a rule to break or a guest's line, not "Should you…" or "How do
-   you…"; the hook bank in `style/HOOKS.md` has openers for the backlog.
+   **The hook changes too:** read `style/HOOKS.md`. This is an animated channel, so open on a
+   scene, not a title card: use one of the animated hooks (`hook-pov`, `hook-split`,
+   `hook-freeze`) for most videos, and a text-card hook (`hook-same`, `hook-number`,
+   `hook-rule`, `hook-callout`, `hook`) at most one video in three. Don't reuse the hook type of
+   the last video (`grep -h -m1 '"type"'` over the same three files). Something moves on the
+   first frame, who it's for is clear in the first second, and the line is a claim, a number, a
+   rule to break or a guest's words, not "Should you…". The topic's `Hook:` in `topics.md` is a
+   ready opener. For `hook-freeze`, render a frame of the inner scene first to find the
+   `focus` spot's coordinates.
 6. **Check frames before the full render.** Render the end of each scene (where everything is on
    screen) and look at them:
    ```bash
@@ -284,9 +288,9 @@ unless another suits the topic better, as long as it still differs from the last
 
 ## Templates
 
-There are 28. `videos/template-demo/` (the first 8) and `videos/template-demo-2/` (the other 16)
-show each one with example content, and `videos/template-demo-hooks/` shows the four newer hooks; copy
-their props as a starting point.
+There are 31. `videos/template-demo/` (the first 8) and `videos/template-demo-2/` (the other 16)
+show each one with example content, `videos/template-demo-hooks-2/` shows the three animated
+hooks and `videos/template-demo-hooks/` the four text-card hooks; copy their props as a starting point.
 
 Every scene except the hooks and end card takes an optional `caption`: one short line at the top
 (keep it under about 40 characters). The minimum comfortable durations are a guide; give
@@ -294,6 +298,9 @@ reading-heavy scenes more.
 
 | type | use for | props | min |
 | --- | --- | --- | --- |
+| `hook-pov` | first scene, animated: a guest walks up to Roma Tom's counter and says the line; he reacts | `pov` (the setup, under about 30 characters), `guest`, `quote` (under about 30 characters; `*swash*` allowed), `react` (`shock`, `sweat` or `joy`), `host`; set the scene's `speaker` to the guest | 3 s |
+| `hook-split` | first scene, animated: two storefronts with different signs; guests pick one | `line`, `left` and `right` {`name` (the owner tomato), `sign` (under about 24 characters)}, `winner` (`left`, `right` or `none` for a question), `payoff`, `guests` (3 names) | 3.5 s |
+| `hook-freeze` | first scene, animated: another template plays, then freezes with one spot circled | `scene` {`type`, `props`} (any template but hooks and end card; leave out its `caption`), `at` (0 to 1, default 0.85), `focus` {`x`, `y`, `rx`, `ry`}, `label` (caps), `line` (under about 50 characters) | 3.5 s |
 | `hook` | the question, first scene | `kicker` (2 to 3 words, caps), `headline` (under about 60 characters), `host` | 2.8 s |
 | `hook-same` | first scene: two things owners mix up | `kicker`, `left`, `right` (one or two short words each), `line` ("Sound the same. They're *not*."), `host` | 3 s |
 | `hook-number` | first scene: one big number first | `kicker`, `number` (a string, such as "$8,100"), `line` (what it is, under about 40 characters), `host` | 3 s |
