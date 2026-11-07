@@ -41,6 +41,7 @@ const sound = require('./lib/sound.js');
 const voice = require('./lib/voice.js');
 const american = require('./lib/american.js');
 const { writeCover } = require('./cover.js');
+const { loadScene } = require('./lib/scenes.js');
 
 const WIPE = 0.5; // seconds
 const BOIL = 4; // frames per boil step
@@ -62,6 +63,20 @@ if (args.includes('--bg')) board.background = args[args.indexOf('--bg') + 1];
 const backgrounds = [].concat(board.background || 'paper');
 for (const b of backgrounds) if (!THEMES[b]) throw new Error(`unknown background "${b}" (try ${Object.keys(THEMES).join(', ')})`);
 const dir = path.dirname(file);
+
+// Each video's hook is its own: stop on an unfinished starter, or a copy of another video's hook.
+for (const s of board.scenes || []) {
+  if (!/^\.\.?\//.test(String(s.type))) continue;
+  const src = fs.readFileSync(path.resolve(dir, s.type), 'utf8');
+  if (src.includes('// STARTER:')) throw new Error(`${s.type} is still the starter: build this video's own hook (see style/HOOKS.md)`);
+  const videos = path.join(__dirname, '..', 'videos');
+  for (const other of fs.readdirSync(videos)) {
+    const f = path.join(videos, other, path.basename(s.type));
+    if (path.resolve(f) !== path.resolve(dir, s.type) && fs.existsSync(f) && fs.readFileSync(f, 'utf8') === src) {
+      throw new Error(`${s.type} is the same as videos/${other}/${path.basename(s.type)}: each video needs its own hook`);
+    }
+  }
+}
 
 // American English only: stop on British words or spellings anywhere a viewer sees or hears them.
 {
@@ -118,7 +133,7 @@ async function layout(vc) {
     const frames = Math.round(Math.max(s.duration || 0, need) * FPS);
     const scene = {
       ...s,
-      draw: require(`./scenes/${s.type}.js`),
+      draw: loadScene(s.type, dir),
       theme: s.type === 'endcard' ? THEMES.lime : THEMES[s.background || ''] || THEMES[backgrounds[i % backgrounds.length]],
       start: cursor,
       frames,

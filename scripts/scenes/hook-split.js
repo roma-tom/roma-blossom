@@ -7,36 +7,12 @@
 //          payoff: 'Only one is *full*.', guests: ['Maria', 'Ivan', 'Ana'] }
 // winner: 'none' keeps it a question: the guests stop between the two and look both ways.
 
-const { C, headline, tomato, pen, motion } = require('../lib/kit.js');
-const { text, wrapText } = require('../lib/marks.js');
+const { headline, tomato, pen, motion } = require('../lib/kit.js');
+const { storefront } = require('../lib/stage.js');
 const { seg, easeOut, easeInOut, spring, breathe } = motion;
 
 const PW = 420, PANELS = [{ x: 60 }, { x: 520 }], TOP = 640, AWN = 760, FLOOR = 1240;
 const TURN = 1.3; // seconds until the guests turn into the winning door
-
-function storefront(ctx, theme, x, side, sec, dim, seed) {
-  const cx = x + PW / 2;
-  // Sign board with the cafe's promise.
-  const lines = wrapText(side.sign || '', PW - 70, { size: 52, balance: true }).slice(0, 2);
-  const sh = 40 + lines.length * 56;
-  pen.shape(ctx, pen.roundRect(x + 10, TOP - sh / 2 - 20, PW - 20, sh, 16), { fill: C.card, width: 5, seed, offset: 4 });
-  lines.forEach((ln, i) => text(ctx, ln, cx, TOP - sh / 2 + 34 + i * 56, { size: 52, align: 'center' }));
-  // The building, an awning with scallops, and the open door with the owner in it.
-  pen.shape(ctx, pen.roundRect(x, AWN, PW, FLOOR - AWN, 10), { fill: C.paper, width: 6, seed: seed + 1, offset: 0 });
-  const n = 5, sw = PW / n;
-  for (let i = 0; i < n; i++) {
-    const sx = x + i * sw;
-    const pts = [{ x: sx, y: AWN - 50 }, { x: sx + sw, y: AWN - 50 }, { x: sx + sw, y: AWN + 30 }];
-    for (let j = 0; j <= 8; j++) pts.push({ x: sx + sw - (sw * j) / 8, y: AWN + 30 + Math.sin((Math.PI * j) / 8) * 26 });
-    pen.shape(ctx, pts, { fill: i % 2 ? C.card : C.rose, width: 5, seed: seed + 10 + i, offset: 0 });
-  }
-  pen.shape(ctx, pen.roundRect(cx - 110, AWN + 120, 220, FLOOR - AWN - 120, 12), { fill: C.card, width: 5, seed: seed + 2, offset: 0 });
-  tomato(ctx, side.name || 'Leo', cx, FLOOR - 120, 230, { squash: breathe(sec) });
-  if (dim > 0) {
-    ctx.save(); ctx.globalAlpha = 0.45 * dim; ctx.fillStyle = theme.bg;
-    ctx.fillRect(x - 10, TOP - 120, PW + 20, FLOOR - TOP + 140); ctx.restore();
-  }
-}
 
 function hookSplit(ctx, theme, t, props, info = {}) {
   const sec = info.sec ?? t * 3.5;
@@ -49,7 +25,7 @@ function hookSplit(ctx, theme, t, props, info = {}) {
     const k = spring(seg(sec, i * 0.06, 0.3 + i * 0.06));
     ctx.save();
     ctx.translate(PANELS[i].x + PW / 2, FLOOR); ctx.scale(k, k); ctx.translate(-(PANELS[i].x + PW / 2), -FLOOR);
-    storefront(ctx, theme, PANELS[i].x, side, sec, none || i === win ? 0 : dimLoser, 2610 + i * 40);
+    storefront(ctx, theme, { x: PANELS[i].x, w: PW, sign: side.sign, name: side.name, sec, dim: none || i === win ? 0 : dimLoser, seed: 2610 + i * 40, top: TOP, awn: AWN, floor: FLOOR });
     ctx.restore();
   });
   // The street, and the divider between the two cafes.

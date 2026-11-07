@@ -24,6 +24,7 @@ const fs = require('fs');
 const path = require('path');
 const { W, H, C, THEMES, frame, background, rays, kicker, headline, tomato, pen } = require('./lib/kit.js');
 const { text, measure, money, loop } = require('./lib/marks.js');
+const { loadScene, isHook } = require('./lib/scenes.js');
 
 const SQUARE = { top: (H - W) / 2, bottom: (H + W) / 2 }; // 420 … 1500
 const CROPS = [
@@ -143,10 +144,11 @@ function inkRows(canvas) {
   return top < 0 ? { top: H / 2, bottom: H / 2 } : { top, bottom: bottom + 1 };
 }
 
-function renderCover(board, slug = '') {
-  // The first hook scene of any kind; the newer hook types say what their cover text is.
-  const first = (board.scenes || []).find((s) => String(s.type).startsWith('hook'));
-  const draw = first && first.type !== 'hook' ? require(`./scenes/${first.type}.js`) : null;
+function renderCover(board, slug = '', dir = '.') {
+  // The first scene, when it's the hook: a video's own hook file or a hook template. A hook
+  // module can say what its cover text is with draw.cover(props).
+  const first = (board.scenes || []).find((s) => isHook(s.type));
+  const draw = first && first.type !== 'hook' ? loadScene(first.type, dir) : null;
   const hook = (draw?.cover ? draw.cover(first.props || {}) : first?.props) || {};
   const o = { ...hook, ...(board.cover || {}) };
   const theme = THEMES[o.background || [].concat(board.background || 'paper')[0]];
@@ -213,7 +215,7 @@ function guides(cover) {
 function writeCover(file, o = {}) {
   const board = JSON.parse(fs.readFileSync(file, 'utf8'));
   const dir = path.dirname(file);
-  const { canvas: cover, hero } = renderCover(board, path.basename(path.resolve(dir)));
+  const { canvas: cover, hero } = renderCover(board, path.basename(path.resolve(dir)), dir);
   const out = path.join(dir, 'cover.jpg');
   fs.writeFileSync(out, cover.toBuffer('image/jpeg', 92));
   if (o.guides) {

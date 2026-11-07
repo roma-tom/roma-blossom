@@ -11,8 +11,8 @@
 // }
 // The line takes the top of the screen, where captions go, so leave the inner scene's caption out.
 
-const { W, C, kicker, headline, pen, motion } = require('../lib/kit.js');
-const { loop } = require('../lib/marks.js');
+const { headline, motion } = require('../lib/kit.js');
+const { spotlight, flash, pauseSign, circle, pointer } = require('../lib/stage.js');
 const { seg, easeOut, spring } = motion;
 
 const FREEZE = 0.7; // seconds of the scene playing before it stops
@@ -30,38 +30,18 @@ function hookFreeze(ctx, theme, t, props, info = {}) {
 
   if (sec < FREEZE) return;
   // A white flash, then everything but the focus goes pale.
-  const flash = 1 - seg(sec, FREEZE, FREEZE + 0.12);
-  const pale = easeOut(seg(sec, FREEZE, FREEZE + 0.2));
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(-50, -50, W + 100, 2100);
-  ctx.ellipse(f.x, f.y, f.rx * 1.12, f.ry * 1.12, 0, 0, Math.PI * 2, true);
-  ctx.fillStyle = theme.bg;
-  ctx.globalAlpha = 0.62 * pale;
-  ctx.fill('evenodd');
-  ctx.restore();
-  if (flash > 0) { ctx.save(); ctx.globalAlpha = 0.6 * flash; ctx.fillStyle = C.card; ctx.fillRect(0, 0, W, 1920); ctx.restore(); }
+  spotlight(ctx, theme, f, easeOut(seg(sec, FREEZE, FREEZE + 0.2)));
+  flash(ctx, 1 - seg(sec, FREEZE, FREEZE + 0.12));
 
   // A pause sign, the circle, and the label with an arrow to it.
-  const pk = spring(seg(sec, FREEZE, FREEZE + 0.25));
-  if (pk > 0) {
-    ctx.save(); ctx.translate(110, 300); ctx.scale(pk, pk);
-    pen.shape(ctx, pen.roundRect(-34, -44, 26, 88, 8), { fill: theme.text, width: 4, seed: 2701, offset: 0 });
-    pen.shape(ctx, pen.roundRect(8, -44, 26, 88, 8), { fill: theme.text, width: 4, seed: 2702, offset: 0 });
-    ctx.restore();
-  }
-  loop(ctx, f.x, f.y, f.rx, f.ry, easeOut(seg(sec, FREEZE + 0.1, FREEZE + 0.5)), theme.accent, 2703, 10);
+  pauseSign(ctx, theme, 110, 300, spring(seg(sec, FREEZE, FREEZE + 0.25)));
+  circle(ctx, theme, f, easeOut(seg(sec, FREEZE + 0.1, FREEZE + 0.5)));
   if (props.label) {
     const above = f.y - f.ry > 520;
     const ly = above ? f.y - f.ry - 150 : f.y + f.ry + 150;
     const lx = Math.min(760, Math.max(280, f.x));
-    const lk = spring(seg(sec, FREEZE + 0.35, FREEZE + 0.6));
-    if (lk > 0) {
-      ctx.save(); ctx.translate(lx, ly); ctx.scale(lk, lk); kicker(ctx, props.label, 0, 0, { seed: 2704 }); ctx.restore();
-      const ay0 = above ? ly + 46 : ly - 46, ay1 = above ? f.y - f.ry - 14 : f.y + f.ry + 14;
-      pen.line(ctx, [{ x: lx, y: ay0 }, { x: (lx + f.x) / 2 + 20, y: (ay0 + ay1) / 2 }, { x: f.x, y: ay1 }],
-        { width: 8, color: theme.accent, seed: 2705, upto: easeOut(seg(sec, FREEZE + 0.45, FREEZE + 0.7)) });
-    }
+    pointer(ctx, theme, props.label, lx, ly, f.x, above ? f.y - f.ry - 14 : f.y + f.ry + 14,
+      spring(seg(sec, FREEZE + 0.35, FREEZE + 0.6)), easeOut(seg(sec, FREEZE + 0.45, FREEZE + 0.7)));
   }
 
   // The line, at the top where a caption would go, written in once the picture stops.

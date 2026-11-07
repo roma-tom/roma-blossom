@@ -116,7 +116,7 @@ Twenty-four templates, each a function `(ctx, theme, t, props, info)` in `script
 from 0 to 1 over the scene. Each one also lists its sound cues in `draw.cues(props)`. The props
 for each are in `.claude/skills/roma-blossom/SKILL.md`.
 
-1. **Hook.** (One of eight hook types, mostly the animated ones; see `style/HOOKS.md`.) The original: the question in big Gaegu with one word on a marker swash, a kicker pill above it
+1. **Hook.** (Made for each video in its own `hook.js`; see `style/HOOKS.md`. Earlier videos used templates, such as the original:) the question in big Gaegu with one word on a marker swash, a kicker pill above it
    ("CAFE MATH", "STAFF", "GUESTS"), and Roma Tom rising like the sun at the bottom, with pale rays behind.
 2. **The Receipt.** A paper register receipt prints line by line: the price of a dish, then food cost,
    labor, rent, card fees… and the small number left at the bottom, circled in rose. For margins,

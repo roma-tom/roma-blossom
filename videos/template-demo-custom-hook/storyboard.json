@@ -1,0 +1,11 @@
+{
+  "title": "Custom Hook Example",
+  "background": "sky",
+  "output": "video.mp4",
+  "mix": { "pad": "sunny" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3.5,
+      "say": "Free oat milk feels like a nice touch. Every splash is seventy-five cents out of your pocket.",
+      "props": { "line": "Free oat milk *drips* money", "per": 0.75, "cups": 4 } }
+  ]
+}

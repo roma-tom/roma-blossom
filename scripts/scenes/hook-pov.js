@@ -6,44 +6,12 @@
 //          react: 'shock' | 'sweat' | 'joy', host = 'Roma Tom' }
 // Set the scene's speaker to the guest so the line is said in their voice.
 
-const { W, C, THEMES, kicker, headline, tomato, pen, motion } = require('../lib/kit.js');
+const { W, C, THEMES, kicker, headline, tomato, motion } = require('../lib/kit.js');
 const { wrapText, bubble } = require('../lib/marks.js');
+const { counter, reaction } = require('../lib/stage.js');
 const { seg, easeOut, spring, settle, breathe } = motion;
 
 const COUNTER = 1440, REACT = 1.25; // y of the counter top; seconds until the reaction
-
-function counter(ctx) {
-  pen.shape(ctx, [{ x: -40, y: COUNTER }, { x: 1120, y: COUNTER - 6 }, { x: 1120, y: 1980 }, { x: -40, y: 1980 }],
-    { fill: C.card, width: 7, seed: 2501, offset: 0 });
-  pen.line(ctx, [{ x: -40, y: COUNTER + 46 }, { x: 1120, y: COUNTER + 40 }], { width: 4, color: C.line, seed: 2502 });
-  // A cup and its saucer on the counter.
-  pen.shape(ctx, pen.ellipse(250, COUNTER + 4, 70, 14), { fill: C.card, width: 5, seed: 2503, offset: 0 });
-  pen.shape(ctx, [{ x: 205, y: COUNTER - 74 }, { x: 295, y: COUNTER - 74 }, { x: 282, y: COUNTER - 2 }, { x: 218, y: COUNTER - 2 }],
-    { fill: C.card, width: 5, seed: 2504, offset: 0 });
-  pen.line(ctx, [{ x: 236, y: COUNTER - 100 }, { x: 244, y: COUNTER - 120 }, { x: 236, y: COUNTER - 140 }], { width: 4, color: C.muted, seed: 2505 });
-}
-
-function reaction(ctx, theme, kind, x, y, p) {
-  if (p <= 0) return;
-  if (kind === 'joy') {
-    [[-190, -150, 34], [180, -170, 28], [210, -40, 22], [-210, -20, 24]].forEach(([dx, dy, s], i) =>
-      pen.sparkle(ctx, x + dx, y + dy, s * spring(seg(p, i * 0.1, 0.5 + i * 0.1)), { fill: C.lime, seed: 2510 + i }));
-  } else if (kind === 'sweat') {
-    [[150, -150], [185, -95]].forEach(([dx, dy], i) => {
-      const k = easeOut(seg(p, i * 0.15, 0.5 + i * 0.15)), dy2 = dy + k * 26;
-      const d = [{ x: x + dx, y: y + dy2 - 34 }, { x: x + dx + 17, y: y + dy2 }, { x: x + dx, y: y + dy2 + 14 }, { x: x + dx - 17, y: y + dy2 }];
-      if (k > 0) pen.shape(ctx, d, { fill: C.sky, width: 4, seed: 2520 + i, offset: 0, alpha: k });
-    });
-  } else {
-    // Shock: lines bursting out on both sides of the head.
-    [-1.05, -0.6, 0.6, 1.05].forEach((a, i) => {
-      const k = easeOut(seg(p, (i % 2) * 0.06, 0.35 + (i % 2) * 0.06));
-      const r0 = 240, r1 = 240 + 70 * k;
-      if (k > 0) pen.line(ctx, [{ x: x + r0 * Math.sin(a), y: y - r0 * Math.cos(a) }, { x: x + r1 * Math.sin(a), y: y - r1 * Math.cos(a) }],
-        { width: 10, color: theme.accent, seed: 2530 + i });
-    });
-  }
-}
 
 function hookPov(ctx, theme, t, props, info = {}) {
   const sec = info.sec ?? t * 3.5;
@@ -58,7 +26,7 @@ function hookPov(ctx, theme, t, props, info = {}) {
   const jump = settle(seg(sec, REACT, REACT + 0.7));
   const hop = Math.max(0, Math.sin(Math.PI * seg(sec, REACT, REACT + 0.3))) * 60;
   tomato(ctx, host, W / 2, 1300 - hop, 560, { squash: 1 + 0.12 * jump + (breathe(sec) - 1) });
-  counter(ctx);
+  counter(ctx, COUNTER, { cupX: 250 });
 
   // The guest walks up from the right, with a little bob, and stops at the counter.
   const walk = easeOut(seg(sec, 0, 0.6));

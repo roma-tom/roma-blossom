@@ -37,15 +37,15 @@ and keeps it; later renders reuse it.
    ("staffing"), pick the strongest question yourself and say which one you chose when you hand over.
    - **No topic given** ("make the next video", "next one"): take the first unticked topic under
      **Up next** in `topics.md`. Its `[kind]` says what sort of video it is (`style/KINDS.md`),
-     and its `Hook:` is a ready opener and hook type (rework it if a better one comes up). Skip
+     and its `Hook:` is a ready opener and a hook idea for this video's own hook (a better idea wins). Skip
      to the next one if it's the same kind as the last video made.
    - **A topic given:** check **Covered** in `topics.md` first. If it's already been made, say so
      and suggest a fresh angle on it, or the next topic from **Up next** instead.
    - **"Add … to the backlog":** append it to the end of **Up next** as
-     `- [ ] Topic [kind] Hook: "opener" (hook type; templates)`, after checking it isn't in either list, then
+     `- [ ] Topic [kind] Hook: "opener" (hook idea: what happens on screen; templates)`, after checking it isn't in either list, then
      commit and push `topics.md`. No video is made.
 2. **Scaffold the folder:** `node scripts/new.js <slug>` creates `videos/<slug>/` with a
-   `script.md`, a `caption.txt` and a starter `storyboard.json`. The starter already has a
+   `script.md`, a `caption.txt`, a starter `hook.js` (to be replaced; see step 5) and a starter `storyboard.json`. The starter already has a
    `background` that the last three videos didn't use.
 3. **Write `script.md`:** the hook, 3 to 5 beats and the ending (the takeaway for advice; a
    punchline, answer, feeling or comment question for the other kinds, see `style/KINDS.md`), with the exact on-screen
@@ -68,15 +68,16 @@ and keeps it; later renders reuse it.
    and keep the scaffold's pick unless the topic suits another one better (see **Look and
    sound** below), as long as it still differs from the last three. Do the same for the pad
    (`mix.pad`, which the scaffold also picks): `grep -h '"pad"'` over the same three files.
-   **The hook changes too:** read `style/HOOKS.md`. This is an animated channel, so open on a
-   scene, not a title card: use one of the animated hooks (`hook-pov`, `hook-split`,
-   `hook-freeze`) for most videos, and a text-card hook (`hook-same`, `hook-number`,
-   `hook-rule`, `hook-callout`, `hook`) at most one video in three. Don't reuse the hook type of
-   the last video (`grep -h -m1 '"type"'` over the same three files). Something moves on the
-   first frame, who it's for is clear in the first second, and the line is a claim, a number, a
-   rule to break or a guest's words, not "Should you…". The topic's `Hook:` in `topics.md` is a
-   ready opener. For `hook-freeze`, render a frame of the inner scene first to find the
-   `focus` spot's coordinates.
+   **Make the hook first: it's the most important scene, and every video gets its own.** Read
+   `style/HOOKS.md` and follow it: write the idea in one line at the top of `videos/<slug>/hook.js`
+   (what frame one shows, what's readable by half a second, the open loop), then replace the
+   starter with a hook drawn for this topic alone, built from `scripts/lib/stage.js`, `kit.js` and
+   `marks.js`. The first scene is `{ "type": "./hook.js", ... }`, with every on-screen word in its
+   `props` and `hook.cover` saying what the cover shows. Check its frames (`--frames 1,15,30,<last>`)
+   and improve it until something moves on frame one, the line reads by frame 15, and it looks
+   like a cartoon, not a slide. Never copy another video's hook or use a hook template as the
+   hook: the renderer stops on the starter or on a copy. The topic's `Hook:` line and hook idea in
+   `topics.md` are a starting point; a better idea wins. The other scenes reuse the templates.
 6. **Check frames before the full render.** Render the end of each scene (where everything is on
    screen) and look at them:
    ```bash
@@ -167,7 +168,7 @@ and keeps it; later renders reuse it.
   "mix": { "pad": "sunny", "padGain": 0.22, "sfxGain": 0.7, "voiceGain": 1, "duck": 0.6 },
   "voice": { "mode": "speech", "narrator": "Roma Tom", "speed": 1 },
   "scenes": [
-    { "type": "hook", "duration": 2.8, "say": "Is a ten percent coupon actually worth it?", "props": { "kicker": "MENU MATH", "headline": "…" } },
+    { "type": "./hook.js", "duration": 3, "say": "Is a ten percent coupon actually worth it?", "props": { "line": "Is 10% off *worth it*?" } },
     { "type": "quote", "duration": 4.5, "speaker": "Maria", "say": "…", "props": { "name": "Maria", "quote": "…" } },
     { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
   ]
@@ -288,24 +289,19 @@ unless another suits the topic better, as long as it still differs from the last
 
 ## Templates
 
-There are 31. `videos/template-demo/` (the first 8) and `videos/template-demo-2/` (the other 16)
-show each one with example content, `videos/template-demo-hooks-2/` shows the three animated
-hooks and `videos/template-demo-hooks/` the four text-card hooks; copy their props as a starting point.
+There are 24 for the scenes after the hook. `videos/template-demo/` (the first 8) and
+`videos/template-demo-2/` (the other 16) show each one with example content; copy their props as
+a starting point. The hook is never one of these: each video draws its own (step 5 and
+`style/HOOKS.md`). The eight hook templates earlier videos used (`hook`, `hook-pov`,
+`hook-split`, `hook-freeze`, `hook-same`, `hook-number`, `hook-rule`, `hook-callout`) are listed in
+`style/HOOKS.md` as references and parts only.
 
-Every scene except the hooks and end card takes an optional `caption`: one short line at the top
+Every template except the end card takes an optional `caption`: one short line at the top
 (keep it under about 40 characters). The minimum comfortable durations are a guide; give
 reading-heavy scenes more.
 
 | type | use for | props | min |
 | --- | --- | --- | --- |
-| `hook-pov` | first scene, animated: a guest walks up to Roma Tom's counter and says the line; he reacts | `pov` (the setup, under about 30 characters), `guest`, `quote` (under about 30 characters; `*swash*` allowed), `react` (`shock`, `sweat` or `joy`), `host`; set the scene's `speaker` to the guest | 3 s |
-| `hook-split` | first scene, animated: two storefronts with different signs; guests pick one | `line`, `left` and `right` {`name` (the owner tomato), `sign` (under about 24 characters)}, `winner` (`left`, `right` or `none` for a question), `payoff`, `guests` (3 names) | 3.5 s |
-| `hook-freeze` | first scene, animated: another template plays, then freezes with one spot circled | `scene` {`type`, `props`} (any template but hooks and end card; leave out its `caption`), `at` (0 to 1, default 0.85), `focus` {`x`, `y`, `rx`, `ry`}, `label` (caps), `line` (under about 50 characters) | 3.5 s |
-| `hook` | the question, first scene | `kicker` (2 to 3 words, caps), `headline` (under about 60 characters), `host` | 2.8 s |
-| `hook-same` | first scene: two things owners mix up | `kicker`, `left`, `right` (one or two short words each), `line` ("Sound the same. They're *not*."), `host` | 3 s |
-| `hook-number` | first scene: one big number first | `kicker`, `number` (a string, such as "$8,100"), `line` (what it is, under about 40 characters), `host` | 3 s |
-| `hook-rule` | first scene: a common rule, stamped | `line` (under about 40 characters), `label` (caps, default "THE RULE"), `note` (the rule, under about 40 characters), `stamp` (caps, 1 to 2 words), `host` | 3 s |
-| `hook-callout` | first scene: who it's for, plus a guest's line | `callout` ("Cafe owners,"), `speaker` (the guest), `quote` (under about 40 characters; `*swash*` allowed); set the scene's `speaker` too | 3 s |
 | `receipt` | where the money goes | `title`, `items` [{`label`, `amount`}] (up to 7; the price as a positive first line, then costs as negatives), `totalLabel`, `total` (default: the sum), `currency` | 4 s |
 | `menu` | menu engineering, pricing | `title`, `items` [{`name`, `price` (a string), `mark`: `star`/`circle`/`cross`/`underline`, `note`}] (up to 4; names under about 16 characters) | 4 s |
 | `rush` | the shape of a day, staffing | `label`, `hours` [], `values` [] (6 to 10 bars; the highest is the peak, in rose), `queue` [names] (up to 5), `queueLabel` | 4 s |

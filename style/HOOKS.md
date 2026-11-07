@@ -3,6 +3,60 @@
 The first second decides whether anyone sees the rest. Instagram counts how many viewers skip
 a reel in its first 3 seconds, and that number feeds whether it shows the reel to more people.
 
+## Every video gets its own hook
+
+The hook is the most important scene, so it is never a template. Each video's first scene is
+drawn for that video alone, in `videos/<slug>/hook.js` (`"type": "./hook.js"` in the
+storyboard). The other scenes keep reusing the templates.
+
+**1. The idea first, in one line, before any code.** What picture, specific to this topic,
+makes an owner stop? Write it at the top of `hook.js`:
+
+- *The idea:* one sentence. "Free oat milk pours into a latte, and every drop flips out as a coin."
+- *Frame one shows:* something already moving, in the middle of the action.
+- *Readable by 0.5 s:* who it's for and what it's about (the line on screen, under about 8 words).
+- *The open loop:* the question the rest of the video answers.
+
+Good ideas come from the topic's own objects and moments: the cup, the receipt, the door, the
+clock, the line, the guest's face. Make the problem visible: money leaving, a clock running,
+a table emptying, a pile growing. If the idea would fit any other video, it isn't the idea yet.
+
+**2. Build it** from `scripts/lib/stage.js`, plus `kit.js` and `marks.js`:
+
+| part | what it is |
+| --- | --- |
+| `counter`, `cup`, `table`, `clock`, `storefront` | sets and props, drawn by hand like the rest |
+| `walk`, `jump`, `rise` | tomatoes walking in with a bob, jumping when something lands, rising like the sun |
+| `reaction` | `shock`, `sweat`, `joy` or `think`, drawn around a head |
+| `say`, `pointer` | a guest's line in a bubble; a label with an arrow |
+| `coin` | a spinning coin flying along an arc (money leaving) |
+| `spotlight`, `flash`, `pauseSign`, `circle` | freeze-frame tricks: pale all but one spot, flash, pause, circle it |
+| `playScene` | draw any template inside the hook, running or frozen |
+| `at`, `pop`, `popIn` | timing in seconds: eased progress, pop-ins that overshoot |
+| `tomato`, `headline`, `kicker`, `rays`, `pen` (kit.js) | the cast, the hand-lettered line, the label pill, the sunrise, the wobbly pen |
+| `text`, `bubble`, `loop`, `cross`, `check`, `money` (marks.js) | text, bubbles and the marks an owner makes with a pen |
+
+Add a new part to `stage.js` when a hook needs one that others could use (a register, a door,
+a phone, a menu). `videos/template-demo-custom-hook/hook.js` is a worked example, and the hook
+templates below show more ways to move things. Borrow parts, never a whole hook: the renderer
+stops if `hook.js` is the scaffold's starter or a copy of another video's hook.
+
+**3. The rules the hook keeps**
+
+- Time everything in seconds (`info.sec`), not `t`: the scene stretches to fit the spoken line,
+  and the words must land at the same moment however long it runs.
+- Every word on screen comes from the storyboard's `props`, so the American English check and
+  the cover can read it. Export `hook.cover = (props) => ({ kicker, headline, ... })` for the cover.
+- Sound on the action: `hook.cues = () => [{ sec, sfx, gain }]`.
+- When Roma Tom is in it as the host, he's in the middle of the frame (`W / 2`).
+- Text stays out of the safe zones (top 220 px, bottom 380 px, right 140 px).
+- Brand colors only (`C` and `theme`), no emoji.
+
+**4. Check frames** at 0.03 s, 0.5 s, 1 s and the end (frame = seconds × 30):
+`node scripts/render.js videos/<slug>/storyboard.json --frames 1,15,30,<last>`. Is something moving
+on frame one? Is the line readable by frame 15? Does it look like a cartoon, not a slide? Is
+anything crowded or off the edge? Fix and check again. A hook usually takes two or three rounds.
+
 ## Animated videos for owners: what opens best (researched November 7, 2026)
 
 Roma Tom's niche is **animated videos for cafe and restaurant owners**. An Instagram and TikTok
@@ -80,35 +134,23 @@ takes: "Customers aren't the real kings of business, employees are."
 - Our old hook was the same every time: a kicker pill, a "Should you…?" question writing itself
   in word by word, and Roma Tom rising. The text took most of a second to appear.
 
-## The hook templates
+## Hook templates from earlier videos
 
-**Open on a scene.** Use one of the three animated hooks for most videos, and change the type from
-one video to the next, so no two videos in a row open the same way. The text-card hooks stay for
-when the words really are the scene (a number so big it is the picture), at most one video in three.
+Earlier videos opened with these. They are references now: read them for ideas and moves, and
+lift their parts into `stage.js`, but a new video's hook is never one of them.
 
-**Animated (the default)**
-
-| type | what happens on screen | fits | say it like |
-| --- | --- | --- | --- |
-| `hook-pov` | "POV:" and the setup on screen; a guest walks up to Roma Tom's counter and says the line; Roma Tom jumps (shock, sweat or joy) | relatable, guests, story, a problem every owner knows | (the guest) "Hi! Are you guys still doing food?" |
-| `hook-split` | two storefronts side by side with different signs; guests stroll past and all turn into one door | any choice between two ways (signs, prices, menus, hours) | "Same street, same coffee. Only one of these cafes is full at lunch." |
-| `hook-freeze` | any other template plays, then stops with a record scratch; everything goes pale but one spot, circled, with a label and an arrow | advice and quizzes: the receipt line, the late ticket, the empty table, the dial in the red | "Stop. See table four? That ticket is about to cost you a regular." |
-
-`videos/template-demo-hooks-2/` shows them back to back.
-
-**Text cards (sometimes)**
-
-| type | pattern | say it like |
+| type | what it does | used by |
 | --- | --- | --- |
-| `hook-same` | two things owners mix up; the equals gets slashed | "Markup and margin sound like the same thing. They're not." |
-| `hook-number` | one big number slams in first, then what it is | "Eight thousand one hundred dollars a year. That's what free oat milk can cost you." |
-| `hook-rule` | a common rule on a sticky note, stamped | "Never raise your prices, people say. That rule quietly costs you." |
-| `hook-callout` | "Cafe owners," plus a line a guest really says | (the guest speaks) "You remembered my name? Okay, I'm coming back tomorrow." |
-| `hook` | the original: a question with Roma Tom rising | Rarely; a short, sharp question only. |
+| `hook-pov` | "POV:" setup; a guest walks up to Roma Tom's counter, says the line, he reacts | `template-demo-hooks-2` |
+| `hook-split` | two storefronts side by side; guests pick one door | `template-demo-hooks-2` |
+| `hook-freeze` | another template plays, freezes with a record scratch, one spot circled | `template-demo-hooks-2` |
+| `hook-same` | two words; the equals sign gets slashed | `markup-vs-margin` |
+| `hook-number` | one big number slams in and gets circled | `saturday-at-the-cafe` |
+| `hook-rule` | a rule on a sticky note gets stamped | `happy-hour-math`, `staff-come-first` |
+| `hook-callout` | "Cafe owners," and a guest's line in a bubble | `one-water-four-hours` |
+| `hook` | the original: a question with Roma Tom rising | most videos before November 6 |
 
-`videos/template-demo-hooks/` shows the text cards.
-
-**Rules for any hook**
+**Rules for any hook line**
 
 - Something moves on the first frame, and who it's for is clear in the first second.
 - Lead with the claim, the number, the rule or the guest. Not "Should you…".
