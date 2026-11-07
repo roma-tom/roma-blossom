@@ -5,7 +5,7 @@
 **Hook type:** hook (the original, a short question with Roma Tom rising)
 **Background:** blush (pad: cosy)
 **Voice:** speech, Roma Tom narrates; Maria says her own line
-**Length:** about 20 to 30 s
+**Length:** about 31 s
 
 The idea: five guests every owner will recognize, counted down to the one everyone wants, the
 regular who brings friends. Ends by asking which one came in today, for the comments.

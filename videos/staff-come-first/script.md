@@ -5,7 +5,7 @@
 **Hook type:** hook-rule (note "The customer is always right", stamped NOT ALWAYS)
 **Background:** lime (pad: sway)
 **Voice:** speech, Roma Tom narrates; Dev says his own line
-**Length:** about 20 to 30 s
+**Length:** about 31 s
 
 The idea: "the customer is always right" can cost you the people who make the guest experience.
 Backing your team against a rude guest is worth more than that one visit. Stated as an opinion,

@@ -5,7 +5,7 @@
 **Hook type:** hook-same ("Markup" ≠ "Margin")
 **Background:** paper (pad: warm)
 **Voice:** speech, Roma Tom narrates
-**Length:** about 30 s
+**Length:** about 32 s
 
 The idea: owners often add a 50% markup and think they keep half of the sale. Markup is
 measured on the cost, margin on the price, so a 50% markup only keeps a third. To hit a margin,
