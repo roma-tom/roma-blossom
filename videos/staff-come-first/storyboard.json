@@ -1,0 +1,29 @@
+{
+  "title": "The Customer Isn't Always King. Your Staff Are.",
+  "cover": { "hero": "crowd", "names": ["Dev", "Ana", "Leo"], "kicker": "HOT TAKE", "headline": "The customer is *not* always king" },
+  "background": "lime",
+  "output": "video.mp4",
+  "mix": { "pad": "sway" },
+  "scenes": [
+    { "type": "hook-rule", "duration": 3.2,
+      "say": "The customer is always right, they say. Not always.",
+      "props": { "line": "The rule your team *pays for*", "label": "OLD SAYING", "note": "The customer is always right", "stamp": "NOT ALWAYS" } },
+    { "type": "myth", "duration": 5.5,
+      "say": "A guest who yells at your barista isn't right. And your whole team is watching what you do next.",
+      "props": { "caption": "Hot *take*",
+        "myth": "The customer is always right",
+        "fact": "A guest who yells at your barista is not right" } },
+    { "type": "scale", "duration": 5,
+      "say": "One rude guest is one visit. A barista who knows you've got their back stays, and looks after hundreds of good guests.",
+      "props": { "caption": "What's it *worth*?",
+        "left": { "label": "One rude guest", "weight": 1 },
+        "right": { "label": "A team that trusts you", "weight": 3 },
+        "verdict": "Back your *team*" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Dev",
+      "say": "When the boss backs you up, you stay.",
+      "props": { "name": "Dev", "role": "line cook", "quote": "When the boss backs you up, you *stay*." } },
+    { "type": "endcard", "duration": 3.2,
+      "say": "Look after your staff, and they look after your guests. Agree? Follow for more owner tips.",
+      "props": {} }
+  ]
+}

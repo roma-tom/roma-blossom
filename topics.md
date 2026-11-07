@@ -20,7 +20,6 @@ behind a non-advice topic in the order.
 
 ## Up next
 
-- [ ] The customer isn't always king. Your staff are. [hot take] Hook: "The customer is always right, they say. Not always." (hook-rule; myth, scale)
 - [ ] What's the real cost of a free refill? [advice] Hook: "[Yearly number] dollars a year. That's what free refills can cost." (hook-number; receipt, jar)
 - [ ] Maria's first visit, and her hundredth [story] Hook: (Maria) "The first time I came here, nobody looked up." (hook-callout; regulars, quote, stampcard)
 - [ ] Guess how many lattes it takes to pay the rent [quiz] Hook: "Guess how many lattes it takes to pay one month's rent." (hook-number "?"; receipt, jar; ends asking for guesses in the comments)
@@ -124,6 +123,7 @@ Made as videos:
 - [x] One water, four hours, your best table (`videos/one-water-four-hours`)
 - [x] Markup and margin are not the same thing (`videos/markup-vs-margin`)
 - [x] Five guests every cafe gets (`videos/five-guests`)
+- [x] The customer isn't always king. Your staff are. (`videos/staff-come-first`)
 
 Examples in the style guide:
 
