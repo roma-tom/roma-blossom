@@ -1,0 +1,35 @@
+{
+  "title": "What Does a Free Refill Really Cost?",
+  "cover": { "hero": "tomato", "name": "Leo" },
+  "background": "butter",
+  "output": "video.mp4",
+  "mix": { "pad": "mellow" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3, "peek": false, "say": "Free refills. Free for who?",
+      "props": { "line": "Free refills. Free for *who*?", "label": "FREE REFILLS" } },
+    { "type": "receipt", "duration": 4.5,
+      "say": "Say one refill pours fifty cents of coffee, plus ten cents of milk and sugar. That's sixty cents, for zero dollars.",
+      "props": { "caption": "One *refill*", "title": "REFILL · $0",
+        "items": [
+          { "label": "Refill", "amount": 0 },
+          { "label": "Coffee", "amount": -0.5 },
+          { "label": "Milk and sugar", "amount": -0.1 }
+        ],
+        "totalLabel": "You keep" } },
+    { "type": "jar", "duration": 4.5,
+      "say": "Twenty-five refills a day comes to about fifty-four hundred dollars a year.",
+      "props": { "caption": "It adds *up*",
+        "lines": ["60¢ a refill", "× 25 refills a day", "× 360 days"],
+        "total": 5400, "label": "a year" } },
+    { "type": "scale", "duration": 4.5, "peek": false,
+      "say": "Still, a guest who feels looked after comes back. Keep refills, just on purpose.",
+      "props": { "caption": "Worth *keeping*?",
+        "left": { "label": "60¢ refill", "weight": 1 },
+        "right": { "label": "A guest who comes back", "weight": 3 },
+        "verdict": "Keep it, but *on purpose*" } },
+    { "type": "fix", "duration": 4,
+      "say": "So: one free refill, for dine-in. Or charge a dollar. And know what each cup costs you.",
+      "props": { "title": "The fix", "steps": ["One free refill, dine-in", "Or refills for $1", "Know your cost per cup"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}

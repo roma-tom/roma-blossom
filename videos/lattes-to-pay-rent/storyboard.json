@@ -1,0 +1,126 @@
+{
+  "title": "How Many Lattes Pay the Rent?",
+  "cover": {
+    "hero": "number",
+    "kicker": "QUICK QUIZ",
+    "headline": "How many lattes pay the *rent*?",
+    "number": "$4,500",
+    "label": "rent, in lattes?"
+  },
+  "background": "paper",
+  "output": "video.mp4",
+  "mix": {
+    "pad": "sunny"
+  },
+  "scenes": [
+    {
+      "type": "./hook.js",
+      "duration": 3,
+      "say": "Guess how many lattes it takes to pay one month's rent.",
+      "props": {
+        "line": "How many lattes pay the *rent*?",
+        "bill": "RENT · ONE MONTH",
+        "amount": "$4,500"
+      },
+      "peek": false
+    },
+    {
+      "type": "receipt",
+      "duration": 4.5,
+      "say": "Say a latte sells for five fifty. The espresso, milk and cup cost about a dollar. So you keep four fifty.",
+      "props": {
+        "caption": "One *latte*",
+        "title": "LATTE · $5.50",
+        "items": [
+          {
+            "label": "Latte",
+            "amount": 5.5
+          },
+          {
+            "label": "Espresso",
+            "amount": -0.5
+          },
+          {
+            "label": "Milk",
+            "amount": -0.3
+          },
+          {
+            "label": "Cup and lid",
+            "amount": -0.2
+          }
+        ],
+        "totalLabel": "You keep"
+      }
+    },
+    {
+      "type": "jar",
+      "duration": 4.5,
+      "say": "Rent is forty-five hundred dollars a month. Divide by four fifty, and that's one thousand lattes.",
+      "props": {
+        "caption": "The *answer*",
+        "lines": [
+          "$4,500 rent a month",
+          "÷ $4.50 kept per latte"
+        ],
+        "total": 1000,
+        "currency": "",
+        "label": "lattes a month"
+      }
+    },
+    {
+      "type": "calendar",
+      "duration": 4.5,
+      "say": "That's thirty-three lattes every single day, just for rent. Before staff, power or anything else.",
+      "props": {
+        "caption": "Every *day*",
+        "month": "ONE MONTH",
+        "start": 0,
+        "days": 30,
+        "marks": {
+          "1": "dot",
+          "2": "dot",
+          "3": "dot",
+          "4": "dot",
+          "5": "dot",
+          "6": "dot",
+          "7": "dot",
+          "8": "dot",
+          "9": "dot",
+          "10": "dot",
+          "11": "dot",
+          "12": "dot",
+          "13": "dot",
+          "14": "dot",
+          "15": "dot",
+          "16": "dot",
+          "17": "dot",
+          "18": "dot",
+          "19": "dot",
+          "20": "dot",
+          "21": "dot",
+          "22": "dot",
+          "23": "dot",
+          "24": "dot",
+          "25": "dot",
+          "26": "dot",
+          "27": "dot",
+          "28": "dot",
+          "29": "dot",
+          "30": "dot"
+        },
+        "legend": [
+          {
+            "mark": "dot",
+            "label": "33 lattes, just for rent"
+          }
+        ]
+      }
+    },
+    {
+      "type": "endcard",
+      "duration": 3,
+      "say": "What did you guess? Tell me in the comments. Follow for more owner tips.",
+      "props": {}
+    }
+  ]
+}

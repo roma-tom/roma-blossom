@@ -1,0 +1,31 @@
+{
+  "title": "Maria Almost Walked Out. Now She's a Regular.",
+  "cover": { "hero": "headline", "kicker": "CAFE LIFE", "headline": "She almost *walked out*" },
+  "background": "sky",
+  "output": "video.mp4",
+  "mix": { "pad": "drift" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3, "speaker": "Maria",
+      "say": "Um, hello? Is anyone working?",
+      "props": { "label": "MARIA'S FIRST VISIT", "line": "Um, hello? Is anyone *working*?" } },
+    { "type": "day", "duration": 5,
+      "say": "That was Maria, a year ago. Two minutes at the counter, and nobody looked up. She almost left. Then Dev called out, morning, what can I get you?",
+      "props": { "caption": "Her *first* visit",
+        "steps": [
+          { "time": "7:58", "label": "Walks in" },
+          { "time": "7:59", "label": "Nobody looks up" },
+          { "time": "8:00", "label": "Turns to leave" },
+          { "time": "8:00", "label": "Dev: \"Morning!\"" }
+        ],
+        "highlight": 3 } },
+    { "type": "stampcard", "duration": 4.5,
+      "say": "She came back the next day. And the next. Today is her hundredth visit.",
+      "props": { "caption": "A year *later*", "title": "Maria's card", "stamps": 10, "filled": 10, "reward": "Visit *100*", "name": "Maria" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Maria",
+      "say": "I nearly walked out that first day. One hello is why I didn't.",
+      "props": { "name": "Maria", "role": "regular, 100 visits", "quote": "One hello is why I *stayed*." } },
+    { "type": "endcard", "duration": 3,
+      "say": "Every regular starts as a first visit. Follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}

@@ -22,9 +22,6 @@ behind a non-advice topic in the order. Topics without a hook idea need one befo
 
 ## Up next
 
-- [ ] What's the real cost of a free refill? [advice] Hook: "Free refills. Free for who?" (hook idea: a mug on the counter refills itself on a loop; each time, the register drawer pops open and spits a coin out the door, and a refill counter ticks up; receipt, jar)
-- [ ] Maria's first visit, and her hundredth [story] Hook: (Maria) "Um, hello? Is anyone working?" (hook idea: Maria walks up to an empty counter, taps the bell, the clock hands spin, and she slowly turns back toward the door; regulars, quote, stampcard)
-- [ ] Guess how many lattes it takes to pay the rent [quiz] Hook: "Guess how many lattes it takes to pay one month's rent." (hook idea: the rent bill unrolls down the screen like an endless receipt while lattes stack up beside it, racing to reach the top; it stops before they do; receipt, jar; ends asking for guesses in the comments)
 - [ ] Is your Google profile quietly losing you customers? [advice] Hook: (guest) "Your Google page said you were open. I drove twenty minutes." (hook idea: a phone shows a map pin that says OPEN in green; the camera pulls back to the cafe with its shutters down and a guest staring at the closed door; review, countdown)
 - [ ] Two oh four: empty. Two oh five: a bus tour. [relatable] Hook: "Two oh four, the cafe is empty. Two oh five, a bus tour walks in." (hook idea: Roma Tom finally sits down with a coffee in an empty cafe; the wall clock ticks to 2:05 and the door bursts open with a line of tomatoes pouring in; rush, tickets)
 - [ ] Year one owner versus year ten owner [then and now] Hook: "Same cafe. Year one and year ten look nothing alike." (hook idea: Roma Tom split down the middle: the year-one half frazzled under twenty sticky notes and three coffees, the year-ten half calm with one checklist; versus, countdown)
@@ -126,6 +123,9 @@ Made as videos:
 - [x] Markup and margin are not the same thing (`videos/markup-vs-margin`)
 - [x] Five guests every cafe gets (`videos/five-guests`)
 - [x] The customer isn't always king. Your staff are. (`videos/staff-come-first`)
+- [x] What's the real cost of a free refill? (`videos/free-refill-cost`)
+- [x] Maria's first visit, and her hundredth (`videos/marias-hundredth-visit`)
+- [x] Guess how many lattes it takes to pay the rent (`videos/lattes-to-pay-rent`)
 
 Examples in the style guide:
 
