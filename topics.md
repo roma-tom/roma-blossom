@@ -22,7 +22,6 @@ behind a non-advice topic in the order. Topics without a hook idea need one befo
 
 ## Up next
 
-- [ ] Is your Google profile quietly losing you customers? [advice] Hook: (guest) "Your Google page said you were open. I drove twenty minutes." (hook idea: a phone shows a map pin that says OPEN in green; the camera pulls back to the cafe with its shutters down and a guest staring at the closed door; review, countdown)
 - [ ] Two oh four: empty. Two oh five: a bus tour. [relatable] Hook: "Two oh four, the cafe is empty. Two oh five, a bus tour walks in." (hook idea: Roma Tom finally sits down with a coffee in an empty cafe; the wall clock ticks to 2:05 and the door bursts open with a line of tomatoes pouring in; rush, tickets)
 - [ ] Year one owner versus year ten owner [then and now] Hook: "Same cafe. Year one and year ten look nothing alike." (hook idea: Roma Tom split down the middle: the year-one half frazzled under twenty sticky notes and three coffees, the year-ten half calm with one checklist; versus, countdown)
 - [ ] Should you pay a bit above minimum wage to keep staff? [advice] Hook: "One dollar an hour, against two thousand to replace her." (hook idea: a barista tomato walks toward the exit with her apron off; a one-dollar coin rolls across the floor and stops at her feet, and she stops too; scale, jar)
@@ -127,6 +126,7 @@ Made as videos:
 - [x] Maria's first visit, and her hundredth (`videos/marias-hundredth-visit`)
 - [x] Guess how many lattes it takes to pay the rent (`videos/lattes-to-pay-rent`)
 - [x] Should your cafe try to be for everyone? (`videos/for-everyone`)
+- [x] Is your Google profile quietly losing you customers? (`videos/google-profile-hours`)
 
 Examples in the style guide:
 

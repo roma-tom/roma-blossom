@@ -4,13 +4,14 @@
 //   node render.js <storyboard> --frames 0,45,100   → PNGs of just those frames, for checking
 //   node render.js <storyboard> --bg lime            → override the storyboard's background
 //   node render.js <storyboard> --babble             → the tomatoes babble instead of speaking
+//   node render.js <storyboard> --kokoro             → speak with Kokoro instead of ElevenLabs
 //   node render.js <storyboard> --no-voice           → no voiceover
 //
 // storyboard.json:
 //   {
 //     "background": "paper" (or lime, butter, blush, sky, mint), or a list to alternate by scene,
 //     "output": "video.mp4",              (next to the storyboard; optional)
-//     "voice": { "mode": "speech" | "babble" | "off", "narrator": "Roma Tom", "speed": 1, "cast": {} },
+//     "voice": { "mode": "speech" | "babble" | "off", "engine": "elevenlabs" | "kokoro", "narrator": "Roma Tom", "speed": 1, "cast": {} },
 //     "scenes": [{ "type": "hook", "duration": 3.5, "say": "…", "speaker": "Maria", "props": { ... } }, ...]
 //   }
 //
@@ -53,7 +54,7 @@ const TAIL_LAST = 0.9;
 const args = process.argv.slice(2);
 const file = path.resolve(args[0] || '');
 if (!args[0] || !fs.existsSync(file)) {
-  console.error('usage: node render.js <storyboard.json> [--frames 0,30,60] [--bg lime] [--babble | --no-voice] [--silent]');
+  console.error('usage: node render.js <storyboard.json> [--frames 0,30,60] [--bg lime] [--babble | --no-voice] [--kokoro] [--silent]');
   process.exit(1);
 }
 const framesArg = args.includes('--frames') ? args[args.indexOf('--frames') + 1].split(',').map(Number) : null;
@@ -94,8 +95,9 @@ function voiceConfig() {
   if (v === undefined || v === true) v = {};
   else if (v === false) v = { mode: 'off' };
   else if (typeof v === 'string') v = { mode: v };
-  v = { mode: 'speech', narrator: 'Roma Tom', speed: 1, cast: {}, ...v };
+  v = { mode: 'speech', engine: 'elevenlabs', narrator: 'Roma Tom', speed: 1, cast: {}, ...v };
   if (args.includes('--babble')) v.mode = 'babble';
+  if (args.includes('--kokoro')) v.engine = 'kokoro';
   if (args.includes('--no-voice')) v.mode = 'off';
   if (!['speech', 'babble', 'off'].includes(v.mode)) throw new Error(`unknown voice mode "${v.mode}"`);
   return v;
@@ -105,23 +107,31 @@ function voiceConfig() {
 async function layout(vc) {
   const lines = [];
   if (vc.mode !== 'off') {
+    const said = [];
     for (const [i, s] of board.scenes.entries()) {
       if (!s.say) {
         if (s.type !== 'endcard') console.warn(`warning: scene ${i + 1} (${s.type}) has no "say", so it's silent`);
-        lines.push(null);
         continue;
       }
       const problems = voice.checkLine(s.say);
       if (problems.length) console.warn(`warning: scene ${i + 1} "say" has ${problems.join('; ')}:\n  ${s.say}`);
-      const speaker = s.speaker || vc.narrator;
-      // Speech: the scene grows to fit the line. Babble carries no words, so it fits inside the
-      // scene's own duration instead, and the scenes keep their quicker pace.
-      const lead = i === 0 ? LEAD_FIRST : LEAD, tail = i === board.scenes.length - 1 ? TAIL_LAST : TAIL;
-      const clip = vc.mode === 'speech'
-        ? await voice.speak(s.say, voice.voiceFor(speaker, vc.cast), vc.speed)
-        : voice.babble(s.say, speaker, Math.max(0.6, (s.duration || 0) - lead - tail));
-      lines.push({ speaker, clip, mouth: voice.mouth(clip, FPS) });
+      said.push({ i, text: s.say, speaker: s.speaker || vc.narrator });
     }
+    // Speech: the scene grows to fit the line, and every line comes from one engine. Babble
+    // carries no words, so it fits inside the scene's own duration instead, and the scenes
+    // keep their quicker pace.
+    let clips;
+    if (vc.mode === 'speech') {
+      const spoken = await voice.speakAll(said, vc);
+      vc.used = spoken.engine;
+      clips = spoken.clips;
+    } else {
+      clips = said.map(({ i, text, speaker }) => {
+        const lead = i === 0 ? LEAD_FIRST : LEAD, tail = i === board.scenes.length - 1 ? TAIL_LAST : TAIL;
+        return voice.babble(text, speaker, Math.max(0.6, (board.scenes[i].duration || 0) - lead - tail));
+      });
+    }
+    said.forEach((l, k) => (lines[l.i] = { speaker: l.speaker, clip: clips[k], mouth: voice.mouth(clips[k], FPS) }));
   }
 
   let cursor = 0;
@@ -247,7 +257,7 @@ function soundtrack() {
   scenes = await layout(vc);
   total = scenes.reduce((n, s) => n + s.frames, 0);
   if (vc.mode !== 'off') {
-    console.log(`voice: ${vc.mode}, ${(total / FPS).toFixed(1)} s`);
+    console.log(`voice: ${vc.mode}${vc.used ? ` (${vc.used})` : ''}, ${(total / FPS).toFixed(1)} s`);
     for (const [i, s] of scenes.entries()) console.log(`  ${i + 1} ${s.type.padEnd(10)} ${(s.frames / FPS).toFixed(1).padStart(5)} s  starts at frame ${s.start}`);
   }
 

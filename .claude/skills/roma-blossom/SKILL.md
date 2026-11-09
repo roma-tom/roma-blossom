@@ -15,9 +15,13 @@ levels up from this file. This file may be reached through a symlink in `~/.clau
 resolve its real path first. Run every command below from the project root.
 
 - `style/STYLE.md`: palette, type, motion, cast, safe zones. **Read it before writing a script.**
-- `scripts/`: the renderer, scene templates, sound and voice. Node only; no API keys. The voice
-  runs on this computer (Kokoro, a small text-to-speech model).
+- `scripts/`: the renderer, scene templates, sound and voice. Node only. The voice is
+  ElevenLabs, using `ELEVENLABS_API_KEY` from `.env.local` at the project root (never print or
+  open that file); without a key, or if ElevenLabs fails, the whole video falls back to Kokoro,
+  a small text-to-speech model that runs on this computer.
 - `videos/<slug>/`: one folder per video, with `script.md`, `storyboard.json` and the output.
+  The finished `video.mp4` and `cover.jpg` are never committed: they go to a GitHub Release
+  (`scripts/publish.js`), which gives the download links.
 - `videos/best-seller/`: the worked example. Copy its shape.
 - `topics.md`: the backlog of video ideas (**Up next**) and the ones already made (**Covered**).
 
@@ -27,8 +31,13 @@ One-time setup (if `scripts/node_modules` is missing):
 npm install --prefix scripts
 ```
 
-The first render with a voice also downloads the voice model (about 330 MB) from Hugging Face
-and keeps it; later renders reuse it.
+Publishing needs `GITHUB_TOKEN` (a fine-grained GitHub token with "Contents: Read and write"
+on this repo) in the environment or in `.env.local`. In a cloud session, it comes from the
+environment's settings. If it's missing, say so at hand-over and give the local file paths.
+
+If `.env.local` is missing, run `npx -y @elevenlabs/cli@latest onboard init` at the project
+root and follow what it prints. The first render that falls back to Kokoro downloads its model
+(about 330 MB) from Hugging Face and keeps it; later renders reuse it.
 
 ## Workflow
 
@@ -108,24 +117,29 @@ and keeps it; later renders reuse it.
    (after writing it, strip one with `perl -pi -e 'chomp if eof' caption.txt`). Never use emoji
    in a caption (or in the post caption in `script.md`): words only. Never say the numbers are examples, made up or
    illustrative, and never tell the viewer to swap in their own figures.
-9. **Update `topics.md`, then commit and push.** Move the video's topic from **Up next** to the
+9. **Update `topics.md`, commit and push, then publish.** Move the video's topic from **Up next** to the
    end of the **Made as videos** list under **Covered**, ticked, with its folder:
    `- [x] Topic (`videos/<slug>`)` (drop the kind, hook and templates). (If the topic wasn't in the backlog, just add it there.)
-   Commit it together with the video folder: `script.md`, `storyboard.json`, `caption.txt`,
-   `video.mp4` and `cover.jpg` (WAVs and frames are ignored). In a cloud session, push the session's branch.
-   Pushing a video can take a few minutes on a slow connection, so run the push with a
-   10-minute timeout rather than the default 2.
+   Commit it together with the video folder's sources: `script.md`, `storyboard.json`,
+   `caption.txt` and `hook.js`. Never commit `video.mp4` or `cover.jpg` (they're ignored, as are
+   WAVs and frames). Push the branch (in a cloud session, the session's branch). Then publish
+   the video, cover and caption as a GitHub Release:
+   ```bash
+   node scripts/publish.js videos/<slug>
+   ```
+   It prints the release page and a download link for each file. Run it again after a
+   re-render: it replaces the files in the same release. Uploading can take a minute or two on
+   a slow connection, so give it a 10-minute timeout.
 10. **Hand it over** for the user to post by hand. This is the default: don't touch any social
    media scheduler unless the user asked for auto-posting (step 11). Give:
-   - the public links to the video and its cover, the raw files at the commit you just pushed:
-     ```bash
-     base="https://raw.githubusercontent.com/$(git remote get-url origin | sed -E 's#\.git$##; s#.*[:/]([^/:]+/[^/:]+)$#\1#')/$(git rev-parse HEAD)/videos/<slug>"
-     echo "$base/video.mp4"; echo "$base/cover.jpg"
-     ```
+   - the links `publish.js` printed: the release page (download buttons for all three files,
+     easy on a phone) and the direct links to the video, cover and caption
    - the caption in a code block (one tap to copy), and `title` for the networks that ask for one
    - which focal point the cover used, the on-screen text, and which question you picked if you
      chose it (step 1)
-   - which voice mode it used, if not speech (the user asked for babble)
+   - which voice mode it used, if not speech (the user asked for babble), and if the render
+     printed `(kokoro)` on the `voice:` line when ElevenLabs was wanted, say so and include
+     the warning it printed
 11. **Auto-post, only when asked.** Do this only if the user's request says so in words, such as
    "auto post it", "post it", or "schedule it". Never on your own initiative, and not when the
    request is unclear: then hand over as in step 10 and ask.
@@ -136,7 +150,7 @@ and keeps it; later renders reuse it.
    connector is available, say so and hand over as in step 10.
    - **Brand:** the one labelled Roma Tom. Use its timezone and post to every network it has
      connected.
-   - **Media:** the video link from step 10. The scheduler copies the file when the post is
+   - **Media:** the video's download link from step 10. The scheduler copies the file when the post is
      created, so later commits can't break it.
    - **When:** the time the user gave; otherwise the best-scoring hour in the next 7 days
      (Instagram's data if it is connected), at least 12 hours from now, on an hour with no other
@@ -199,11 +213,15 @@ and keeps it; later renders reuse it.
   tomatoes talk in cartoon syllables instead, still with the timing and mouths of the lines;
   use it only when the user asks for it. Babble doesn't stretch scenes to fit the line: it's
   trimmed to fit each scene's `duration`, so the video moves quicker (about 12 to 20 s). Set
-  each `duration` for reading time, a little above the template minimum for busy scenes. `"voice": false` leaves the voice out. `speed`
-  (default 1) speeds every line up or down; `cast` sets a tomato's Kokoro voice by name, such
-  as `{ "Maria": "af_bella" }` (Roma Tom is `am_michael`; everyone else gets one from their name).
+  each `duration` for reading time, a little above the template minimum for busy scenes. `"voice": false` leaves the voice out. `engine` is
+  `elevenlabs` (default) or `kokoro`. `speed` (default 1) speeds every line up or down, on
+  Kokoro only (Eleven v4 has no speed setting). `cast` sets a tomato's voice by name, per
+  engine: `{ "Maria": { "elevenlabs": "FGY2WhTYpPnrIDTdsKH5", "kokoro": "af_bella" } }`, or a
+  single Kokoro name or ElevenLabs voice id. Roma Tom is Chris
+  (`iP95p4xoKVk53GoZ742B`, a premade voice) on ElevenLabs and `am_michael` on Kokoro; everyone else gets one
+  from their name.
 - Optional per scene: `push` (slow camera push, default 0.03; 0 for none).
-- `--bg lime` on the command line overrides the background; `--babble` and `--no-voice` override
+- `--bg lime` on the command line overrides the background; `--babble`, `--no-voice` and `--kokoro` override
   the voice; `--silent` leaves out the sound (the voice still sets the timing).
 - In any headline or caption, `*word*` or `*several words*` gets the marker swash. Use it once
   per line, on the word that carries the point.
@@ -232,8 +250,9 @@ holds the list; add to it when you spot a new one). Common swaps:
 | centre, litre, grey, cosy, maths | center, liter, gray, cozy, math |
 | 75c, £, pence | 75¢, $, cents |
 
-The voices are American too: Roma Tom is `am_michael` and guests only get American (`af_`/`am_`)
-Kokoro voices. Never set a British (`bf_`/`bm_`) voice in `cast`.
+The voices are American too: guests only get American ElevenLabs voices and American
+(`af_`/`am_`) Kokoro voices. Never set a British voice (ElevenLabs' George, Daniel, Alice or
+Lily, or Kokoro's `bf_`/`bm_`) in `cast`.
 
 ## The voiceover
 
@@ -252,7 +271,8 @@ the same story for people watching muted, so the two cover each other.
   - no symbols: `$` → dollars, `%` → percent, `&` → and, `×` → times, `/` → per or a
   - no abbreviations: "versus", "for example", "minutes", "average"
   - names and words it may stumble on: respell them ("Roma Tom" is fine; "gyro" → "yee-roh"),
-    or give the sounds as `[gyro](/ˈjiɹO/)` (Kokoro's phonemes) when respelling isn't enough
+    or give the sounds as `[gyro](/ˈjiɹO/)` (Kokoro's phonemes) when respelling isn't enough;
+    ElevenLabs reads only the word in the brackets, so prefer respelling
   - no `*swash*` asterisks and no emoji
 - **Short sentences,** about 2.5 words a second. Most lines are one or two sentences; the
   hook is one. The end card says "Follow for more owner tips." (for day, story and relatable

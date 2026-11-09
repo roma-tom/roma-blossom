@@ -1,10 +1,15 @@
-// The voiceover: what the tomatoes say, as speech (Kokoro, a small text-to-speech model that
-// runs on this computer) or as babble (cartoon syllables made in code). Also the mouth
-// movements that follow it, and a check that a line is written the way it should be spoken.
+// The voiceover: what the tomatoes say, as speech or as babble (cartoon syllables made in
+// code). Also the mouth movements that follow it, and a check that a line is written the way
+// it should be spoken.
 //
-// Speech is cached in scripts/.cache/voice/, one file per line, voice and speed, so a render
-// only runs the model for lines that changed. The model (about 330 MB) downloads from
-// Hugging Face the first time and is kept in node_modules.
+// Speech comes from ElevenLabs (eleven_v4, over the network, using ELEVENLABS_API_KEY from
+// .env.local at the top of the repo). If there's no key or ElevenLabs fails, every line of the
+// video falls back to Kokoro, a small text-to-speech model that runs on this computer (about
+// 330 MB, downloaded from Hugging Face the first time and kept in node_modules), so one video
+// never mixes the two.
+//
+// Speech is cached in scripts/.cache/voice/, one file per line, engine, voice and speed, so a
+// render only asks for lines that changed.
 
 const fs = require('fs');
 const path = require('path');
@@ -15,24 +20,60 @@ const SR = 48000;
 const TAU = Math.PI * 2;
 const MODEL = 'onnx-community/Kokoro-82M-v1.0-ONNX';
 const DTYPE = 'fp32';
+const EL_MODEL = 'eleven_v4';
 const CACHE = path.join(__dirname, '..', '.cache', 'voice');
 
+// The ElevenLabs key lives in .env.local at the top of the repo; load it unless it's already set.
+const ENV_FILE = path.join(__dirname, '..', '..', '.env.local');
+if (!process.env.ELEVENLABS_API_KEY && fs.existsSync(ENV_FILE)) process.loadEnvFile(ENV_FILE);
+
 // Roma Tom's voice, and the pool every other tomato's name picks from (the same name always
-// gets the same voice). American English voices only: the audience is American, so no British
-// (bf_/bm_) voices. A few recurring characters are pinned so they keep a fitting voice.
+// gets the same voice). American English voices only: the audience is American. A few
+// recurring characters are pinned so they keep a fitting voice. Each engine has its own
+// list, in the same order, so a tomato sounds alike in both.
 const HOST = 'roma tom';
-const HOST_VOICE = 'am_michael';
-const GUEST_VOICES = ['af_heart', 'am_puck', 'af_bella', 'am_fenrir', 'af_kore', 'af_nicole', 'am_fenrir', 'af_sarah'];
-const RECURRING = { dev: 'am_puck' };
+const VOICES = {
+  elevenlabs: {
+    // Chris: charming, down-to-earth. (Library voices like Chris - Soothing, bTw8AqIDQenIK3kFqvhT,
+    // need a paid ElevenLabs plan to use over the API.)
+    host: 'iP95p4xoKVk53GoZ742B',
+    guests: [
+      'cgSgspJ2msm6clMCkdW9', // Jessica: playful, bright, warm
+      'N2lVS1w4EtoT3dr4eOWO', // Callum: husky trickster
+      'hpp4J3VqNfWAUOO0d1Us', // Bella: professional, bright, warm
+      'bIHbv24MWmeRgasZH58o', // Will: relaxed optimist
+      'FGY2WhTYpPnrIDTdsKH5', // Laura: enthusiast, quirky
+      'XrExE9yKIg1WjnnlVkGX', // Matilda: knowledgeable, upbeat
+      'cjVigY5qzO86Huf0OWal', // Eric: smooth, trustworthy
+      'EXAVITQu4vr4xnSDxMaL', // Sarah: mature, reassuring
+    ],
+    recurring: { dev: 'TX3LPaxmHKxFdv7VOQHJ' }, // Liam: energetic, young
+  },
+  kokoro: {
+    host: 'am_michael',
+    guests: ['af_heart', 'am_puck', 'af_bella', 'am_fenrir', 'af_kore', 'af_nicole', 'am_fenrir', 'af_sarah'],
+    recurring: { dev: 'am_puck' },
+  },
+};
+const ENGINES = Object.keys(VOICES);
 
 const key = (name) => String(name).trim().toLowerCase();
 const hash = (s) => parseInt(crypto.createHash('sha1').update(s).digest('hex').slice(0, 8), 16);
 
-function voiceFor(name, cast = {}) {
-  for (const [n, v] of Object.entries(cast)) if (key(n) === key(name)) return v;
-  if (key(name) === HOST) return HOST_VOICE;
-  if (RECURRING[key(name)]) return RECURRING[key(name)];
-  return GUEST_VOICES[hash(key(name)) % GUEST_VOICES.length];
+// A cast entry is { "elevenlabs": "<voice id>", "kokoro": "am_puck" } (either or both), or a
+// single voice: a Kokoro name like "am_puck" or an ElevenLabs voice id. A name with no voice
+// for this engine falls back to the pool.
+const isKokoroName = (v) => /^[a-z]{2}_[a-z]+$/.test(v);
+function voiceFor(name, cast = {}, engine = 'elevenlabs') {
+  for (const [n, v] of Object.entries(cast)) {
+    if (key(n) !== key(name)) continue;
+    if (typeof v === 'object' && v[engine]) return v[engine];
+    if (typeof v === 'string' && isKokoroName(v) === (engine === 'kokoro')) return v;
+  }
+  const { host, guests, recurring } = VOICES[engine];
+  if (key(name) === HOST) return host;
+  if (recurring[key(name)]) return recurring[key(name)];
+  return guests[hash(key(name)) % guests.length];
 }
 
 // ---------------------------------------------------------------- checking a line
@@ -55,7 +96,7 @@ function checkLine(text) {
 // ---------------------------------------------------------------- speech
 
 let ttsPromise = null;
-function model() {
+function kokoro() {
   if (!ttsPromise) {
     ttsPromise = (async () => {
       const { KokoroTTS } = await import('kokoro-js');
@@ -66,7 +107,15 @@ function model() {
   return ttsPromise;
 }
 
-// Kokoro speaks at 24 kHz; double it to 48 kHz with a windowed-sinc half-band filter.
+let clientPromise = null;
+function elevenlabs() {
+  if (!clientPromise) {
+    clientPromise = import('@elevenlabs/elevenlabs-js').then(({ ElevenLabsClient }) => new ElevenLabsClient());
+  }
+  return clientPromise;
+}
+
+// Both engines give 24 kHz here; double it to 48 kHz with a windowed-sinc half-band filter.
 function upsample2(x) {
   const TAPS = 32, out = new Float32Array(x.length * 2);
   const h = [];
@@ -102,20 +151,66 @@ function normalize(x, peak = 0.6) {
   return x;
 }
 
-async function speak(text, voice, speed = 1) {
-  const id = crypto.createHash('sha1').update([MODEL, DTYPE, voice, speed, text].join('|')).digest('hex');
+// One line as 24 kHz samples, from an engine.
+async function generate(engine, text, voice, speed) {
+  if (engine === 'kokoro') {
+    const out = await (await kokoro()).generate(text, { voice, speed });
+    if (out.sampling_rate !== 24000) throw new Error(`unexpected sample rate ${out.sampling_rate}`);
+    return Float32Array.from(out.audio);
+  }
+  // ElevenLabs reads words, not Kokoro's phonemes: [gyro](/ˈjiɹO/) is sent as "gyro". Eleven v4
+  // has no speed setting, so speed only applies to Kokoro.
+  const words = String(text).replace(/\[([^\]]*)\]\(\/[^)]*\/\)/g, '$1');
+  const stream = await (await elevenlabs()).textToSpeech.convert(voice, {
+    text: words,
+    modelId: EL_MODEL,
+    outputFormat: 'pcm_24000', // raw 16-bit little-endian mono
+    voiceSettings: { stability: 0.5, similarityBoost: 0.75 },
+  });
+  const b = Buffer.from(await new Response(stream).arrayBuffer());
+  const out = new Float32Array(b.length >> 1);
+  for (let i = 0; i < out.length; i++) out[i] = b.readInt16LE(i * 2) / 32768;
+  return out;
+}
+
+async function speak(text, voice, speed = 1, engine = 'elevenlabs') {
+  const parts = engine === 'kokoro' ? [MODEL, DTYPE, voice, speed, text] : ['elevenlabs', EL_MODEL, voice, text];
+  const id = crypto.createHash('sha1').update(parts.join('|')).digest('hex');
   const file = path.join(CACHE, `${id}.f32`);
   if (fs.existsSync(file)) {
     const b = fs.readFileSync(file);
     return new Float32Array(b.buffer, b.byteOffset, b.length / 4).slice();
   }
-  const tts = await model();
-  const out = await tts.generate(text, { voice, speed });
-  if (out.sampling_rate !== 24000) throw new Error(`unexpected sample rate ${out.sampling_rate}`);
-  const samples = normalize(upsample2(trim(Float32Array.from(out.audio), 24000)));
+  const samples = normalize(upsample2(trim(await generate(engine, text, voice, speed), 24000)));
   fs.mkdirSync(CACHE, { recursive: true });
   fs.writeFileSync(file, Buffer.from(samples.buffer));
   return samples;
+}
+
+// Every line of a video, each { text, speaker }, from one engine: ElevenLabs unless asked
+// for Kokoro. If ElevenLabs has no key or fails on any line, all of them are redone with
+// Kokoro, so the voices stay consistent. Returns { engine, clips }.
+async function speakAll(lines, { engine = 'elevenlabs', cast = {}, speed = 1 } = {}) {
+  if (!ENGINES.includes(engine)) throw new Error(`unknown voice engine "${engine}" (use ${ENGINES.join(' or ')})`);
+  const run = async (e) => {
+    const clips = [];
+    for (const l of lines) clips.push(await speak(l.text, voiceFor(l.speaker, cast, e), speed, e));
+    return { engine: e, clips };
+  };
+  if (engine === 'elevenlabs') {
+    if (!process.env.ELEVENLABS_API_KEY) {
+      console.warn('warning: no ELEVENLABS_API_KEY (run `npx -y @elevenlabs/cli@latest onboard init` at the top of the repo), so the voice is Kokoro');
+    } else {
+      try {
+        if (speed !== 1) console.warn(`warning: ElevenLabs (${EL_MODEL}) has no speed setting, so "speed": ${speed} is ignored`);
+        return await run('elevenlabs');
+      } catch (err) {
+        const status = err && err.statusCode ? ` (${err.statusCode})` : '';
+        console.warn(`warning: ElevenLabs failed${status}: ${err && err.message ? err.message.split('\n')[0] : err}\n  falling back to Kokoro for every line`);
+      }
+    }
+  }
+  return run('kokoro');
 }
 
 // ---------------------------------------------------------------- babble
@@ -230,4 +325,4 @@ function mouth(x, fps) {
   return out;
 }
 
-module.exports = { SR, HOST_VOICE, GUEST_VOICES, voiceFor, checkLine, speak, babble, mouth };
+module.exports = { SR, VOICES, ENGINES, voiceFor, checkLine, speak, speakAll, babble, mouth };

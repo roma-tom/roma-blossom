@@ -1,0 +1,60 @@
+{
+  "title": "Is Your Google Profile Losing You Customers?",
+  "cover": { "hero": "tomato", "name": "Ivan", "kicker": "CAFE OWNERS", "headline": "Is Google sending guests to a *locked door*?" },
+  "background": "sky",
+  "output": "video.mp4",
+  "mix": { "pad": "mellow" },
+  "scenes": [
+    {
+      "type": "./hook.js",
+      "duration": 3.5,
+      "speaker": "Ivan",
+      "say": "Your Google page said you were open. I drove twenty minutes.",
+      "props": { "label": "CAFE OWNERS,", "line": "It said you were *open*.", "status": "OPEN NOW", "closed": "CLOSED" }
+    },
+    {
+      "type": "review",
+      "duration": 5,
+      "say": "Then he leaves a review. One wrong hour can become one star.",
+      "props": {
+        "caption": "One wrong hour, *one star*",
+        "name": "Ivan",
+        "stars": 1,
+        "text": "Drove 20 minutes. Google said open. The door was locked.",
+        "reply": "So sorry, Ivan. Our hours were out of date. They're fixed, and your next coffee is on us."
+      }
+    },
+    {
+      "type": "myth",
+      "duration": 5,
+      "say": "Most owners set up Google once and forget it. But Google only knows what you tell it.",
+      "props": {
+        "caption": "Myth or *fact*?",
+        "myth": "Set up Google once and you're done",
+        "fact": "Google only shows what you tell it: holidays, new hours, a new menu"
+      }
+    },
+    {
+      "type": "jar",
+      "duration": 4.5,
+      "say": "Say three guests a week find the wrong hours and go somewhere else. At fifteen dollars each, that's over two thousand dollars a year.",
+      "props": {
+        "caption": "Wrong hours *add up*",
+        "lines": ["3 guests a week", "× $15 each", "× 52 weeks"],
+        "total": 2340,
+        "label": "a year"
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 4.5,
+      "say": "Google says a complete profile makes guests seventy percent more likely to visit. So check your hours, holiday hours and photos every month.",
+      "props": {
+        "caption": "70% more likely to *visit*",
+        "title": "Once a month",
+        "steps": ["Check your hours", "Add holiday hours early", "Update the menu and photos"]
+      }
+    },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
