@@ -17,6 +17,7 @@ scripts/
   render.js           storyboard.json → video.mp4 and cover.jpg (+ sound.wav, voice.wav, sfx/)
   cover.js            the crop-safe cover image alone, with --guides to see the crops
   new.js              scaffold videos/<slug>/
+  publish.js          upload a finished video, cover and caption as a GitHub Release
   still.js            one still of a scene on any backgrounds → out/
   scenes/             the 25 templates and the end card
   lib/
@@ -30,7 +31,7 @@ scripts/
   fonts/              Gaegu and Inter (SIL Open Font License)
 topics.md             the backlog of video ideas, and the ones already made
 videos/
-  best-seller/        the worked example: script.md, storyboard.json, video.mp4
+  best-seller/        the worked example: script.md, storyboard.json, hook and caption
   template-demo/      the first 8 templates, with example content
   template-demo-2/    the other 16 templates
 ```
@@ -81,13 +82,21 @@ The skill lives inside the repo, so any Claude Code session that opens this repo
 including cloud sessions. To use it from any folder on your own machine, link
 `.claude/skills/roma-blossom` into `~/.claude/skills/`.
 
-## Public video links
+## Video links
 
-Every committed `video.mp4` has a public link, ready for a social media scheduler:
+Finished videos and covers are not committed (`.gitignore` skips `video.mp4` and `cover.jpg`),
+so the repo stays small. Instead, each video is published as a GitHub Release:
 
+```bash
+node scripts/publish.js videos/<slug>
 ```
-https://raw.githubusercontent.com/roma-tom/roma-blossom/<commit>/videos/<slug>/video.mp4
-```
 
-Using the commit (rather than a branch name) keeps the link pointing at that exact video. The
-skill prints this link when it hands a video over.
+This makes the release `video/<slug>` and attaches `<slug>.mp4`, `<slug>-cover.jpg` and
+`<slug>-caption.txt`, with the title and caption in the release notes. It prints the release
+page (download buttons, easy on a phone) and a public download link for each file, ready for a
+social media scheduler. Running it again after a re-render replaces the files.
+
+It needs `GITHUB_TOKEN`: a fine-grained token with "Contents: Read and write" on this repo, in
+`.env.local` or the environment (for cloud sessions, the environment's settings).
+
+Videos committed before this change are still in git history, at their old commit links.

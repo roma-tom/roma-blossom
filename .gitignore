@@ -6,3 +6,6 @@ videos/**/frame-*.png
 .cache/
 # Local secrets written by `elevenlabs onboard`
 /.env.local
+# Finished videos and covers go to GitHub Releases (scripts/publish.js), not git history
+videos/**/video.mp4
+videos/**/cover.jpg
