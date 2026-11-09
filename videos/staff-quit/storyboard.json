@@ -1,0 +1,20 @@
+{
+  "title": "Why Good Staff Quit After Three Months",
+  "cover": { "hero": "crowd", "names": ["Dev", "Maria", "Sam"], "kicker": "STAFF", "headline": "Why do good staff quit after *three months*?" },
+  "background": "blush",
+  "music": { "mood": "dreamy" },
+  "output": "video.mp4",
+  "scenes": [
+    { "type": "hook", "duration": 3, "props": { "kicker": "STAFF", "headline": "Why do good staff quit after *three months*?" } },
+    { "type": "myth", "duration": 5, "props": {
+      "myth": "They left for a bit more pay.",
+      "fact": "Often it's a rough first month: no plan, no feedback, no name to ask." } },
+    { "type": "countdown", "duration": 5, "props": {
+      "caption": "Three things to *fix*",
+      "items": ["A written first-week plan", "One buddy to ask anything", "A real chat at week four"] } },
+    { "type": "fix", "duration": 4.5, "props": {
+      "title": "This week",
+      "steps": ["Write down day one to five", "Name a buddy for each new hire", "Book the week-four chat now"] } },
+    { "type": "endcard", "duration": 2.6, "props": {} }
+  ]
+}
