@@ -34,7 +34,9 @@ if (!process.env.ELEVENLABS_API_KEY && fs.existsSync(ENV_FILE)) process.loadEnvF
 const HOST = 'roma tom';
 const VOICES = {
   elevenlabs: {
-    host: 'bTw8AqIDQenIK3kFqvhT', // Chris - Soothing (from the voice library; add it to My Voices)
+    // Chris: charming, down-to-earth. (Library voices like Chris - Soothing, bTw8AqIDQenIK3kFqvhT,
+    // need a paid ElevenLabs plan to use over the API.)
+    host: 'iP95p4xoKVk53GoZ742B',
     guests: [
       'cgSgspJ2msm6clMCkdW9', // Jessica: playful, bright, warm
       'N2lVS1w4EtoT3dr4eOWO', // Callum: husky trickster

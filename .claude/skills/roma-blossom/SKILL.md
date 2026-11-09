@@ -208,8 +208,8 @@ root and follow what it prints. The first render that falls back to Kokoro downl
   `elevenlabs` (default) or `kokoro`. `speed` (default 1) speeds every line up or down, on
   Kokoro only (Eleven v4 has no speed setting). `cast` sets a tomato's voice by name, per
   engine: `{ "Maria": { "elevenlabs": "FGY2WhTYpPnrIDTdsKH5", "kokoro": "af_bella" } }`, or a
-  single Kokoro name or ElevenLabs voice id. Roma Tom is Chris - Soothing
-  (`bTw8AqIDQenIK3kFqvhT`) on ElevenLabs and `am_michael` on Kokoro; everyone else gets one
+  single Kokoro name or ElevenLabs voice id. Roma Tom is Chris
+  (`iP95p4xoKVk53GoZ742B`, a premade voice) on ElevenLabs and `am_michael` on Kokoro; everyone else gets one
   from their name.
 - Optional per scene: `push` (slow camera push, default 0.03; 0 for none).
 - `--bg lime` on the command line overrides the background; `--babble`, `--no-voice` and `--kokoro` override

@@ -38,7 +38,7 @@ Every number shown needs a source or a worked calculation, kept in `script.md`.
 - The tomatoes speak. Roma Tom narrates; a guest can say their own line. Whoever speaks moves
   their mouth with the voice, and peeks in at the lower left if the scene doesn't show them.
 - The voice is ElevenLabs (Kokoro, run on this computer, when ElevenLabs isn't available):
-  Roma Tom is Chris - Soothing on ElevenLabs and `am_michael` on Kokoro, and every other name
+  Roma Tom is Chris on ElevenLabs and `am_michael` on Kokoro, and every other name
   picks its own American voice (never a British one), so a recurring character always sounds the same.
 - Warm and plain, like a friend across the counter: short sentences, numbers said the way
   people say them, no jargon.

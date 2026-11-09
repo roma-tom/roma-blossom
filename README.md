@@ -58,8 +58,8 @@ another background with `--bg sky`, and leave out the sound with `--silent`. Set
 The tomatoes speak each scene's `say` line, and each scene stretches to fit its line. The voice is
 [ElevenLabs](https://elevenlabs.io) (`eleven_v4`), using `ELEVENLABS_API_KEY` from `.env.local`
 at the top of the repo. To set that up, run `npx -y @elevenlabs/cli@latest onboard init` here and
-follow what it prints. Roma Tom is the library voice Chris - Soothing, which has to be added to
-the account's My Voices.
+follow what it prints. Roma Tom is Chris, one of ElevenLabs' premade voices (library voices
+need a paid plan to use over the API).
 
 If there's no key or ElevenLabs fails (no network, out of credits), the whole video falls back to
 [Kokoro](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX), a small text-to-speech
