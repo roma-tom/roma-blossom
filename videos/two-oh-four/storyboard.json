@@ -1,6 +1,6 @@
 {
   "title": "Two Oh Four: Empty. Two Oh Five: A Bus Tour.",
-  "cover": { "hero": "number", "number": "2:05", "label": "and a bus tour walks in", "kicker": "CAFE LIFE", "headline": "2:04 empty. 2:05 *bus tour.*" },
+  "cover": { "hero": "headline", "kicker": "CAFE LIFE", "headline": "2:04 empty. 2:05 *bus tour.*" },
   "background": "lime",
   "output": "video.mp4",
   "mix": { "pad": "sway" },
