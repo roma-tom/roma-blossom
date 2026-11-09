@@ -1,0 +1,28 @@
+{
+  "title": "Year One Owner vs Year Ten Owner",
+  "cover": { "hero": "host" },
+  "background": "paper",
+  "output": "video.mp4",
+  "mix": { "pad": "sunny" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3.5,
+      "say": "Same cafe. Year one and year ten look nothing alike.",
+      "props": { "label": "THEN AND NOW", "line": "Year 1 vs *year 10*", "left": "YEAR 1", "right": "YEAR 10" } },
+    { "type": "versus", "duration": 4.5,
+      "say": "Year one, Roma Tom worked every shift, seven days a week. Year ten, four days, and home for dinner.",
+      "props": { "caption": "Same owner, *ten years* apart",
+        "left": { "name": "Roma Tom", "label": "Year one", "value": "7 days", "note": "every shift, every week" },
+        "right": { "name": "Roma Tom", "label": "Year ten", "value": "4 days", "note": "and home for dinner" },
+        "winner": "right" } },
+    { "type": "countdown", "duration": 4.5,
+      "say": "Ten years taught him what to stop. Saying yes to every idea. Answering texts at midnight. And the big one: doing every job himself.",
+      "props": { "caption": "What year ten *stopped* doing",
+        "items": ["Saying yes to every idea", "Answering texts at midnight", "Doing every job himself"] } },
+    { "type": "quote", "duration": 4.5, "speaker": "Dev",
+      "say": "Year one, he checked every plate I made. Now he lets me run the line.",
+      "props": { "name": "Dev", "role": "line cook, year eight", "quote": "Now he lets me *run the line*." } },
+    { "type": "endcard", "duration": 3,
+      "say": "Which year are you in? Follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
