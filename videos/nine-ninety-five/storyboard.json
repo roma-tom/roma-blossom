@@ -1,0 +1,68 @@
+{
+  "title": "Should Prices End in .95 or a Round Number?",
+  "cover": {
+    "hero": "number",
+    "number": "$9.95",
+    "label": "or $10?"
+  },
+  "background": "butter",
+  "output": "video.mp4",
+  "mix": {
+    "pad": "cosy"
+  },
+  "scenes": [
+    {
+      "type": "./hook.js",
+      "duration": 4,
+      "say": "Nine ninety-five and ten dollars sound almost the same. Guests don't read them that way.",
+      "props": {
+        "label": "MENU PRICES",
+        "line": "Same price? *Not* to guests.",
+        "a": "$9.95",
+        "b": "$10"
+      },
+      "peek": false
+    },
+    {
+      "type": "pricetag",
+      "duration": 4.5,
+      "say": "Shoppers read the first digit. In one catalog test, a dress sold a third more at thirty-nine dollars than at thirty-four.",
+      "props": {
+        "caption": "Guests read the *first* digit",
+        "item": "Catalog dress",
+        "from": "$34",
+        "to": "$39",
+        "note": "sold about *a third* more"
+      }
+    },
+    {
+      "type": "myth",
+      "duration": 5,
+      "say": "But nine ninety-five isn't magic. It says bargain. A round ten says quality, and many restaurant managers price their best dishes that way.",
+      "props": {
+        "caption": "Myth or *fact*?",
+        "myth": "A .95 price always sells more",
+        "fact": "It signals a deal. Round signals quality."
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 4.5,
+      "say": "So: end grab-and-go items in ninety-five. Round off your signature dishes. And keep one style per menu section.",
+      "props": {
+        "title": "Price on purpose",
+        "steps": [
+          "Grab-and-go: end in .95",
+          "Signature dishes: round it",
+          "One style per menu section"
+        ]
+      }
+    },
+    {
+      "type": "endcard",
+      "duration": 2.6,
+      "say": "Follow for more owner tips.",
+      "props": {}
+    }
+  ]
+}
