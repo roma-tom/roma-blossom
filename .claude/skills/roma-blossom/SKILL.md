@@ -15,8 +15,10 @@ levels up from this file. This file may be reached through a symlink in `~/.clau
 resolve its real path first. Run every command below from the project root.
 
 - `style/STYLE.md`: palette, type, motion, cast, safe zones. **Read it before writing a script.**
-- `scripts/`: the renderer, scene templates, sound and voice. Node only; no API keys. The voice
-  runs on this computer (Kokoro, a small text-to-speech model).
+- `scripts/`: the renderer, scene templates, sound and voice. Node only. The voice is
+  ElevenLabs, using `ELEVENLABS_API_KEY` from `.env.local` at the project root (never print or
+  open that file); without a key, or if ElevenLabs fails, the whole video falls back to Kokoro,
+  a small text-to-speech model that runs on this computer.
 - `videos/<slug>/`: one folder per video, with `script.md`, `storyboard.json` and the output.
 - `videos/best-seller/`: the worked example. Copy its shape.
 - `topics.md`: the backlog of video ideas (**Up next**) and the ones already made (**Covered**).
@@ -27,8 +29,9 @@ One-time setup (if `scripts/node_modules` is missing):
 npm install --prefix scripts
 ```
 
-The first render with a voice also downloads the voice model (about 330 MB) from Hugging Face
-and keeps it; later renders reuse it.
+If `.env.local` is missing, run `npx -y @elevenlabs/cli@latest onboard init` at the project
+root and follow what it prints. The first render that falls back to Kokoro downloads its model
+(about 330 MB) from Hugging Face and keeps it; later renders reuse it.
 
 ## Workflow
 
@@ -125,7 +128,9 @@ and keeps it; later renders reuse it.
    - the caption in a code block (one tap to copy), and `title` for the networks that ask for one
    - which focal point the cover used, the on-screen text, and which question you picked if you
      chose it (step 1)
-   - which voice mode it used, if not speech (the user asked for babble)
+   - which voice mode it used, if not speech (the user asked for babble), and if the render
+     printed `(kokoro)` on the `voice:` line when ElevenLabs was wanted, say so and include
+     the warning it printed
 11. **Auto-post, only when asked.** Do this only if the user's request says so in words, such as
    "auto post it", "post it", or "schedule it". Never on your own initiative, and not when the
    request is unclear: then hand over as in step 10 and ask.
@@ -199,11 +204,15 @@ and keeps it; later renders reuse it.
   tomatoes talk in cartoon syllables instead, still with the timing and mouths of the lines;
   use it only when the user asks for it. Babble doesn't stretch scenes to fit the line: it's
   trimmed to fit each scene's `duration`, so the video moves quicker (about 12 to 20 s). Set
-  each `duration` for reading time, a little above the template minimum for busy scenes. `"voice": false` leaves the voice out. `speed`
-  (default 1) speeds every line up or down; `cast` sets a tomato's Kokoro voice by name, such
-  as `{ "Maria": "af_bella" }` (Roma Tom is `am_michael`; everyone else gets one from their name).
+  each `duration` for reading time, a little above the template minimum for busy scenes. `"voice": false` leaves the voice out. `engine` is
+  `elevenlabs` (default) or `kokoro`. `speed` (default 1) speeds every line up or down, on
+  Kokoro only (Eleven v4 has no speed setting). `cast` sets a tomato's voice by name, per
+  engine: `{ "Maria": { "elevenlabs": "FGY2WhTYpPnrIDTdsKH5", "kokoro": "af_bella" } }`, or a
+  single Kokoro name or ElevenLabs voice id. Roma Tom is Chris - Soothing
+  (`bTw8AqIDQenIK3kFqvhT`) on ElevenLabs and `am_michael` on Kokoro; everyone else gets one
+  from their name.
 - Optional per scene: `push` (slow camera push, default 0.03; 0 for none).
-- `--bg lime` on the command line overrides the background; `--babble` and `--no-voice` override
+- `--bg lime` on the command line overrides the background; `--babble`, `--no-voice` and `--kokoro` override
   the voice; `--silent` leaves out the sound (the voice still sets the timing).
 - In any headline or caption, `*word*` or `*several words*` gets the marker swash. Use it once
   per line, on the word that carries the point.
@@ -232,8 +241,9 @@ holds the list; add to it when you spot a new one). Common swaps:
 | centre, litre, grey, cosy, maths | center, liter, gray, cozy, math |
 | 75c, £, pence | 75¢, $, cents |
 
-The voices are American too: Roma Tom is `am_michael` and guests only get American (`af_`/`am_`)
-Kokoro voices. Never set a British (`bf_`/`bm_`) voice in `cast`.
+The voices are American too: guests only get American ElevenLabs voices and American
+(`af_`/`am_`) Kokoro voices. Never set a British voice (ElevenLabs' George, Daniel, Alice or
+Lily, or Kokoro's `bf_`/`bm_`) in `cast`.
 
 ## The voiceover
 
@@ -252,7 +262,8 @@ the same story for people watching muted, so the two cover each other.
   - no symbols: `$` → dollars, `%` → percent, `&` → and, `×` → times, `/` → per or a
   - no abbreviations: "versus", "for example", "minutes", "average"
   - names and words it may stumble on: respell them ("Roma Tom" is fine; "gyro" → "yee-roh"),
-    or give the sounds as `[gyro](/ˈjiɹO/)` (Kokoro's phonemes) when respelling isn't enough
+    or give the sounds as `[gyro](/ˈjiɹO/)` (Kokoro's phonemes) when respelling isn't enough;
+    ElevenLabs reads only the word in the brackets, so prefer respelling
   - no `*swash*` asterisks and no emoji
 - **Short sentences,** about 2.5 words a second. Most lines are one or two sentences; the
   hook is one. The end card says "Follow for more owner tips." (for day, story and relatable
