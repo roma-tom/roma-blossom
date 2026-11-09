@@ -112,7 +112,7 @@ Rules:
 
 ## Scene templates
 
-Twenty-four templates, each a function `(ctx, theme, t, props, info)` in `scripts/scenes/`, where `t` runs
+Twenty-five templates, each a function `(ctx, theme, t, props, info)` in `scripts/scenes/`, where `t` runs
 from 0 to 1 over the scene. Each one also lists its sound cues in `draw.cues(props)`. The props
 for each are in `.claude/skills/roma-blossom/SKILL.md`.
 
@@ -154,5 +154,6 @@ for each are in `.claude/skills/roma-blossom/SKILL.md`.
 22. **The Price Tag.** A swinging tag: the old price is crossed out and the new one written in.
 23. **The Trend.** A line chart drawing itself across the weeks, with a pinned note where something changed.
 24. **The Rota** (the schedule). A week of shifts filling in, with the headcount underneath and the thin day circled.
+25. **The Street.** Two shops stacked on the same street, with the same guests walking past both, day after day. Some turn in and the shop's "came in" count ticks up; one owner can shout a new extra each day. A day pill steps through the week and the winner's count is circled. For positioning, signs and offers: same foot traffic, different results.
 
 Plus a fixed **end card** on lime: the Roma Tom tomato, "Follow for more owner tips" and the handle.

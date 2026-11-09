@@ -289,12 +289,12 @@ unless another suits the topic better, as long as it still differs from the last
 
 ## Templates
 
-There are 24 for the scenes after the hook. `videos/template-demo/` (the first 8) and
-`videos/template-demo-2/` (the other 16) show each one with example content; copy their props as
-a starting point. The hook is never one of these: each video draws its own (step 5 and
-`style/HOOKS.md`). The eight hook templates earlier videos used (`hook`, `hook-pov`,
-`hook-split`, `hook-freeze`, `hook-same`, `hook-number`, `hook-rule`, `hook-callout`) are listed in
-`style/HOOKS.md` as references and parts only.
+There are 25 for the scenes after the hook. `videos/template-demo/` (the first 8) and
+`videos/template-demo-2/` (the next 16) show each one with example content; copy their props as
+a starting point. `street` is shown in `videos/for-everyone/`. The hook is never one of these:
+each video draws its own (step 5 and `style/HOOKS.md`). The eight hook templates earlier videos
+used (`hook`, `hook-pov`, `hook-split`, `hook-freeze`, `hook-same`, `hook-number`, `hook-rule`,
+`hook-callout`) are listed in `style/HOOKS.md` as references and parts only.
 
 Every template except the end card takes an optional `caption`: one short line at the top
 (keep it under about 40 characters). The minimum comfortable durations are a guide; give
@@ -325,6 +325,7 @@ reading-heavy scenes more.
 | `pricetag` | price rises, price psychology | `item`, `from`, `to` (strings with the currency), `note` | 4.5 s |
 | `trend` | a number changing over time | `label` (caps), `labels` [], `values` [] (4 to 12), `note` {`at` (index), `text`}, `last` | 4.5 s |
 | `rota` | scheduling, cover | `days` [], `staff` [{`name`, `shifts` [0/1 per day]}] (up to 5), `highlight` (day index, circled) | 4.5 s |
+| `street` | two shops on one street, same foot traffic: positioning, signs, offers | `days` [] (1 to 7, caps), `top`, `bottom`: {`label` (caps), `sign` (under about 24 characters; `*swash*` allowed), `owner` (tomato), `counts` [] (running total that came in, one per day), `start`, `awning` (`red`/`green`), `shouts` [] (one short line per day, optional)}, `passers` (2 to 8 a day, the same on both), `winner`: `top`/`bottom`. Set `"peek": false`: the narrator's corner peek lands on the walkers | 6 s |
 | `endcard` | always last | `cta` (default "Follow for more *owner* tips"), `site` (default "romatom.com") | 2.6 s |
 
 ## The cast

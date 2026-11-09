@@ -126,6 +126,7 @@ Made as videos:
 - [x] What's the real cost of a free refill? (`videos/free-refill-cost`)
 - [x] Maria's first visit, and her hundredth (`videos/marias-hundredth-visit`)
 - [x] Guess how many lattes it takes to pay the rent (`videos/lattes-to-pay-rent`)
+- [x] Should your cafe try to be for everyone? (`videos/for-everyone`)
 
 Examples in the style guide:
 

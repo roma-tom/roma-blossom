@@ -4,3 +4,5 @@ out/
 videos/**/*.wav
 videos/**/frame-*.png
 .cache/
+# Local secrets written by `elevenlabs onboard`
+/.env.local
