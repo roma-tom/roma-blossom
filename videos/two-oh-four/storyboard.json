@@ -1,0 +1,31 @@
+{
+  "title": "Two Oh Four: Empty. Two Oh Five: A Bus Tour.",
+  "cover": { "hero": "number", "number": "2:05", "label": "and a bus tour walks in", "kicker": "CAFE LIFE", "headline": "2:04 empty. 2:05 *bus tour.*" },
+  "background": "lime",
+  "output": "video.mp4",
+  "mix": { "pad": "sway" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3.5,
+      "say": "Two oh four, the cafe is empty. Two oh five, a bus tour walks in.",
+      "props": { "label": "TUESDAY, 2 PM", "line": "2:04 empty. 2:05 *bus tour.*" } },
+    { "type": "tickets", "duration": 4.5,
+      "say": "Three tables, three orders, all at once. Dev has not even put his coffee down.",
+      "props": { "caption": "Two oh *six*",
+        "tickets": [
+          { "table": "T1", "items": ["4 lattes", "2 muffins"], "minutes": 3 },
+          { "table": "T2", "items": ["3 iced teas", "1 panini"], "minutes": 8 },
+          { "table": "T3", "items": ["5 flat whites"], "minutes": 14 }
+        ],
+        "limit": 12, "goal": "ALL AT ONCE", "cook": "Dev" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Ivan",
+      "say": "And the first guest in line has one question. Do you have a restroom?",
+      "props": { "name": "Ivan", "role": "bus tour, first off", "quote": "Is there a *restroom*?" } },
+    { "type": "countdown", "duration": 4.5,
+      "say": "Then it is the usual. Separate checks. The oat milk running out. And you, smiling through all of it.",
+      "props": { "caption": "The next ten *minutes*",
+        "items": ["The oat milk runs out", "Eight separate checks", "You, smiling anyway"] } },
+    { "type": "endcard", "duration": 3,
+      "say": "Tag the owner who has lived this. Follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
