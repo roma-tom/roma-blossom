@@ -1,0 +1,30 @@
+{
+  "title": "The Texts Every Owner Gets Before 7 AM",
+  "cover": { "hero": "crowd", "names": ["Dev", "Ana", "Sam"] },
+  "background": "sky",
+  "output": "video.mp4",
+  "mix": { "pad": "sway" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 4, "peek": false,
+      "say": "Six twelve in the morning. The phone starts buzzing.",
+      "props": { "label": "OWNER LIFE", "line": "6:12 am. The phone *buzzes*.", "time": "6:12" } },
+    { "type": "chat", "duration": 6,
+      "say": "It's Dev. The espresso machine is making a noise. What kind of noise? Like a goose. Oh, and the milk didn't come.",
+      "props": { "caption": "Before the doors *even open*",
+        "contact": "Dev", "status": "LINE COOK",
+        "messages": [
+          { "from": "them", "text": "Morning!! Quick thing" },
+          { "from": "them", "text": "The espresso machine is making a noise" },
+          { "from": "me", "text": "What kind of noise?" },
+          { "from": "them", "text": "Like a goose" },
+          { "from": "them", "text": "Also the milk didn't come" }
+        ] } },
+    { "type": "countdown", "duration": 4.5,
+      "say": "And every week, there's more. Can I swap Saturday? Running ten minutes late. And the classic: is the oven supposed to smoke?",
+      "props": { "caption": "Texts before *7 am*",
+        "items": ["Can I swap Saturday?", "Running 10 minutes late", "Is the oven supposed to smoke?"] } },
+    { "type": "endcard", "duration": 3,
+      "say": "Tag the owner whose phone does this. Follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
