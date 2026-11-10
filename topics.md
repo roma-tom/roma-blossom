@@ -24,7 +24,6 @@ behind a non-advice topic in the order. Topics without a hook idea need one befo
 
 - [ ] Should you pay a bit above minimum wage to keep staff? [advice] Hook: "One dollar an hour, against two thousand to replace her." (hook idea: a barista tomato walks toward the exit with her apron off; a one-dollar coin rolls across the floor and stops at her feet, and she stops too; scale, jar)
 - [ ] The texts every owner gets before 7 am [relatable] Hook: (Dev) "So... the espresso machine is making a noise." (hook idea: a dark bedroom, the alarm clock reads 6:12, and the phone on the nightstand lights up and buzzes across the table with text after text; chat, rota)
-- [ ] How does portion creep quietly eat your margin? [advice] Hook: "A slightly bigger scoop, every plate. That's [yearly number] dollars a year." (hook idea: plates slide past on the pass and the scoop on each gets a little bigger; with each plate, a coin quietly slips off the edge; plate, jar)
 - [ ] The last hour nobody sees: closing the cafe [day] Hook: (guest) "Just one coffee? Please?" (hook idea: the lights click off one by one, Roma Tom flips the sign to CLOSED, then a knock: a guest's face pressed to the glass; day, countdown)
 - [ ] Is a bigger menu costing you money? [advice] Hook: "More dishes, more sales, right? Usually not." (hook idea: a menu unfolds, and unfolds, and keeps unfolding off the bottom of the screen while Dev in the kitchen watches it, sweating; menu, myth)
 - [ ] What a guest decides in their first ten seconds [guests] Hook: (guest) "Hmm. Is this place any good?" (hook idea: a ten-second timer bar drains across the top while a new guest's eyes dart around the room; everything they notice gets a tick or a cross; quote, countdown; keep it a guest's-eye story, no invented statistic)
@@ -127,6 +126,7 @@ Made as videos:
 - [x] Year one owner versus year ten owner (`videos/year-one-year-ten`)
 - [x] Should prices end in .95 or a round number? (`videos/nine-ninety-five`)
 - [x] The dishwasher is the most important person in your kitchen (`videos/dishwasher`)
+- [x] How does portion creep quietly eat your margin? (`videos/portion-creep`)
 
 Examples in the style guide:
 

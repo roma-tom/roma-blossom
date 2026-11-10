@@ -1,0 +1,25 @@
+{
+  "title": "How Portion Creep Quietly Eats Your Margin",
+  "cover": { "hero": "headline" },
+  "background": "mint",
+  "output": "video.mp4",
+  "mix": { "pad": "mellow" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 4, "peek": false,
+      "say": "A slightly bigger scoop, every plate. That's five thousand four hundred dollars a year.",
+      "props": { "label": "FOOD COST", "line": "A little extra, *every plate*." } },
+    { "type": "quote", "duration": 4.5, "speaker": "Dev",
+      "say": "Guests love it when I give them a little extra.",
+      "props": { "name": "Dev", "role": "line cook, generous", "quote": "Guests love a *little extra*." } },
+    { "type": "jar", "duration": 4.5,
+      "say": "Say one extra ounce of fries costs you ten cents. Times a hundred and fifty plates a day, three hundred and sixty days a year. That's five thousand four hundred dollars.",
+      "props": { "caption": "One extra ounce of *fries*",
+        "lines": ["10¢ an extra ounce", "× 150 plates a day", "× 360 days"],
+        "total": 5400, "currency": "$", "label": "a year" } },
+    { "type": "fix", "duration": 4.5,
+      "say": "So: give the line the right size scoop. Weigh one plate every shift. And pin up a photo of how the plate should look.",
+      "props": { "title": "Stop the creep",
+        "steps": ["Use the right size scoop", "Weigh one plate per shift", "Pin up a photo of the plate"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
