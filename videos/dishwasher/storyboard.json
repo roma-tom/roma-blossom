@@ -1,0 +1,25 @@
+{
+  "title": "The Dishwasher Runs Your Kitchen",
+  "cover": { "hero": "tomato", "name": "Rosa" },
+  "background": "blush",
+  "output": "video.mp4",
+  "mix": { "pad": "warm" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 4, "peek": false,
+      "say": "Saturday rush. Every plate in the house is dirty. Then Rosa gets to work.",
+      "props": { "label": "SATURDAY, 7 PM", "line": "Who *really* runs the rush?" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Dev",
+      "say": "Plates are back. All of them. Clean. Rosa, you're a legend.",
+      "props": { "name": "Dev", "role": "line cook, on the grill", "quote": "Plates are back. All of them. *Clean.*" } },
+    { "type": "countdown", "duration": 4.5,
+      "say": "The dish pit keeps the line in plates. It spots the chipped glass before a guest does. And it's usually the last one out at night.",
+      "props": { "caption": "What the dish pit *really* does",
+        "items": ["Keeps the line in plates", "Spots the chipped glass first", "Last one out at night"] } },
+    { "type": "quote", "duration": 4.5,
+      "say": "No dishwasher, no service. So thank yours by name tonight.",
+      "props": { "name": "Roma Tom", "role": "owner", "quote": "No dishwasher, *no service*." } },
+    { "type": "endcard", "duration": 3,
+      "say": "Send this to your dish crew. Follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
