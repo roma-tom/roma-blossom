@@ -46,7 +46,11 @@ if (!m) { console.error(`origin isn't a GitHub repo: ${remote}`); process.exit(1
 async function gh(method, url, body, headers = {}) {
   const r = await fetch(url.startsWith('http') ? url : `https://api.github.com${url}`, {
     method,
-    headers: { Authorization: `Bearer ${TOKEN}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'roma-blossom-publish', ...headers },
+    headers: {
+      Authorization: `Bearer ${TOKEN}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'roma-blossom-publish',
+      ...(body != null && !Buffer.isBuffer(body) ? { 'Content-Type': 'application/json' } : {}),
+      ...headers,
+    },
     body: body == null ? undefined : Buffer.isBuffer(body) ? body : JSON.stringify(body),
   });
   if (r.status === 404 && method === 'GET') return null;
