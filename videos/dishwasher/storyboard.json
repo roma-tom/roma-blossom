@@ -1,0 +1,25 @@
+{
+  "title": "Thank You to the Dishwasher",
+  "cover": { "hero": "tomato", "name": "Dev" },
+  "background": "mint",
+  "output": "video.mp4",
+  "mix": { "pad": "drift" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3.5, "speaker": "Dev",
+      "say": "Plates are back. All of them. Clean.",
+      "props": { "label": "SHOUT-OUT", "line": "Plates are back. *All* clean." } },
+    { "type": "countdown", "duration": 5,
+      "say": "On a busy night, the line cooks get the credit. But no clean cups, no lattes. No clean pans, no sauté. No clean plates, no dinner. It all runs through the dish pit.",
+      "props": { "caption": "It all runs through the *dish pit*",
+        "items": ["No clean cups, no lattes", "No clean pans, no sauté", "No clean plates, no dinner"] } },
+    { "type": "quote", "duration": 4.5, "speaker": "Dev",
+      "say": "When the dish pit is on, I never wonder if I will run out. I just cook.",
+      "props": { "name": "Dev", "role": "line cook", "quote": "When the dish pit is on, *I just cook*." } },
+    { "type": "quote", "duration": 4.5,
+      "say": "So to everyone on dishes tonight, hot water, long shift, and never a thank you: thank you. We see every plate.",
+      "props": { "name": "Roma Tom", "role": "owner", "quote": "Thank you. We see *every plate*." } },
+    { "type": "endcard", "duration": 3,
+      "say": "Send this to your dishwasher. Then follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}

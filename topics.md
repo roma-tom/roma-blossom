@@ -23,7 +23,6 @@ behind a non-advice topic in the order. Topics without a hook idea need one befo
 ## Up next
 
 - [ ] Should you pay a bit above minimum wage to keep staff? [advice] Hook: "One dollar an hour, against two thousand to replace her." (hook idea: a barista tomato walks toward the exit with her apron off; a one-dollar coin rolls across the floor and stops at her feet, and she stops too; scale, jar)
-- [ ] The dishwasher is the most important person in your kitchen [shout-out] Hook: (Dev) "Plates are back. All of them. Clean." (hook idea: a tower of dirty plates grows taller than the screen during the rush; Dev's hands blur and it drops to one clean stack in a second; quote, countdown)
 - [ ] The texts every owner gets before 7 am [relatable] Hook: (Dev) "So... the espresso machine is making a noise." (hook idea: a dark bedroom, the alarm clock reads 6:12, and the phone on the nightstand lights up and buzzes across the table with text after text; chat, rota)
 - [ ] How does portion creep quietly eat your margin? [advice] Hook: "A slightly bigger scoop, every plate. That's [yearly number] dollars a year." (hook idea: plates slide past on the pass and the scoop on each gets a little bigger; with each plate, a coin quietly slips off the edge; plate, jar)
 - [ ] The last hour nobody sees: closing the cafe [day] Hook: (guest) "Just one coffee? Please?" (hook idea: the lights click off one by one, Roma Tom flips the sign to CLOSED, then a knock: a guest's face pressed to the glass; day, countdown)
@@ -127,6 +126,7 @@ Made as videos:
 - [x] Two oh four: empty. Two oh five: a bus tour. (`videos/two-oh-four`)
 - [x] Year one owner versus year ten owner (`videos/year-one-year-ten`)
 - [x] Should prices end in .95 or a round number? (`videos/nine-ninety-five`)
+- [x] The dishwasher is the most important person in your kitchen (`videos/dishwasher`)
 
 Examples in the style guide:
 
