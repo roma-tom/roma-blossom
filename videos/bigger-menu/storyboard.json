@@ -1,0 +1,32 @@
+{
+  "title": "Is a Bigger Menu Costing You Money?",
+  "cover": { "hero": "number", "number": "$3,900", "label": "a year on slow dishes" },
+  "background": "lime",
+  "output": "video.mp4",
+  "mix": { "pad": "sunny" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3.5, "peek": false,
+      "say": "More dishes, more sales, right? Usually not.",
+      "props": { "label": "THE MENU", "line": "More dishes, more sales? *Usually not.*" } },
+    { "type": "menu", "duration": 5,
+      "say": "Look at what actually sells. Say the burger and the bowl sell dozens a week. The duck salad and the risotto sell two each.",
+      "props": { "caption": "What *actually* sells",
+        "title": "Dinner",
+        "items": [
+          { "name": "Smash burger", "price": "16", "mark": "star", "note": "40 a week" },
+          { "name": "Chicken bowl", "price": "15", "mark": "star", "note": "35 a week" },
+          { "name": "Duck salad", "price": "19", "mark": "cross", "note": "2 a week" },
+          { "name": "Saffron risotto", "price": "22", "mark": "cross", "note": "2 a week" }
+        ] } },
+    { "type": "jar", "duration": 4.5,
+      "say": "But every slow dish needs its own ingredients. Say you throw out fifteen dollars of them a week. Five slow dishes, fifty-two weeks. That's three thousand nine hundred dollars.",
+      "props": { "caption": "What slow dishes *throw out*",
+        "lines": ["$15 of waste a week", "× 5 slow dishes", "× 52 weeks"],
+        "total": 3900, "currency": "$", "label": "a year" } },
+    { "type": "fix", "duration": 4.5,
+      "say": "So: cut what sells least. Build your dishes from shared ingredients. And bring the fun ones back as specials.",
+      "props": { "title": "Trim the menu",
+        "steps": ["Cut what sells least", "Share ingredients across dishes", "Bring favorites back as specials"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
