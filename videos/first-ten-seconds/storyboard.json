@@ -1,0 +1,25 @@
+{
+  "title": "What a Guest Decides in Their First Ten Seconds",
+  "cover": { "hero": "crowd", "names": ["Priya", "Maria", "Leo"] },
+  "background": "butter",
+  "output": "video.mp4",
+  "mix": { "pad": "drift" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 4.2, "peek": false,
+      "say": "A new guest walks in. Ten seconds later, she's already decided.",
+      "props": { "label": "NEW GUEST", "line": "Ten seconds. *Decided.*", "seconds": "10" } },
+    { "type": "quote", "duration": 4.5, "speaker": "Priya",
+      "say": "Hmm. Is this place any good?",
+      "props": { "name": "Priya", "role": "first visit, at the door", "quote": "Hmm. Is this place *any good*?" } },
+    { "type": "countdown", "duration": 4.5,
+      "say": "In those first seconds she takes in the smell at the door. Whether the tables are clean. And the big one: whether anyone says hi.",
+      "props": { "caption": "What a new guest *notices*",
+        "items": ["The smell at the door", "A sticky table", "Someone saying hi"] } },
+    { "type": "quote", "duration": 4, "speaker": "Priya",
+      "say": "Okay. Someone said hi. I'm staying.",
+      "props": { "name": "Priya", "role": "ten seconds later", "quote": "Okay. I'm *staying*." } },
+    { "type": "endcard", "duration": 3,
+      "say": "Say hi in the first ten seconds. Follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
