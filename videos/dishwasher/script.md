@@ -1,26 +1,26 @@
 # dishwasher
 
 **Kind:** shout-out
-**Question:** Who really keeps the kitchen running during the rush?
-**Background:** blush, pad: warm. **Length:** about 29 s
+**Question:** Who really keeps the kitchen running on a busy night? (the dishwasher)
+**Background:** mint, pad: drift. **Length:** about 33 s
 
 ## Scenes
 
-| # | Template | On screen | Says | Time |
-| --- | --- | --- | --- | --- |
-| 1 | ./hook.js | Saturday rush: a tower of dirty plates climbs and wobbles beside the sink; Rosa's hands blur in a cloud of bubbles and it drains into one neat clean stack. "Who *really* runs the rush?" | Saturday rush. Every plate in the house is dirty. Then Rosa gets to work. | 5.7 s |
-| 2 | quote | Dev, line cook: "Plates are back. All of them. *Clean.*" | (Dev) Plates are back. All of them. Clean. Rosa, you're a legend. | 4.5 s |
-| 3 | countdown | What the dish pit *really* does: Keeps the line in plates / Spots the chipped glass first / Last one out at night | The dish pit keeps the line in plates. It spots the chipped glass before a guest does. And it's usually the last one out at night. | 8.8 s |
-| 4 | quote | Roma Tom, owner: "No dishwasher, *no service*." | No dishwasher, no service. So thank yours by name tonight. | 4.9 s |
-| 5 | endcard | Follow for more *cafe life* | Send this to your dish crew. Follow for more cafe life. | 4.9 s |
+| # | Template | On screen | Says |
+| --- | --- | --- | --- |
+| 1 | ./hook.js | A tower of dirty plates sways up the counter; a swish, and it drops to one clean sparkling stack as Dev rises, relieved. "Plates are back. *All* clean." | (Dev) Plates are back. All of them. Clean. |
+| 2 | countdown | It all runs through the *dish pit*: no clean cups, no lattes / no clean pans, no saute / no clean plates, no dinner | On a busy night, the line cooks get the credit. But no clean cups, no lattes... It all runs through the dish pit. |
+| 3 | quote | Dev, line cook: "When the dish pit is on, *I just cook*." | (Dev) When the dish pit is on, I never wonder if I will run out. I just cook. |
+| 4 | quote | Roma Tom, owner: "Thank you. We see *every plate*." | So to everyone on dishes tonight... thank you. We see every plate. |
+| 5 | endcard | Follow for more *cafe life* | Send this to your dishwasher. Then follow for more cafe life. |
 
 ## Fact notes
 
-- No statistics. A shout-out built on the cast: Rosa (new, the dishwasher) and Dev (line cook).
-  "Last one out at night" is framed as "usually", a common kitchen experience, not a measured claim.
+- No statistics or figures. A thank-you to a role; the cups, pans and plates lines are plain
+  kitchen logic, and Dev's line is the cast's own voice.
 
 ## Post caption
 
-Saturday rush. Every plate in the house is dirty. Then the dish pit catches up and service keeps going. No dishwasher, no service. Thank yours by name tonight, and send this to your dish crew.
+Every busy night runs through the dish pit. No clean cups, no lattes. No clean pans, no sauté. No clean plates, no dinner. To everyone on dishes tonight: thank you. Send this to yours.
 
-#kitchenlife #restaurantlife #cafeowner #hospitality #backofhouse
+#cafeowner #restaurantowner #dishwasher #cafelife #hospitality
