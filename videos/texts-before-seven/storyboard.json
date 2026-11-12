@@ -1,0 +1,39 @@
+{
+  "title": "The Texts Every Cafe Owner Gets Before 7 AM",
+  "cover": { "hero": "headline", "kicker": "CAFE OWNERS", "headline": "The texts *before 7*" },
+  "background": "sky",
+  "output": "video.mp4",
+  "mix": { "pad": "warm" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3.5, "speaker": "Dev",
+      "say": "So... the espresso machine is making a noise.",
+      "props": { "label": "CAFE OWNERS", "line": "6:12 am. *Buzz.*", "time": "6:12", "message": "So... the espresso machine is making a *noise*." } },
+    { "type": "chat", "duration": 5,
+      "say": "Six twenty. Sam, the supplier. The truck is running late. And there's no oat milk this week.",
+      "props": { "caption": "6:20 am: the *supplier*",
+        "contact": "Sam", "status": "SUPPLIER",
+        "messages": [
+          { "from": "them", "text": "Morning! Truck's running a bit late." },
+          { "from": "them", "text": "Also... no oat milk this week." },
+          { "from": "me", "text": "How late is late?" },
+          { "from": "them", "text": "Lunch-ish?" }
+        ] } },
+    { "type": "rota", "duration": 4.5,
+      "say": "Six thirty-one. Jess wakes up with a fever. The Thursday morning shift is now Dev and you.",
+      "props": { "caption": "6:31 am: Jess is *sick*",
+        "days": ["M", "T", "W", "T", "F", "S", "S"],
+        "staff": [
+          { "name": "Roma Tom", "shifts": [1, 1, 0, 1, 1, 1, 0] },
+          { "name": "Dev", "shifts": [1, 0, 1, 1, 1, 1, 1] },
+          { "name": "Jess", "shifts": [0, 1, 1, 0, 1, 1, 1] },
+          { "name": "Ana", "shifts": [1, 1, 1, 0, 0, 1, 1] }
+        ],
+        "highlight": 3 } },
+    { "type": "quote", "duration": 4.5, "speaker": "Maria",
+      "say": "Are you open yet? I'm right outside. I'll wait.",
+      "props": { "caption": "6:48 am: the *regular*", "name": "Maria", "role": "regular, every day at 7", "quote": "Are you open yet? I'm *right outside*." } },
+    { "type": "endcard", "duration": 3,
+      "say": "Send this to the owner whose phone is already buzzing. Follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}

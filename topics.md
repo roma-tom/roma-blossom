@@ -124,6 +124,7 @@ Made as videos:
 - [x] The dishwasher is the most important person in your kitchen (`videos/dishwasher`)
 - [x] How does portion creep quietly eat your margin? (`videos/portion-creep`)
 - [x] The texts every owner gets before 7 am (`videos/before-seven`)
+- [x] The texts every owner gets before 7 am, a second take (`videos/texts-before-seven`)
 - [x] The last hour nobody sees: closing the cafe (`videos/closing-time`)
 - [x] Is a bigger menu costing you money? (`videos/bigger-menu`)
 - [x] What a guest decides in their first ten seconds (`videos/first-ten-seconds`)
