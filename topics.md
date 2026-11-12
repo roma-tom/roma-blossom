@@ -23,7 +23,6 @@ behind a non-advice topic in the order. Topics without a hook idea need one befo
 ## Up next
 
 - [ ] Should you pay a bit above minimum wage to keep staff? [advice] Hook: "One dollar an hour, against two thousand to replace her." (hook idea: a barista tomato walks toward the exit with her apron off; a one-dollar coin rolls across the floor and stops at her feet, and she stops too; scale, jar)
-- [ ] Should your staff eat for free? [advice] Hook: "If leftovers are the only free food your staff get, look at what that tells them." (hook idea: perfect plates float past to the guests while Dev, on his break, gets handed a plate of burnt ends from the back; scale, receipt)
 - [ ] The espresso machine died at seven on a Saturday [story] Hook: (Maria) "Is the machine... smoking?" (hook idea: the espresso machine shakes, puffs smoke and goes bang, and the whole line of guests flinches at once; day, chat, fix)
 - [ ] Gift cards: free money or a promise you have to keep? [advice] Hook: "A gift card sale and income sound like the same thing. They're not." (hook idea: a gift card slides into the register, the drawer opens, and the cash inside is see-through with a little IOU tag on it; myth, jar)
 - [ ] Which earns more: the cheapest thing on your menu or the priciest? [quiz] Hook: "The two dollar cookie or the sixteen dollar plate: which one earns you more?" (hook idea: a $2 cookie and a $16 plate on a seesaw; it tips back and forth, then freezes level with a question mark; menu, versus; ends asking for guesses)
@@ -129,6 +128,7 @@ Made as videos:
 - [x] Is a bigger menu costing you money? (`videos/bigger-menu`)
 - [x] What a guest decides in their first ten seconds (`videos/first-ten-seconds`)
 - [x] You don't have to post every day (`videos/post-every-day`)
+- [x] Should your staff eat for free? (`videos/staff-meal`)
 
 Examples in the style guide:
 

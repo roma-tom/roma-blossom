@@ -1,0 +1,26 @@
+{
+  "title": "Should Your Staff Eat for Free?",
+  "cover": { "hero": "tomato", "name": "Dev" },
+  "background": "blush",
+  "output": "video.mp4",
+  "mix": { "pad": "warm" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 4, "peek": false,
+      "say": "If leftovers are the only free food your staff get, look at what that tells them.",
+      "props": { "label": "STAFF", "line": "Guests get this. Staff get *that*?" } },
+    { "type": "pricetag", "duration": 4.5,
+      "say": "A real staff meal isn't a fourteen dollar plate to you. At food cost, say it's three dollars fifty.",
+      "props": { "caption": "What a staff meal *really* costs",
+        "item": "Rice bowl", "from": "$14", "to": "$3.50",
+        "note": "at *food cost*, not menu price" } },
+    { "type": "countdown", "duration": 4.5,
+      "say": "For that, nobody works the rush hungry. Your staff taste the menu, so they can sell it. And the big one: a team that feels looked after.",
+      "props": { "caption": "What a real meal *buys* you",
+        "items": ["Nobody works the rush hungry", "Staff who can sell the menu", "A team that feels looked after"] } },
+    { "type": "fix", "duration": 4.5,
+      "say": "So: cook one real staff meal every shift. Try new dishes on the team first. And sit down together for ten minutes.",
+      "props": { "title": "Feed the team",
+        "steps": ["One real staff meal a shift", "Try new dishes on the team", "Sit down together, 10 minutes"] } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
