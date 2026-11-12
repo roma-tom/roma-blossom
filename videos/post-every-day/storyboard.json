@@ -1,0 +1,27 @@
+{
+  "title": "You Don't Have to Post Every Day",
+  "cover": { "hero": "headline" },
+  "background": "sky",
+  "output": "video.mp4",
+  "mix": { "pad": "sway" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3.8, "peek": false,
+      "say": "Post every day or disappear, they say. That rule burns owners out.",
+      "props": { "label": "HOT TAKE", "line": "Post every day? *No.*" } },
+    { "type": "myth", "duration": 5,
+      "say": "Even the head of Instagram once suggested a couple of feed posts a week. Not seven.",
+      "props": { "caption": "Myth or *fact*?",
+        "myth": "You have to post every single day",
+        "fact": "Instagram's head once said a couple of feed posts a week" } },
+    { "type": "calendar", "duration": 5, "peek": false,
+      "say": "What matters is showing up every week. In one study of over a hundred thousand accounts, the ones that posted most weeks got about five times the engagement per post.",
+      "props": { "caption": "Every *week*, not every day",
+        "month": "NOVEMBER", "start": 6, "days": 30,
+        "marks": { "3": "tick", "5": "tick", "7": "tick", "10": "tick", "12": "tick", "14": "tick", "17": "tick", "19": "tick", "21": "tick", "24": "tick", "26": "tick", "28": "tick" },
+        "legend": [{ "mark": "tick", "label": "a post" }] } },
+    { "type": "quote",  "duration": 4.5,
+      "say": "So post three times a week you can actually keep up. Every week. Agree? Tell me in the comments.",
+      "props": { "name": "Roma Tom", "role": "owner, posts on Tuesdays", "quote": "Three a week you can keep. *Agree?*" } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more owner tips.", "props": {} }
+  ]
+}
