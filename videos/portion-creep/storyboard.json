@@ -1,0 +1,65 @@
+{
+  "title": "How Portion Creep Quietly Eats Your Margin",
+  "cover": { "hero": "crowd", "names": ["Dev", "Maria", "Sam"], "kicker": "PORTION CREEP", "headline": "A bigger scoop, *every* plate" },
+  "background": "paper",
+  "output": "video.mp4",
+  "mix": { "pad": "mellow" },
+  "voice": { "mode": "speech", "narrator": "Roma Tom", "speed": 1.1 },
+  "scenes": [
+    {
+      "type": "./hook.js",
+      "duration": 4,
+      "say": "A slightly bigger scoop, every plate. That's ten thousand eight hundred dollars a year.",
+      "props": { "label": "PORTION CREEP", "line": "A bigger scoop, *every* plate.", "number": "$10,800", "unit": "A YEAR" },
+      "peek": false
+    },
+    {
+      "type": "receipt",
+      "duration": 4.5,
+      "say": "Say your chicken bowl sells for fourteen dollars. The recipe says four ounces of chicken. A heavy hand makes it five. That extra ounce costs a quarter.",
+      "props": {
+        "caption": "One *extra* ounce",
+        "title": "CHICKEN BOWL",
+        "items": [
+          { "label": "Price", "amount": 14 },
+          { "label": "Recipe food", "amount": -3.5 },
+          { "label": "Extra ounce", "amount": -0.25 }
+        ],
+        "totalLabel": "Left"
+      }
+    },
+    {
+      "type": "jar",
+      "duration": 4.5,
+      "say": "A quarter sounds like nothing. Times a hundred twenty bowls a day, all year, it's ten thousand eight hundred dollars.",
+      "props": {
+        "caption": "A quarter adds *up*",
+        "lines": ["25¢ extra a bowl", "× 120 bowls a day", "× 360 days"],
+        "total": 10800,
+        "label": "a year"
+      }
+    },
+    {
+      "type": "quote",
+      "duration": 4.5,
+      "speaker": "Dev",
+      "say": "Nobody ever showed me the recipe. I just scoop until it looks right.",
+      "props": { "name": "Dev", "role": "line cook", "quote": "I just scoop until it *looks right*." }
+    },
+    {
+      "type": "fix",
+      "duration": 4.5,
+      "say": "So: weigh one plate every shift. Use portion scoops, not guesswork. And pin a photo of each dish at the pass.",
+      "props": {
+        "title": "Stop the creep",
+        "steps": ["Weigh one plate every shift", "Portion scoops, not guesswork", "A photo of each dish at the pass"]
+      }
+    },
+    {
+      "type": "endcard",
+      "duration": 2.6,
+      "say": "Follow for more owner tips.",
+      "props": {}
+    }
+  ]
+}
