@@ -1,57 +1,85 @@
 // This video's own hook.
 //
-// The idea: plates of fries slide along the pass one after another, and each scoop is a little
-// bigger than the last; as every plate goes by, a coin quietly slips off its edge and drops.
-// Frame one shows: a plate already sliding, a coin already falling.
-// Readable by 0.5 s: "A little extra, *every plate*." over the pass.
-// The open loop: how much does that little extra add up to?
+// The idea: chicken bowls slide along the pass one after another, and the scoop on each one is
+// a little bigger than the last; as each bowl passes Dev, a coin quietly slips off the edge of
+// the pass and drops away, until the yearly number lands under the pass.
+// Frame one shows: bowls already sliding across the pass, Dev behind it watching them go.
+// Readable by 0.5 s: "A bigger scoop, *every* plate." over the pass.
+// The open loop: how much can one slightly bigger scoop really cost?
 //
-// props: { label, line }
+// props: { label, line, number, unit }
 
 const { W, C, kicker, headline, tomato, pen } = require('../../scripts/lib/kit.js');
+const { text } = require('../../scripts/lib/marks.js');
 const S = require('../../scripts/lib/stage.js');
 
-const PASS = 1060, V = 300, GAP = 400, X0 = 600, DROP_X = 540;
+const PASS = 1180, SPEED = 330, GAP = 400, DROP_X = 760, NUMBER_AT = 3.2;
 
-function plateOfFries(ctx, x, y, size, seed) {
-  pen.shape(ctx, pen.ellipse(x, y, 165, 50, 32), { fill: C.card, width: 6, seed, offset: 0 });
-  pen.shape(ctx, pen.ellipse(x, y - 4, 118, 33, 28), { fill: C.card, width: 3, seed: seed + 1, offset: 0 });
-  // The fries: a pile of sticks that grows with size (0..1).
-  const n = 4 + Math.round(size * 22), r = pen.rng(seed + 2);
-  for (let i = 0; i < n; i++) {
-    const a = -0.9 + r() * 1.8, len = 60 + r() * 30, cx = x + (r() - 0.5) * (50 + size * 170), cy = y - 6 - r() * (10 + size * 90);
-    pen.line(ctx, [{ x: cx - Math.sin(a) * len / 2, y: cy + Math.cos(a) * len / 4 }, { x: cx + Math.sin(a) * len / 2, y: cy - Math.cos(a) * len / 4 }], { width: 20, color: C.ink, seed: seed + 10 + i });
-    pen.line(ctx, [{ x: cx - Math.sin(a) * len / 2, y: cy + Math.cos(a) * len / 4 }, { x: cx + Math.sin(a) * len / 2, y: cy - Math.cos(a) * len / 4 }], { width: 12, color: C.butter, seed: seed + 60 + i, amp: 0.5 });
+// A bowl standing on y at x, with a mound of chicken scaled by s.
+function bowl(ctx, theme, x, y, s, seed) {
+  const mw = 96 + 14 * (s - 1), mh = 40 * s, my = y - 110 - mh * 0.45;
+  // The mound: sliced chicken piling up above the rim, with a couple of green leaves.
+  pen.shape(ctx, pen.ellipse(x, my, mw, mh, 28), { fill: C.butter, width: 5, seed, offset: 0 });
+  pen.line(ctx, [{ x: x - mw * 0.55, y: my + mh * 0.1 }, { x: x - mw * 0.15, y: my - mh * 0.6 }], { width: 4, seed: seed + 1 });
+  pen.line(ctx, [{ x: x + mw * 0.0, y: my + mh * 0.2 }, { x: x + mw * 0.45, y: my - mh * 0.5 }], { width: 4, seed: seed + 2 });
+  pen.shape(ctx, pen.ellipse(x - 104, y - 116, 24, 12, 14), { fill: C.forest, width: 4, seed: seed + 3, offset: 0 });
+  pen.shape(ctx, pen.ellipse(x + 106, y - 114, 22, 11, 14), { fill: C.forest, width: 4, seed: seed + 4, offset: 0 });
+  // The bowl itself.
+  const pts = [{ x: x - 130, y: y - 110 }, { x: x + 130, y: y - 110 }];
+  for (let j = 0; j <= 10; j++) {
+    const a = (Math.PI * j) / 10;
+    pts.push({ x: x + Math.cos(a) * 130 * (j <= 5 ? 1 : 1), y: y - 110 + Math.sin(a) * 100 });
   }
+  pen.shape(ctx, pts, { fill: C.card, width: 6, seed: seed + 5, offset: 0 });
+  pen.line(ctx, [{ x: x - 112, y: y - 82 }, { x: x + 112, y: y - 82 }], { width: 4, color: C.line, seed: seed + 6 });
 }
 
 function hook(ctx, theme, t, props, info = {}) {
   const sec = info.sec ?? t * 4;
-  kicker(ctx, props.label || '', W / 2, 260, { seed: 7101 });
-  headline(ctx, theme, props.line || '', { x: W / 2, y: 330, size: 112, maxW: 860, appear: S.at(sec, 0, 0.2), seed: 7102 });
+  kicker(ctx, props.label || '', W / 2, 260, { seed: 6101 });
+  headline(ctx, theme, props.line || '', { x: W / 2, y: 330, size: 108, maxW: 860, appear: S.at(sec, 0, 0.2), seed: 6102 });
 
-  // The heat lamp and the pass shelf.
-  pen.shape(ctx, pen.roundRect(-40, 650, 1160, 34, 14), { fill: C.ink, width: 5, seed: 7103, offset: 0 });
-  [180, 540, 900].forEach((x, i) => pen.shape(ctx, [{ x: x - 70, y: 684 }, { x: x + 70, y: 684 }, { x: x + 40, y: 724 }, { x: x - 40, y: 724 }], { fill: C.butter, width: 4, seed: 7104 + i, offset: 0 }));
-  pen.shape(ctx, [{ x: -40, y: PASS + 20 }, { x: 1120, y: PASS + 14 }, { x: 1120, y: PASS + 70 }, { x: -40, y: PASS + 76 }], { fill: C.card, width: 6, seed: 7110, offset: 0 });
+  // Dev behind the pass, eyes following the bowls, sweating once the coins start to go.
+  const look = Math.sin(sec * 2.2) * 0.06;
+  const j = S.jump(sec, NUMBER_AT, 36);
+  tomato(ctx, 'Dev', W / 2, 830 - j.hop, 440, { squash: j.squash, angle: look });
+  S.reaction(ctx, theme, 'sweat', W / 2 + 40, 810, S.seg(sec, 1.0, 1.5));
 
-  // Dev below the pass, plating happily.
-  tomato(ctx, 'Dev', W / 2, 1380, 520, { squash: S.breathe(sec), angle: Math.sin(sec * 2.4) * 0.05 });
+  // The pass: a steel shelf across the screen.
+  pen.shape(ctx, [{ x: -40, y: PASS }, { x: 1120, y: PASS - 6 }, { x: 1120, y: PASS + 44 }, { x: -40, y: PASS + 50 }], { fill: C.card, width: 7, seed: 6103, offset: 0 });
 
-  // The plates slide left to right; each scoop is bigger than the one before it.
-  for (let i = 0; i < 9; i++) {
-    const x = X0 + V * sec - i * GAP;
-    if (x < -220 || x > W + 220) continue;
-    plateOfFries(ctx, x, PASS, Math.min(1, i * 0.25), 7120 + i * 37);
-    // As it passes the middle, a coin slips off its edge and falls.
-    const t0 = (DROP_X - X0 + i * GAP) / V;
-    if (t0 > -0.5) S.coin(ctx, theme, DROP_X + 150, PASS + 10, DROP_X + 230, 1560, S.seg(sec, t0, t0 + 0.8), 7300 + i, 40, 70);
+  // Bowls slide left to right; each later bowl carries a bigger scoop.
+  const shift = sec * SPEED;
+  for (let k = -2; k < 9; k++) {
+    const x = 560 + shift - k * GAP;
+    if (x < -200 || x > W + 200) continue;
+    const s = Math.min(2.6, 1 + 0.25 * (k + 1));
+    bowl(ctx, theme, x, PASS, s, 6200 + ((k + 20) % 7) * 10);
   }
+
+  // As each bowl passes DROP_X, a coin slips off the front edge of the pass and falls.
+  for (let k = -1; k < 9; k++) {
+    const a = (DROP_X - 560 + k * GAP) / SPEED;
+    const p = S.seg(sec, a, a + 0.9);
+    if (p <= 0 || p >= 1) continue;
+    S.coin(ctx, theme, DROP_X + 40, PASS - 10, DROP_X + 170, 2000, p, 6300 + k, 46, 90);
+  }
+
+  // The year's cost lands under the pass.
+  const k = S.pop(sec, NUMBER_AT, 0.35);
+  S.popIn(ctx, k, W / 2 - 40, 1420, () => {
+    text(ctx, props.number || '', W / 2 - 40, 1440, { size: 170, align: 'center', color: theme.accent });
+    text(ctx, props.unit || '', W / 2 - 40, 1515, { font: 'Inter', size: 34, spacing: 4, align: 'center', color: theme.text });
+  });
 }
 
 hook.cues = () => {
   const cues = [{ sec: 0, sfx: 'swish', gain: 0.3 }];
-  for (let i = 1; i < 9; i++) { const s = (DROP_X - X0 + i * GAP) / V; if (s >= 0 && s < 8) cues.push({ sec: s + 0.15, sfx: 'clink', gain: 0.4 }); }
+  for (let k = -1; k < 6; k++) {
+    const a = (DROP_X - 560 + k * GAP) / SPEED;
+    if (a >= 0 && a < NUMBER_AT) cues.push({ sec: a + 0.15, sfx: 'clink', gain: 0.4 });
+  }
+  cues.push({ sec: NUMBER_AT, sfx: 'ding', gain: 0.5 });
   return cues;
 };
 hook.cover = (p) => ({ kicker: p.label, headline: p.line });
