@@ -1,26 +1,30 @@
 # closing-time
 
-**Kind:** day
-**Question:** What happens in the last hour of the day, after the sign flips to closed?
-**Background:** paper, pad: cosy. **Length:** about 25 s
+**Topic:** The last hour nobody sees: closing the cafe
+**Kind:** day (see `style/KINDS.md`): told in times, ending on a warm moment, no fix scene
+**Hook:** its own (`hook.js`): the lamps click off, the door sign flips to CLOSED, and Leo squashes against the glass, knocking
+**Background:** blush (pad: cosy)
+**Voice:** speech; Leo says the hook, Roma Tom narrates the rest
+
+The idea: the sign says closed, but the owner's day doesn't end there. Let in the last guest,
+then the work nobody sees, then one more thing on the phone, then a small thank-you.
 
 ## Scenes
 
-| # | Template | On screen | Says | Time |
-| --- | --- | --- | --- | --- |
-| 1 | ./hook.js | 7:00 pm. The lamps click off one by one, Roma Tom flips the door sign from OPEN to CLOSED and exhales, then a knock: Leo's face squashed against the glass. "Closed. *Almost.*" | Seven o'clock. Lights off. Sign flipped. Then, a knock. | 4.4 s |
-| 2 | quote | Leo, at the door, 7:01 pm: "Just one coffee? *Please?*" | (Leo) Just one coffee? Please? I'll be really quick. | 4.5 s |
-| 3 | day | The hour after *close*: 7:05 Lock the door / 7:15 Clean the machine / 7:45 Count the register / 8:10 Mop the floor / 8:30 Lights out | Then the hour nobody sees. Strip and clean the espresso machine. Count the register. Mop the floor. Lights out at eight thirty. | 9.2 s |
-| 4 | quote | Roma Tom, owner, 8:31 pm: "One coffee. *To go.*" | And yes. Leo got his coffee. To go. | 4.0 s |
-| 5 | endcard | Follow for more *cafe life* | Follow for more cafe life. | 3.1 s |
+| # | Template | On screen | Says |
+| --- | --- | --- | --- |
+| 1 | ./hook.js | CLOSING TIME / OPEN flips to CLOSED / Leo: "Just one coffee? *Please?*" | (Leo) Just one coffee? Please? |
+| 2 | day | The hour *nobody* sees / 9:05 One last latte, 9:15 Count the register, 9:30 Scrub the machine, 9:45 Mop the floors, 10:00 Set up for 6 am | Of course you let Leo in. One last latte. Then the hour nobody sees. Count the register. Scrub the espresso machine. Mop the floors. |
+| 3 | chat | 9:50 pm: one more *thing* / Dev, LINE COOK: "Did anyone order milk for tomorrow?" / "..." / "Ordering it now." / "You're a hero. Night!" | Nine fifty. Dev texts. Did anyone order milk for tomorrow? Anyone means you. Ordering it now. |
+| 4 | quote | In the tip *jar* / "Thanks for *opening* the door." Leo, the 9:01 guest | Ten o'clock. Last light off. And in the tip jar, a napkin from Leo. Thanks for opening the door. |
+| 5 | endcard | Follow for more *cafe life* | Follow for more cafe life. |
 
 ## Fact notes
 
-- No statistics. The times are Roma Tom's own evening, story details rather than a claim
-  about how long closing takes everywhere.
+A story about the cast (Roma Tom, Leo, Dev), not a report. No statistics are shown or spoken.
+
+- **Times:** the cast's evening, for the story (a cafe closing at 9 pm, out by 10).
 
 ## Post caption
 
-7:00 pm. Lights off, sign flipped, and then a knock on the glass. Then comes the hour nobody sees: clean the machine, count the register, mop the floor, lights out at 8:30. And yes, Leo got his coffee. To go.
-
-#cafelife #cafeowner #dayinthelife #smallbusiness #closingtime
+See caption.txt.

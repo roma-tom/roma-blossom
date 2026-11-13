@@ -1,77 +1,93 @@
 // This video's own hook.
 //
-// The idea: closing time. The lamps click off one by one, Roma Tom flips the door sign from
-// OPEN to CLOSED and finally exhales, and then a knock: Leo's face squashed against the glass.
-// Frame one shows: the first lamp clicking off, the room already dimming.
-// Readable by 0.5 s: "Closed. *Almost.*" over the dimming cafe.
-// The open loop: does Leo get his coffee, and what happens in the hour after close?
+// The idea: the cafe's three pendant lamps click off one by one and the sign on the glass door
+// flips from OPEN to CLOSED, and then a guest bumps right up against the glass, squashed flat,
+// knocking, with "Just one coffee? Please?"
+// Frame one shows: the first lamp clicking off and the door sign already mid-flip.
+// Readable by 0.5 s: CLOSING TIME on the pill and CLOSED on the door.
+// The open loop: does the owner let him in, and what happens in the hour after the sign flips?
 //
-// props: { label, line, open, closed }
+// props: { label, open, closed, quote, guest }
 
-const { W, C, kicker, headline, tomato, pen } = require('../../scripts/lib/kit.js');
+const { W, C, kicker, tomato, pen } = require('../../scripts/lib/kit.js');
 const { text } = require('../../scripts/lib/marks.js');
 const S = require('../../scripts/lib/stage.js');
 
-const LAMPS = [[200, 0.15], [540, 0.55], [880, 0.95]];
-const FLIP = 1.4, KNOCK = 2.3, FLOOR = 1500;
-const DOOR = { x: 580, y: 720, w: 340, h: FLOOR - 720 };
+const LAMPS = [{ x: 170, off: 0.05 }, { x: 540, off: 0.2 }, { x: 910, off: 0.35 }];
+const BULB_Y = 400, FLIP = [0.0, 0.32], BUMP = 0.42, KNOCKS = [0.75, 0.95], BUBBLE = 0.5;
+const DOOR = { x: 250, y: 560, w: 580, h: 1000 };
+
+function lamp(ctx, theme, x, on, i) {
+  pen.line(ctx, [{ x, y: -20 }, { x, y: BULB_Y - 70 }], { width: 5, seed: 7010 + i });
+  // The shade: a little wobbly cone.
+  pen.shape(ctx, [{ x: x - 30, y: BULB_Y - 76 }, { x: x + 30, y: BULB_Y - 76 }, { x: x + 76, y: BULB_Y - 10 }, { x: x - 76, y: BULB_Y - 10 }],
+    { fill: C.tomato, width: 6, seed: 7020 + i, offset: 0 });
+  pen.shape(ctx, pen.ellipse(x, BULB_Y + 8, 28, 24, 18), { fill: on ? C.butter : C.line, width: 5, seed: 7030 + i, offset: 0 });
+  if (on > 0) {
+    // Doodled light rays under a lit bulb.
+    [-0.9, -0.45, 0, 0.45, 0.9].forEach((a, j) => {
+      const r0 = 52, r1 = 52 + 46 * on;
+      pen.line(ctx, [{ x: x + Math.sin(a) * r0, y: BULB_Y + 8 + Math.cos(a) * r0 }, { x: x + Math.sin(a) * r1, y: BULB_Y + 8 + Math.cos(a) * r1 }],
+        { width: 5, color: theme.soft, seed: 7040 + i * 10 + j });
+    });
+  }
+}
 
 function hook(ctx, theme, t, props, info = {}) {
-  const sec = info.sec ?? t * 4;
+  const sec = info.sec ?? t * 3;
+  const d = DOOR;
 
-  // The room dims with each lamp that goes off.
-  const off = LAMPS.filter(([, s]) => sec >= s).length;
-  ctx.save(); ctx.globalAlpha = 0.06 * off; ctx.fillStyle = C.ink; ctx.fillRect(0, 0, W, 1920); ctx.restore();
+  // The lamps, clicking off one at a time.
+  LAMPS.forEach((l, i) => lamp(ctx, theme, l.x, sec < l.off ? 1 : 0, i));
+  kicker(ctx, props.label || '', W / 2, 262, { seed: 7001 });
 
-  LAMPS.forEach(([x, s], i) => {
-    pen.line(ctx, [{ x, y: 470 }, { x, y: 560 }], { width: 4, color: theme.soft, seed: 9101 + i });
-    pen.shape(ctx, [{ x: x - 60, y: 560 }, { x: x + 60, y: 560 }, { x: x + 90, y: 630 }, { x: x - 90, y: 630 }], { fill: C.ink, width: 4, seed: 9105 + i, offset: 0 });
-    pen.shape(ctx, pen.ellipse(x, 640, 26, 18, 16), { fill: sec >= s ? C.muted : C.butter, width: 4, seed: 9110 + i, offset: 0 });
-  });
+  // The glass door: frame, glass, handle.
+  pen.shape(ctx, pen.roundRect(d.x, d.y, d.w, d.h, 18), { fill: C.card, width: 7, seed: 7101, offset: 0 });
+  pen.shape(ctx, pen.roundRect(d.x + 40, d.y + 40, d.w - 80, d.h - 120, 12), { fill: C.sky, width: 5, seed: 7102, offset: 0 });
+  pen.line(ctx, [{ x: d.x + 120, y: d.y + 120 }, { x: d.x + 200, y: d.y + 40 + 0 }], { width: 5, color: C.card, seed: 7103 });
+  pen.line(ctx, [{ x: d.x + 110, y: d.y + 220 }, { x: d.x + 280, y: d.y + 50 }], { width: 5, color: C.card, seed: 7104 });
+  pen.shape(ctx, pen.roundRect(d.x + d.w - 76, d.y + d.h / 2 + 40, 22, 120, 10), { fill: C.line, width: 5, seed: 7105, offset: 0 });
 
-  kicker(ctx, props.label || '', W / 2, 260, { seed: 9120 });
-  headline(ctx, theme, props.line || '', { x: W / 2, y: 320, size: 120, maxW: 860, appear: S.at(sec, 0, 0.2), seed: 9121 });
-
-  // The door, rattling when Leo knocks.
-  const rattle = sec > KNOCK && sec < KNOCK + 0.5 ? Math.sin(sec * 80) * 6 : 0;
-  ctx.save(); ctx.translate(rattle, 0);
-  pen.shape(ctx, pen.roundRect(DOOR.x, DOOR.y, DOOR.w, DOOR.h, 12), { fill: C.card, width: 7, seed: 9130, offset: 0 });
-  const g = { x: DOOR.x + 40, y: DOOR.y + 40, w: DOOR.w - 80, h: 380 };
-  pen.shape(ctx, pen.roundRect(g.x, g.y, g.w, g.h, 10), { fill: C.ink, width: 5, seed: 9131, offset: 0 });
-  // Leo pressed to the glass, squashed, after the knock.
-  if (sec > KNOCK) {
-    ctx.save(); ctx.beginPath(); ctx.rect(g.x, g.y, g.w, g.h); ctx.clip();
-    const k = S.pop(sec, KNOCK, 0.3);
-    tomato(ctx, 'Leo', g.x + g.w / 2, g.y + 230 + (1 - k) * 300, 300, { squash: 1.25 });
-    ctx.restore();
-    S.reaction(ctx, theme, 'sweat', g.x + g.w / 2 + 20, g.y + 220, S.seg(sec, KNOCK + 0.2, KNOCK + 0.8));
+  // The guest, outside, bumping right up against the glass and squashing flat on it.
+  const g = S.pop(sec, BUMP, 0.35);
+  if (g > 0) {
+    const knock = KNOCKS.reduce((s, k) => s + Math.max(0, Math.sin(Math.PI * S.seg(sec, k, k + 0.14))), 0);
+    tomato(ctx, props.guest || 'Leo', 590, 1330, 460, { scale: g, squash: 1.22 + 0.06 * knock });
+    // Knock lines beside the glass.
+    KNOCKS.forEach((k, i) => {
+      const p = S.seg(sec, k, k + 0.35);
+      if (p > 0 && p < 1) [-0.5, 0, 0.5].forEach((a, j) =>
+        pen.line(ctx, [{ x: 812 + Math.cos(a) * 30, y: 1210 + i * 60 + Math.sin(a) * 30 }, { x: 812 + Math.cos(a) * (60 + 30 * p), y: 1210 + i * 60 + Math.sin(a) * (60 + 30 * p) }],
+          { width: 6, color: theme.text, seed: 7200 + i * 10 + j }));
+    });
   }
-  // The sign hangs inside the glass and flips over.
-  const fl = S.at(sec, FLIP, FLIP + 0.35);
-  const sx = Math.abs(Math.cos(fl * Math.PI)), word = fl < 0.5 ? props.open : props.closed;
-  const sy = g.y + g.h + 90;
-  pen.line(ctx, [{ x: DOOR.x + DOOR.w / 2 - 50, y: sy - 60 }, { x: DOOR.x + DOOR.w / 2, y: sy - 100 }, { x: DOOR.x + DOOR.w / 2 + 50, y: sy - 60 }], { width: 4, seed: 9132 });
-  ctx.save(); ctx.translate(DOOR.x + DOOR.w / 2, sy); ctx.scale(Math.max(0.05, sx), 1);
-  pen.shape(ctx, pen.roundRect(-120, -60, 240, 110, 14), { fill: fl < 0.5 ? C.lime : C.blush, width: 5, seed: 9133, offset: 0 });
-  text(ctx, word || '', 0, 18, { size: 56, align: 'center' });
-  ctx.restore();
-  pen.shape(ctx, pen.ellipse(DOOR.x + 50, DOOR.y + DOOR.h / 2 + 140, 14, 14, 14), { fill: C.butter, width: 4, seed: 9134, offset: 0 });
+
+  // The sign on the door, flipping from OPEN to CLOSED.
+  const f = S.seg(sec, FLIP[0], FLIP[1]);
+  const sy = Math.abs(Math.cos(Math.PI * f));
+  const word = f < 0.5 ? props.open || '' : props.closed || '';
+  const cx = W / 2, cy = d.y + 150;
+  pen.line(ctx, [{ x: cx - 90, y: d.y + 40 }, { x: cx, y: cy - 70 }, { x: cx + 90, y: d.y + 40 }], { width: 4, seed: 7301 });
+  ctx.save(); ctx.translate(cx, cy); ctx.scale(1, Math.max(0.04, sy)); ctx.translate(-cx, -cy);
+  pen.shape(ctx, pen.roundRect(cx - 190, cy - 66, 380, 132, 16), { fill: f < 0.5 ? C.lime : C.card, width: 6, seed: 7302, offset: 0 });
+  text(ctx, word, cx, cy + 30, { size: 92, align: 'center', color: f < 0.5 ? C.ink : theme.accent });
   ctx.restore();
 
-  // Roma Tom: reaches to flip the sign, exhales, then turns at the knock.
-  const lean = sec < FLIP + 0.4 ? 0.12 * S.at(sec, FLIP - 0.4, FLIP) : 0.12 * (1 - S.at(sec, FLIP + 0.4, FLIP + 0.8));
-  const j = S.jump(sec, KNOCK, 70);
-  tomato(ctx, 'Roma Tom', 320, 1260 - j.hop, 560, { squash: j.squash, angle: lean });
-  if (sec > FLIP + 0.5 && sec < KNOCK) S.reaction(ctx, theme, 'joy', 320, 1180, S.seg(sec, FLIP + 0.5, FLIP + 1.0));
-  if (sec >= KNOCK) S.reaction(ctx, theme, 'shock', 320, 1180, S.seg(sec, KNOCK, KNOCK + 0.4));
-  pen.line(ctx, [{ x: -40, y: FLOOR }, { x: 1120, y: FLOOR - 4 }], { width: 7, seed: 9140 });
+  // Roma Tom inside, by the door, startled by the knock.
+  const j = S.jump(sec, KNOCKS[0], 30);
+  tomato(ctx, 'Roma Tom', 170, 1480 - j.hop, 360, { squash: j.squash, angle: -0.06 });
+  S.reaction(ctx, theme, 'sweat', 150, 1440, S.seg(sec, KNOCKS[0], KNOCKS[0] + 0.5));
+
+  // The guest's line.
+  S.say(ctx, props.quote || '', { x: 300, y: 800, w: 660, tx: 620, ty: 1170, k: S.pop(sec, BUBBLE, 0.3), size: 78, seed: 7401 });
 }
 
 hook.cues = () => [
-  ...LAMPS.map(([, s]) => ({ sec: s, sfx: 'tick', gain: 0.5 })),
-  { sec: FLIP, sfx: 'swish', gain: 0.4 },
-  { sec: KNOCK, sfx: 'tap', gain: 0.7 }, { sec: KNOCK + 0.15, sfx: 'tap', gain: 0.7 }, { sec: KNOCK + 0.3, sfx: 'tap', gain: 0.7 },
+  ...LAMPS.map((l) => ({ sec: l.off, sfx: 'tap', gain: 0.45 })),
+  { sec: FLIP[0] + 0.05, sfx: 'swish', gain: 0.35 },
+  { sec: BUMP, sfx: 'squish', gain: 0.5 },
+  ...KNOCKS.map((k) => ({ sec: k, sfx: 'tap', gain: 0.6 })),
 ];
-hook.cover = (p) => ({ kicker: p.label, headline: p.line });
+hook.cover = (p) => ({ kicker: p.label, headline: p.quote });
 
 module.exports = hook;
