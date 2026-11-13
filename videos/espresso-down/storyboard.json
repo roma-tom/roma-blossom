@@ -1,0 +1,111 @@
+{
+  "title": "The Espresso Machine Died at 7 on a Saturday",
+  "cover": {
+    "hero": "host"
+  },
+  "background": "lime",
+  "output": "video.mp4",
+  "mix": {
+    "pad": "sunny"
+  },
+  "scenes": [
+    {
+      "type": "./hook.js",
+      "duration": 4,
+      "peek": false,
+      "say": "Saturday, seven in the morning, a line out the door. Then the espresso machine goes bang.",
+      "props": {
+        "label": "SATURDAY",
+        "line": "7:02 am. *Bang.*"
+      }
+    },
+    {
+      "type": "quote",
+      "duration": 4.5,
+      "speaker": "Maria",
+      "say": "Is the machine smoking? Should I come back later?",
+      "props": {
+        "name": "Maria",
+        "role": "regular, first in line",
+        "quote": "Is the machine... *smoking*?"
+      }
+    },
+    {
+      "type": "chat",
+      "duration": 5.5,
+      "say": "Roma Tom texts Sam. Earliest repair, ten o'clock. Got a French press? We have four.",
+      "props": {
+        "caption": "7:04 am, texting *Sam*",
+        "contact": "Sam",
+        "status": "REPAIRS",
+        "messages": [
+          {
+            "from": "me",
+            "text": "Machine just died. Smoke. Line out the door"
+          },
+          {
+            "from": "them",
+            "text": "Unplug it. Earliest I can do is 10"
+          },
+          {
+            "from": "me",
+            "text": "10?!"
+          },
+          {
+            "from": "them",
+            "text": "Got a French press?"
+          },
+          {
+            "from": "me",
+            "text": "We have four."
+          }
+        ]
+      }
+    },
+    {
+      "type": "day",
+      "duration": 5,
+      "say": "So it's French presses and drip coffee all morning, and a free cookie for everyone who waits. Sam fixes it at ten.",
+      "props": {
+        "caption": "The longest *three hours*",
+        "steps": [
+          {
+            "time": "7:02",
+            "label": "Bang"
+          },
+          {
+            "time": "7:10",
+            "label": "French presses out"
+          },
+          {
+            "time": "7:30",
+            "label": "Free cookie for the wait"
+          },
+          {
+            "time": "10:00",
+            "label": "Sam fixes it"
+          }
+        ],
+        "highlight": 2
+      }
+    },
+    {
+      "type": "quote",
+      "duration": 4,
+      "say": "And now there's a backup plan taped to the wall.",
+      "props": {
+        "name": "Roma Tom",
+        "role": "owner, 10:05 am",
+        "quote": "Backup plan: now *taped to the wall*."
+      }
+    },
+    {
+      "type": "endcard",
+      "duration": 3,
+      "say": "Tag the owner who's lived this. Follow for more cafe life.",
+      "props": {
+        "cta": "Follow for more *cafe life*"
+      }
+    }
+  ]
+}
