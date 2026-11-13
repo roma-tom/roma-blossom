@@ -1,0 +1,85 @@
+{
+  "title": "Gift Cards: Free Money or a Promise?",
+  "cover": {
+    "hero": "number",
+    "number": "$50",
+    "label": "owed, not earned"
+  },
+  "background": "butter",
+  "output": "video.mp4",
+  "mix": {
+    "pad": "mellow"
+  },
+  "scenes": [
+    {
+      "type": "./hook.js",
+      "duration": 4,
+      "peek": false,
+      "say": "A gift card sale and income sound like the same thing. They're not.",
+      "props": {
+        "label": "GIFT CARDS",
+        "line": "Gift card sold. *Not yours yet.*",
+        "tag": "IOU"
+      }
+    },
+    {
+      "type": "myth",
+      "duration": 5,
+      "say": "Until the card is spent, that money is a promise. You still owe the coffee, the food and the staff time.",
+      "props": {
+        "caption": "Myth or *fact*?",
+        "myth": "Gift card sales are extra income",
+        "fact": "It's a promise: you still owe the food and the time"
+      }
+    },
+    {
+      "type": "receipt",
+      "duration": 5,
+      "say": "Say a guest spends a fifty dollar card in January. The food and staff time still cost you about thirty dollars, and no new cash comes in.",
+      "props": {
+        "caption": "January: a $50 card *comes back*",
+        "title": "Table 4",
+        "items": [
+          {
+            "label": "Order total",
+            "amount": 50
+          },
+          {
+            "label": "Paid by card",
+            "amount": -50
+          },
+          {
+            "label": "Food cost",
+            "amount": -15
+          },
+          {
+            "label": "Staff time",
+            "amount": -15
+          }
+        ],
+        "totalLabel": "Net",
+        "total": -30,
+        "currency": "$"
+      }
+    },
+    {
+      "type": "fix",
+      "duration": 4.5,
+      "say": "So keep gift card money aside, not in the register. Track how much is still owed. And know the rule: federal law says the money can't expire for at least five years.",
+      "props": {
+        "title": "Keep the promise",
+        "steps": [
+          "Keep gift card money aside",
+          "Track what's still owed",
+          "No expiry under 5 years"
+        ]
+      }
+    },
+    {
+      "type": "endcard",
+      "duration": 2.6,
+      "say": "Follow for more owner tips.",
+      "props": {}
+    }
+  ]
+}
