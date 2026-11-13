@@ -23,7 +23,6 @@ behind a non-advice topic in the order. Topics without a hook idea need one befo
 ## Up next
 
 - [ ] Should you pay a bit above minimum wage to keep staff? [advice] Hook: "One dollar an hour, against two thousand to replace her." (hook idea: a barista tomato walks toward the exit with her apron off; a one-dollar coin rolls across the floor and stops at her feet, and she stops too; scale, jar)
-- [ ] The last hour nobody sees: closing the cafe [day] Hook: (guest) "Just one coffee? Please?" (hook idea: the lights click off one by one, Roma Tom flips the sign to CLOSED, then a knock: a guest's face pressed to the glass; day, countdown)
 - [ ] Is a bigger menu costing you money? [advice] Hook: "More dishes, more sales, right? Usually not." (hook idea: a menu unfolds, and unfolds, and keeps unfolding off the bottom of the screen while Dev in the kitchen watches it, sweating; menu, myth)
 - [ ] What a guest decides in their first ten seconds [guests] Hook: (guest) "Hmm. Is this place any good?" (hook idea: a ten-second timer bar drains across the top while a new guest's eyes dart around the room; everything they notice gets a tick or a cross; quote, countdown; keep it a guest's-eye story, no invented statistic)
 - [ ] You don't have to post every day [hot take] Hook: "Post every day or disappear, they say. That rule burns owners out." (hook idea: a calendar where a phone stamp hits every day, faster and faster, while Roma Tom beside it gets smaller and smaller; myth, countdown)
@@ -127,6 +126,7 @@ Made as videos:
 - [x] The dishwasher is the most important person in your kitchen (`videos/dishwasher`)
 - [x] The texts every owner gets before 7 am (`videos/texts-before-seven`)
 - [x] How does portion creep quietly eat your margin? (`videos/portion-creep`)
+- [x] The last hour nobody sees: closing the cafe (`videos/closing-time`)
 
 Examples in the style guide:
 

@@ -1,0 +1,37 @@
+{
+  "title": "The Last Hour of a Cafe Owner's Day Nobody Sees",
+  "cover": { "hero": "number", "kicker": "CLOSING TIME", "headline": "The hour *nobody* sees", "number": "9:01 pm", "label": "and someone knocks" },
+  "background": "blush",
+  "output": "video.mp4",
+  "mix": { "pad": "cosy" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 3, "speaker": "Leo",
+      "say": "Just one coffee? Please?",
+      "props": { "label": "CLOSING TIME", "open": "OPEN", "closed": "CLOSED", "quote": "Just one coffee? *Please?*", "guest": "Leo" } },
+    { "type": "day", "duration": 5,
+      "say": "Of course you let Leo in. One last latte. Then the hour nobody sees. Count the register. Scrub the espresso machine. Mop the floors.",
+      "props": { "caption": "The hour *nobody* sees",
+        "steps": [
+          { "time": "9:05", "label": "One last latte" },
+          { "time": "9:15", "label": "Count the register" },
+          { "time": "9:30", "label": "Scrub the machine" },
+          { "time": "9:45", "label": "Mop the floors" },
+          { "time": "10:00", "label": "Set up for 6 am" }
+        ],
+        "highlight": 0 } },
+    { "type": "chat", "duration": 5,
+      "say": "Nine fifty. Dev texts. Did anyone order milk for tomorrow? Anyone means you. Ordering it now.",
+      "props": { "caption": "9:50 pm: one more *thing*",
+        "contact": "Dev", "status": "LINE COOK",
+        "messages": [
+          { "from": "them", "text": "Did anyone order milk for tomorrow?" },
+          { "from": "me", "text": "..." },
+          { "from": "me", "text": "Ordering it now." },
+          { "from": "them", "text": "You're a hero. Night!" }
+        ] } },
+    { "type": "quote", "duration": 5,
+      "say": "Ten o'clock. Last light off. And in the tip jar, a napkin from Leo. Thanks for opening the door.",
+      "props": { "caption": "In the tip *jar*", "name": "Leo", "role": "the 9:01 guest", "quote": "Thanks for *opening* the door." } },
+    { "type": "endcard", "duration": 2.6, "say": "Follow for more cafe life.", "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
