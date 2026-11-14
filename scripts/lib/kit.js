@@ -225,9 +225,11 @@ const wasDrawn = (name) => drawn.has(String(name).trim().toLowerCase());
 // it, the mouth follows the voice for whoever is talking.
 function tomato(ctx, name, x, y, size, o = {}) {
   const { squash = 1, angle = 0, alpha = 1, scale = 1 } = o;
-  if (scale <= 0) return;
   const key = String(name).trim().toLowerCase();
+  // Count the tomato as in the scene even while it hasn't popped in yet (scale 0), so the
+  // renderer doesn't flash the speaker's corner peek for those few frames.
   drawn.add(key);
+  if (scale <= 0) return;
   const open = o.mouth ?? talking.get(key) ?? 0;
   const img = tomatoImage(name, size, Math.round(Math.max(0, Math.min(1, open)) * 3) / 3);
   const b = pen.rng(pen.seedOf(name, pen.getBoil()));
