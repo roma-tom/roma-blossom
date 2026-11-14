@@ -25,7 +25,6 @@ behind a non-advice topic in the order. Topics without a hook idea need one befo
 - [ ] Should you pay a bit above minimum wage to keep staff? [advice] Hook: "One dollar an hour, against two thousand to replace her." (hook idea: a barista tomato walks toward the exit with her apron off; a one-dollar coin rolls across the floor and stops at her feet, and she stops too; scale, jar)
 - [ ] Which earns more: the cheapest thing on your menu or the priciest? [quiz] Hook: "The two dollar cookie or the sixteen dollar plate: which one earns you more?" (hook idea: a $2 cookie and a $16 plate on a seesaw; it tips back and forth, then freezes level with a question mark; menu, versus; ends asking for guesses)
 - [ ] Card surcharges: pass the fee on, or absorb it? [advice] Hook: (guest) "Wait. What's this extra fee on my check?" (receipt, scale)
-- [ ] What owners say, and what they mean [relatable] Hook: "Busy weekend? Translation: I haven't sat down since Thursday." (countdown, quote)
 - [ ] Why does a free sample sell more than a discount? [advice] Hook: "Everyone reaches for a discount. A free taste usually sells more." (myth, versus)
 - [ ] The one-star guest who became a regular [story] Hook: (Ivan) "My latte was cold. One star." (review, quote, regulars)
 - [ ] Hire for attitude or for experience? [advice] Hook: "Lots of experience and a good hire sound like the same thing. Often they're not." (scale, myth)
@@ -130,6 +129,7 @@ Made as videos:
 - [x] Should your staff eat for free? (`videos/staff-meal`)
 - [x] The espresso machine died at seven on a Saturday (`videos/espresso-down`)
 - [x] Gift cards: free money or a promise you have to keep? (`videos/gift-cards`)
+- [x] What owners say, and what they mean (`videos/owner-translation`)
 
 Examples in the style guide:
 

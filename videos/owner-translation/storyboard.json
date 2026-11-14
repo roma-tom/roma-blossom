@@ -1,0 +1,25 @@
+{
+  "title": "What Owners Say, and What They Mean",
+  "cover": { "hero": "crowd", "names": ["Maria", "Dev", "Sam"] },
+  "background": "mint",
+  "output": "video.mp4",
+  "mix": { "pad": "cosy" },
+  "scenes": [
+    { "type": "./hook.js", "duration": 4, "peek": false,
+      "say": "Busy weekend? Great! Translation: I haven't sat down since Thursday.",
+      "props": { "label": "CAFE LIFE", "line": "Owner *translation*", "ask": "Busy weekend?", "say": "Great!", "tag": "TRANSLATION", "means": "I haven't sat down since Thursday." } },
+    { "type": "countdown", "duration": 4.5,
+      "say": "It's fine means the oven is not fine. Quick question means forty-five minutes. And day off means answering texts from bed.",
+      "props": { "caption": "What owners say, and *mean*",
+        "items": ["\"It's fine\" = the oven isn't", "\"Quick question\" = 45 minutes", "\"Day off\" = texts from bed"] } },
+    { "type": "quote", "duration": 4.5, "speaker": "Dev",
+      "say": "And when the boss says we'll see, that means no.",
+      "props": { "name": "Dev", "role": "line cook, fluent in owner", "quote": "\"We'll see\" means *no*." } },
+    { "type": "quote", "duration": 4,
+      "say": "I love this job? That one's actually true.",
+      "props": { "name": "Roma Tom", "role": "owner", "quote": "\"I love this job.\" That one's *true*." } },
+    { "type": "endcard", "duration": 3,
+      "say": "What's yours? Tell me in the comments. Follow for more cafe life.",
+      "props": { "cta": "Follow for more *cafe life*" } }
+  ]
+}
